@@ -9,6 +9,7 @@ import com.capuccinolovesballerina.game.Utilidades.*;
 import com.capuccinolovesballerina.game.entidades.BallerinaCapuccina;
 import com.capuccinolovesballerina.game.entidades.CapuccinoAssassino;
 import com.capuccinolovesballerina.game.graficos.AnimacionesCappuccino;
+import com.capuccinolovesballerina.game.graficos.AnimacionesBallerina;
 import com.capuccinolovesballerina.game.mapa.Nivel;
 import com.capuccinolovesballerina.game.objetos.ElementosNivel;
 
@@ -30,7 +31,8 @@ public class PantallaJuego implements Screen {
     private ControladorEntradaJugador controladorEntrada;
     private CapuccinoAssassino cappuccino;
     private BallerinaCapuccina ballerina;
-    private AnimacionesCappuccino animaciones;
+    private AnimacionesCappuccino animacionesCappuccino;
+    private AnimacionesBallerina animacionesBallerina;
 
     private ControladorPartida controladorPartida;
     private RenderizadorJuego renderizadorJuego;
@@ -54,7 +56,8 @@ public class PantallaJuego implements Screen {
         hud = new HUD();
 
         controladorEntrada = new ControladorEntradaJugador();
-        animaciones = new AnimacionesCappuccino();
+        animacionesCappuccino = new AnimacionesCappuccino();
+        animacionesBallerina = new AnimacionesBallerina();
 
         cappuccino = new CapuccinoAssassino(elementos.getSpawnX(), elementos.getSpawnY());
         ballerina = new BallerinaCapuccina(elementos.getSpawnBallerinaX(), elementos.getSpawnBallerinaY());
@@ -66,11 +69,13 @@ public class PantallaJuego implements Screen {
 
         controladorPartida = new ControladorPartida(
             nivel, elementos, menuPausa, menuGameOver, menuVictoria,
-            hud, controladorEntrada, cappuccino, ballerina, animaciones
+            hud, controladorEntrada, cappuccino, ballerina,
+            animacionesCappuccino, animacionesBallerina
         );
 
         renderizadorJuego = new RenderizadorJuego(
-            camera, nivel, cappuccino, ballerina, animaciones,
+            camera, nivel, cappuccino, ballerina,
+            animacionesCappuccino, animacionesBallerina,
             elementos, hud, menuPausa, menuGameOver, menuVictoria
         );
 
@@ -101,7 +106,8 @@ public class PantallaJuego implements Screen {
         menuGameOver.dispose();
         menuVictoria.dispose();
         hud.dispose();
-        animaciones.dispose();
+        animacionesCappuccino.dispose();
+        animacionesBallerina.dispose();
     }
 
     @Override

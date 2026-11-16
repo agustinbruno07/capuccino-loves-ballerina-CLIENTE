@@ -1,14 +1,17 @@
 package com.capuccinolovesballerina.game.objetos;
 
 import com.badlogic.gdx.math.Rectangle;
+import com.capuccinolovesballerina.game.Utilidades.Constantes;
 
 public class BloqueEspuma {
 
     private final Rectangle zona;
+    private final float vidaInicial;
     private float vida;
 
     public BloqueEspuma(float x, float y, float ancho, float alto, float vida) {
         this.zona = new Rectangle(x, y, ancho, alto);
+        this.vidaInicial = vida;
         this.vida = vida;
     }
 
@@ -24,9 +27,23 @@ public class BloqueEspuma {
         return zona;
     }
 
+    // El reloj pertenece al bloque: cada espuma nueva empieza en el primer frame.
+    public int getIndiceFrame() {
+        float transcurrido = Math.max(0f, vidaInicial - vida);
+        if (vida <= Constantes.DURACION_DISOLUCION_ESPUMA) {
+            float disolucion = Constantes.DURACION_DISOLUCION_ESPUMA - vida;
+            return 6 + Math.min(1, (int) (disolucion / (Constantes.DURACION_DISOLUCION_ESPUMA / 2f)));
+        }
+        if (transcurrido < Constantes.DURACION_FORMACION_ESPUMA) {
+            return Math.min(3, (int) (transcurrido / (Constantes.DURACION_FORMACION_ESPUMA / 4f)));
+        }
+        float activo = transcurrido - Constantes.DURACION_FORMACION_ESPUMA;
+        return 4 + (int) (activo / Constantes.DURACION_FRAME_ACTIVO_ESPUMA) % 2;
+    }
+
     //alpha es la opacidad, cosa de que se vaya desvaneciendo poco a poco. queda prime confien
     public float getAlpha() {
-        float fade = 0.5f;
+        float fade = Constantes.DURACION_DISOLUCION_ESPUMA;
         if (vida >= fade) return 1f;
         return Math.max(0f, vida / fade);
     }

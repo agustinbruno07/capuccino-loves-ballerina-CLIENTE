@@ -22,6 +22,7 @@ import com.capuccinolovesballerina.game.pantallas.HUD;
 import com.capuccinolovesballerina.game.pantallas.MenuGameOver;
 import com.capuccinolovesballerina.game.pantallas.MenuPausa;
 import com.capuccinolovesballerina.game.pantallas.MenuVictoria;
+import com.capuccinolovesballerina.game.graficos.AnimacionesBallerina;
 
 public class RenderizadorJuego {
 
@@ -32,7 +33,8 @@ public class RenderizadorJuego {
 
     private final CapuccinoAssassino cappuccino;
     private final BallerinaCapuccina ballerina;
-    private final AnimacionesCappuccino animaciones;
+    private final AnimacionesCappuccino animacionesCappuccino;
+    private final AnimacionesBallerina animacionesBallerina;
     private final ElementosNivel elementos;
 
     private final HUD hud;
@@ -46,13 +48,16 @@ public class RenderizadorJuego {
     private Texture texturaPalancaOn;
     private Texture texturaPinchos;
     private Texture texturaLiana;
+    private Texture texturaEspuma;
+    private TextureRegion[] framesEspuma;
 
     public RenderizadorJuego(
         OrthographicCamera camera,
         Nivel nivel,
         CapuccinoAssassino cappuccino,
         BallerinaCapuccina ballerina,
-        AnimacionesCappuccino animaciones,
+        AnimacionesCappuccino animacionesCappuccino,
+        AnimacionesBallerina animacionesBallerina,
         ElementosNivel elementos,
         HUD hud,
         MenuPausa menuPausa,
@@ -63,7 +68,8 @@ public class RenderizadorJuego {
         this.renderizador = new OrthogonalTiledMapRenderer(nivel.getMapa(), Nivel.ESCALA);
         this.cappuccino = cappuccino;
         this.ballerina = ballerina;
-        this.animaciones = animaciones;
+        this.animacionesCappuccino = animacionesCappuccino;
+        this.animacionesBallerina = animacionesBallerina;
         this.elementos = elementos;
         this.hud = hud;
         this.menuPausa = menuPausa;
@@ -83,6 +89,13 @@ public class RenderizadorJuego {
         texturaPalancaOn = new Texture("objetos/palanca_encendida.png");
         texturaPinchos = new Texture("objetos/pinchos.png");
         texturaLiana = new Texture("objetos/liana.png");
+        texturaEspuma = new Texture(Constantes.RUTA_SPRITESHEET_ESPUMA);
+        framesEspuma = new TextureRegion[Constantes.CANTIDAD_FRAMES_ESPUMA];
+        for (int i = 0; i < framesEspuma.length; i++) {
+            framesEspuma[i] = new TextureRegion(texturaEspuma,
+                i * Constantes.ANCHO_FRAME_ESPUMA, 0,
+                Constantes.ANCHO_FRAME_ESPUMA, Constantes.ALTO_FRAME_ESPUMA);
+        }
 
         texturaCerrada.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         texturaAbierta.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
@@ -101,21 +114,19 @@ public class RenderizadorJuego {
         renderizador.render();
 
         dibujarCortables();
-        dibujarEspuma();
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
+        dibujarEspuma();
         dibujarPuerta();
         dibujarPalanca(elementos.getPalancaCappuccino(), new Color(0.6f, 0.8f, 1f, 1f));
         dibujarPalanca(elementos.getPalancaBallerina(), new Color(1f, 0.6f, 0.8f, 1f));
         dibujarPeligros();
         dibujarLianas();
-        dibujarPersonaje();
-
+        dibujarCappuccino();
+        dibujarBallerina();
         batch.end();
-
-        dibujarBallerinaPlaceholder();
 
         hud.dibujar();
         menuPausa.dibujar();
@@ -148,14 +159,11 @@ public class RenderizadorJuego {
         BloqueEspuma espuma = ballerina.getEspuma();
         if (espuma == null) return;
 
-        shapeRenderer.setProjectionMatrix(camera.combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(1f, 1f, 1f, espuma.getAlpha());
-
         Rectangle z = espuma.getZona();
-        shapeRenderer.rect(z.x, z.y, z.width, z.height);
-
-        shapeRenderer.end();
+        float colorAnterior = batch.getPackedColor();
+        batch.setColor(1f, 1f, 1f, espuma.getAlpha());
+        batch.draw(framesEspuma[espuma.getIndiceFrame()], z.x, z.y, z.width, z.height);
+        batch.setPackedColor(colorAnterior);
     }
 
     private void dibujarPuerta() {
@@ -203,8 +211,8 @@ public class RenderizadorJuego {
         }
     }
 
-    private void dibujarPersonaje() {
-        TextureRegion frame = animaciones.getFrameActual();
+    private void dibujarCappuccino() {
+        TextureRegion frame = animacionesCappuccino.getFrameActual();
 
         float tam = Constantes.TAM_SPRITE_PERSONAJE;
         float x = cappuccino.getX() - (tam - cappuccino.getAncho()) / 2f;
@@ -217,23 +225,18 @@ public class RenderizadorJuego {
         }
     }
 
-    private void dibujarBallerinaPlaceholder() {
-        shapeRenderer.setProjectionMatrix(camera.combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+    private void dibujarBallerina() {
+        TextureRegion frame = animacionesBallerina.getFrameActual();
 
-        shapeRenderer.setColor(0.95f, 0.35f, 0.65f, 1f);
-        shapeRenderer.rect(ballerina.getX(), ballerina.getY(), ballerina.getAncho(), ballerina.getAlto());
+        float tam = Constantes.TAM_SPRITE_PERSONAJE;
+        float x = ballerina.getX() - (tam - ballerina.getAncho()) / 2f;
+        float y = ballerina.getY();
 
-        shapeRenderer.setColor(1f, 1f, 1f, 1f);
-        float e = Constantes.ESCALA_PERSONAJE;
-        float markerSize = 8f * e;
-        float markerY = ballerina.getY() + ballerina.getAlto() - 16f * e;
-        float markerX = ballerina.isMirandoDerecha()
-            ? ballerina.getX() + ballerina.getAncho() - 12f * e
-            : ballerina.getX() + 4f * e;
-        shapeRenderer.rect(markerX, markerY, markerSize, markerSize);
-
-        shapeRenderer.end();
+        if (ballerina.isMirandoDerecha()) {
+            batch.draw(frame, x, y, tam, tam);
+        } else {
+            batch.draw(frame, x + tam, y, -tam, tam);
+        }
     }
 
     public void dispose() {
@@ -246,5 +249,6 @@ public class RenderizadorJuego {
         texturaPalancaOn.dispose();
         texturaPinchos.dispose();
         texturaLiana.dispose();
+        texturaEspuma.dispose();
     }
 }

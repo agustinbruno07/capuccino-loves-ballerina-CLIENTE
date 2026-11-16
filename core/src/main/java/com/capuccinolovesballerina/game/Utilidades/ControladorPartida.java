@@ -7,6 +7,7 @@ import com.capuccinolovesballerina.game.entidades.BallerinaCapuccina;
 import com.capuccinolovesballerina.game.entidades.CapuccinoAssassino;
 import com.capuccinolovesballerina.game.entidades.Player;
 import com.capuccinolovesballerina.game.graficos.AnimacionesCappuccino;
+import com.capuccinolovesballerina.game.graficos.AnimacionesBallerina;
 import com.capuccinolovesballerina.game.graficos.Estado;
 import com.capuccinolovesballerina.game.mapa.Nivel;
 import com.capuccinolovesballerina.game.objetos.BloqueEspuma;
@@ -18,6 +19,7 @@ import com.capuccinolovesballerina.game.pantallas.HUD;
 import com.capuccinolovesballerina.game.pantallas.MenuGameOver;
 import com.capuccinolovesballerina.game.pantallas.MenuPausa;
 import com.capuccinolovesballerina.game.pantallas.MenuVictoria;
+
 
 public class ControladorPartida {
 
@@ -32,7 +34,8 @@ public class ControladorPartida {
     private final ControladorEntradaJugador entrada;
     private final CapuccinoAssassino cappuccino;
     private final BallerinaCapuccina ballerina;
-    private final AnimacionesCappuccino animaciones;
+    private final AnimacionesCappuccino animacionesCappuccino;
+    private final AnimacionesBallerina animacionesBallerina;
     private static final float ALCANCE_PALANCA = 12f;
 
     public ControladorPartida(
@@ -45,7 +48,8 @@ public class ControladorPartida {
         ControladorEntradaJugador entrada,
         CapuccinoAssassino cappuccino,
         BallerinaCapuccina ballerina,
-        AnimacionesCappuccino animaciones
+        AnimacionesCappuccino animacionesCappuccino,
+        AnimacionesBallerina animacionesBallerina
     ) {
         this.nivel = nivel;
         this.elementos = elementos;
@@ -56,7 +60,8 @@ public class ControladorPartida {
         this.entrada = entrada;
         this.cappuccino = cappuccino;
         this.ballerina = ballerina;
-        this.animaciones = animaciones;
+        this.animacionesCappuccino = animacionesCappuccino;
+        this.animacionesBallerina = animacionesBallerina;
     }
 
     public void actualizar(float delta) {
@@ -129,17 +134,28 @@ public class ControladorPartida {
 
 
         if (entrada.isHabilidadPresionada()) {
-            animaciones.setEstado(Estado.ATTACK);
+            animacionesCappuccino.setEstado(Estado.ABILITY);
             cortar();
         } else if (!cappuccino.isEnSuelo()) {
-            animaciones.setEstado(Estado.JUMP);
+            animacionesCappuccino.setEstado(Estado.JUMP);
         } else if (entrada.isIzquierda() || entrada.isDerecha()) {
-            animaciones.setEstado(Estado.WALK);
+            animacionesCappuccino.setEstado(Estado.WALK);
         } else {
-            animaciones.setEstado(Estado.IDLE);
+            animacionesCappuccino.setEstado(Estado.IDLE);
         }
 
-        animaciones.actualizar(delta);
+        if (entrada.isHabilidadPresionadaBallerina()) {
+            animacionesBallerina.setEstado(Estado.ABILITY);
+        } else if (!ballerina.isEnSuelo()) {
+            animacionesBallerina.setEstado(Estado.JUMP);
+        } else if (entrada.isIzquierdaBallerina() || entrada.isDerechaBallerina()) {
+            animacionesBallerina.setEstado(Estado.WALK);
+        } else {
+            animacionesBallerina.setEstado(Estado.IDLE);
+        }
+
+        animacionesCappuccino.actualizar(delta);
+        animacionesBallerina.actualizar(delta);
 
 
         if (estaMuerto(cappuccino) || estaMuerto(ballerina)) {
@@ -284,7 +300,8 @@ public class ControladorPartida {
         }
 
         entrada.soltarTodo();
-        animaciones.reiniciar();
+        animacionesCappuccino.reiniciar();
+        animacionesBallerina.reiniciar();
         hud.reiniciar();
     }
 }

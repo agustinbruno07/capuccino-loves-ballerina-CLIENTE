@@ -27,6 +27,13 @@ public class Constantes {
     public static final float VIDA_ESPUMA = 4f;
     public static final float COOLDOWN_ESPUMA = 2.5f;
     public static final float DISTANCIA_ESPUMA = 8f * ESCALA_PERSONAJE;
+    public static final String RUTA_SPRITESHEET_ESPUMA = "sprites/espumaBallerina.png";
+    public static final int ANCHO_FRAME_ESPUMA = 128;
+    public static final int ALTO_FRAME_ESPUMA = 64;
+    public static final int CANTIDAD_FRAMES_ESPUMA = 8;
+    public static final float DURACION_FORMACION_ESPUMA = 0.45f;
+    public static final float DURACION_FRAME_ACTIVO_ESPUMA = 0.2f;
+    public static final float DURACION_DISOLUCION_ESPUMA = 0.5f;
 
     public static final float MARGEN_LATERAL_PELIGRO = 8f;   // se resta a cada lado
     public static final float MARGEN_SUPERIOR_PELIGRO = 8f;  // se resta de arriba

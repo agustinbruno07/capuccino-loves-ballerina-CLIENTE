@@ -50,7 +50,7 @@ public class AnimacionesCappuccino {
 
 
     public void setEstado(Estado nuevo) {
-        if (estado == Estado.ATTACK && !attack.isAnimationFinished(tiempo)) return;
+        if (estado == Estado.ABILITY && !attack.isAnimationFinished(tiempo)) return;
         if (nuevo != estado) {
             estado = nuevo;
             tiempo = 0f;
@@ -71,7 +71,7 @@ public class AnimacionesCappuccino {
         switch (estado) {
             case WALK:   return walk.getKeyFrame(tiempo);
             case JUMP:   return jump.getKeyFrame(tiempo);
-            case ATTACK: return attack.getKeyFrame(tiempo);
+            case ABILITY: return attack.getKeyFrame(tiempo);
             default:     return idle.getKeyFrame(tiempo);
         }
     }
