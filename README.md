@@ -1,4 +1,4 @@
-# Capuccino Loves Ballerina
+# Cappuccino Loves Ballerina
 
 ## Integrantes del grupo
 
@@ -27,7 +27,18 @@ La propuesta formal y detallada del videojuego se encuentra en la Wiki:
 
 [Ver la propuesta del proyecto](https://github.com/agustinbruno07/capuccino-loves-ballerina/wiki)
 
-## Compilación y ejecución
+## Distribución Windows 1.7.0
+
+En la PC servidor usar **CappuccinoServidor.exe** y pulsar JUGAR.
+En cada una de las dos PC cliente usar **CappuccinoLovesBallerina.exe** y pulsar JUGAR.
+Si no hay servidor, el cliente informa el error y permite reintentar; nunca inicia un servidor.
+
+Generar con `gradlew.bat :lwjgl3:zipClienteWindows :lwjgl3:zipServidorWindows`.
+Los ZIP **CappuccinoServidor-1.7.0-Windows.zip** y **CappuccinoLovesBallerina-1.7.0-Windows.zip**
+quedan en `lwjgl3/build/distributions`. Extraerlos completos: incluyen Java.
+Ver [entrega y pruebas](ENTREGA_WINDOWS.md) y [funcionamiento de red](DOCUMENTACION_RED.md).
+
+## Compilación y ejecución (desarrollo)
 
 ### Requisitos
 
@@ -88,7 +99,7 @@ Desde la carpeta raíz del proyecto, ejecutar:
 ## Video de demostración (segunda pre-entrega)
 [▶ Ver video de demostración](https://drive.google.com/file/d/1RYrjh4mWFUnnSkVwSDYIL4kscPV1n7NP/view?usp=drive_link)
 
-## Estado actual del proyecto (v1.5.1)
+## Estado actual del proyecto (v1.7.0)
 Prototipo jugable del nivel 0 en escritorio con:
 - Movimiento, salto, gravedad y colisiones contra el mapa de Tiled.
 - Animaciones de Cappuccino Assassino (idle/caminar/saltar/atacar) desde spritesheet.
