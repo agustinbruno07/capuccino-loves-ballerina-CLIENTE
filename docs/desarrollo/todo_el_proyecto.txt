@@ -2,8 +2,8 @@
                 INFORME DEL PROYECTO SPEEDG2L
 ============================================================
 
-Fecha: mi�. 11/11/2026
-Hora:  20:47:49,36
+Fecha: lun. 16/11/2026
+Hora:  19:36:27,10
 Ruta:  C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina
 
 ============================================================
@@ -11,13 +11,17 @@ Ruta:  C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina
 ============================================================
 
 Listado de rutas de carpetas
-El n�mero de serie del volumen es CC05-334C
+El n�mero de serie del volumen es CC05-334C
 C:.
 |   .editorconfig
 |   .gitattributes
 |   .gitignore
+|   ANALISIS_SPEEDG2L.md
 |   build.gradle
 |   CHANGELOG.md
+|   DOCUMENTACION_RED.md
+|   ejecutar_cliente.bat
+|   ejecutar_servidor.bat
 |   generar_informe.bat
 |   gradle.properties
 |   gradlew
@@ -25,64 +29,60 @@ C:.
 |   README.md
 |   settings.gradle
 |   todo_el_proyecto.txt
-|
+|   
 +---.gradle
 |   +---9.7.1
 |   |   |   gc.properties
-|   |   |
+|   |   |   
 |   |   +---checksums
 |   |   |       checksums.lock
-|   |   |
+|   |   |       
 |   |   +---executionHistory
 |   |   |       executionHistory.bin
 |   |   |       executionHistory.lock
-|   |   |
+|   |   |       
 |   |   +---expanded
+|   |   |       expanded.lock
+|   |   |       
 |   |   +---fileChanges
 |   |   |       last-build.bin
-|   |   |
+|   |   |       
 |   |   +---fileHashes
 |   |   |       fileHashes.bin
 |   |   |       fileHashes.lock
 |   |   |       resourceHashesCache.bin
-|   |   |
+|   |   |       
 |   |   \---vcsMetadata
 |   +---buildOutputCleanup
 |   |       buildOutputCleanup.lock
 |   |       cache.properties
 |   |       outputFiles.bin
-|   |
+|   |       
+|   +---red
+|   |       cliente.bat
+|   |       servidor.bat
+|   |       
 |   \---vcs-1
 |           gc.properties
-|
+|           
 +---.idea
-|   |   .gitignore
-|   |   compiler.xml
-|   |   gradle.xml
-|   |   misc.xml
-|   |   vcs.xml
-|   |   workspace.xml
-|   |
-|   \---shelf
-|       |   Uncommitted_changes_before_Checkout_at_11_11_2026_19_26__Changes_.xml
-|       |
-|       \---Uncommitted_changes_before_Checkout_at_11_11_2026_19_26_[Changes]
-|               shelved.patch
-|               TILE ABAJO DEL PISO.png
-|               TILE PARED DERECHA.png
-|               TILE PARED IZQUIERDA.png
-|               TILE PISO.png
-|
+|       .gitignore
+|       compiler.xml
+|       gradle.xml
+|       misc.xml
+|       vcs.xml
+|       workspace.xml
+|       
 +---assets
 |   |   assets.txt
-|   |
+|   |   
 |   +---interfaz
 |   |       controles.png
 |   |       fondo_menu.png
 |   |       game_over.png
 |   |       marco_hud.png
 |   |       victoria.jpg
-|   |
+|   |       
 |   +---mapas
 |   |       background1.png
 |   |       background1.tsx
@@ -103,316 +103,531 @@ C:.
 |   |       TILE PISO.png
 |   |       TILESET PISO 32x32.png
 |   |       tileset.tsx
-|   |
+|   |       
 |   +---objetos
-|   |       liana.png
 |   |       palanca_apagada.png
 |   |       palanca_encendida.png
 |   |       pinchos.png
 |   |       puerta_abierta.png
 |   |       puerta_cerrada.png
-|   |
+|   |       
 |   +---skin
 |   |       default.fnt
 |   |       default.png
 |   |       uiskin.atlas
 |   |       uiskin.json
 |   |       uiskin.png
-|   |
+|   |       
 |   +---sonidos
 |   |       musica_juego.mp3
 |   |       musica_menu.mp3
-|   |
+|   |       
 |   \---sprites
+|           ballerina.png
 |           cappuccino.png
-|
+|           espumaBallerina.png
+|           lianas_animadas.png
+|           
 +---build
 |   \---reports
 |       \---problems
 |               problems-report.html
-|
+|               
 +---core
 |   |   build.gradle
-|   |
+|   |   
 |   +---build
 |   |   +---classes
 |   |   |   \---java
-|   |   |       \---main
+|   |   |       +---main
+|   |   |       |   \---com
+|   |   |       |       \---capuccinolovesballerina
+|   |   |       |           \---game
+|   |   |       |               |   CapuccinoLovesBallerinaGame.class
+|   |   |       |               |   
+|   |   |       |               +---entidades
+|   |   |       |               |       BallerinaCapuccina.class
+|   |   |       |               |       CapuccinoAssassino.class
+|   |   |       |               |       Player.class
+|   |   |       |               |       
+|   |   |       |               +---graficos
+|   |   |       |               |       AnimacionesBallerina$1.class
+|   |   |       |               |       AnimacionesBallerina.class
+|   |   |       |               |       AnimacionesCappuccino$1.class
+|   |   |       |               |       AnimacionesCappuccino.class
+|   |   |       |               |       Estado.class
+|   |   |       |               |       
+|   |   |       |               +---mapa
+|   |   |       |               |       CargadorMapaServidor$1.class
+|   |   |       |               |       CargadorMapaServidor$2.class
+|   |   |       |               |       CargadorMapaServidor.class
+|   |   |       |               |       GestorColisiones.class
+|   |   |       |               |       Nivel.class
+|   |   |       |               |       
+|   |   |       |               +---objetos
+|   |   |       |               |       BloqueEspuma.class
+|   |   |       |               |       ElementosNivel.class
+|   |   |       |               |       ObjetoCortable.class
+|   |   |       |               |       Palanca.class
+|   |   |       |               |       Puerta.class
+|   |   |       |               |       
+|   |   |       |               +---pantallas
+|   |   |       |               |       HUD.class
+|   |   |       |               |       MenuGameOver$1.class
+|   |   |       |               |       MenuGameOver$2.class
+|   |   |       |               |       MenuGameOver.class
+|   |   |       |               |       MenuPausa$1.class
+|   |   |       |               |       MenuPausa$2.class
+|   |   |       |               |       MenuPausa$3.class
+|   |   |       |               |       MenuPausa.class
+|   |   |       |               |       MenuVictoria$1.class
+|   |   |       |               |       MenuVictoria$2.class
+|   |   |       |               |       MenuVictoria.class
+|   |   |       |               |       PantallaControles$1.class
+|   |   |       |               |       PantallaControles.class
+|   |   |       |               |       PantallaJuego$1.class
+|   |   |       |               |       PantallaJuego.class
+|   |   |       |               |       PantallaMenu$1.class
+|   |   |       |               |       PantallaMenu$2.class
+|   |   |       |               |       PantallaMenu$3.class
+|   |   |       |               |       PantallaMenu$4.class
+|   |   |       |               |       PantallaMenu$5.class
+|   |   |       |               |       PantallaMenu.class
+|   |   |       |               |       PantallaOpciones$1.class
+|   |   |       |               |       PantallaOpciones$2.class
+|   |   |       |               |       PantallaOpciones$3.class
+|   |   |       |               |       PantallaOpciones$4.class
+|   |   |       |               |       PantallaOpciones$5.class
+|   |   |       |               |       PantallaOpciones.class
+|   |   |       |               |       
+|   |   |       |               +---red
+|   |   |       |               |   |   Cliente.class
+|   |   |       |               |   |   ProtocolosRed$Controles.class
+|   |   |       |               |   |   ProtocolosRed$EstadoPartida.class
+|   |   |       |               |   |   ProtocolosRed$Jugador.class
+|   |   |       |               |   |   ProtocolosRed.class
+|   |   |       |               |   |   Servidor$Conexion.class
+|   |   |       |               |   |   Servidor.class
+|   |   |       |               |   |   
+|   |   |       |               |   \---hilos
+|   |   |       |               |           HiloCliente.class
+|   |   |       |               |           HiloServidor$Recibido.class
+|   |   |       |               |           HiloServidor.class
+|   |   |       |               |           
+|   |   |       |               \---Utilidades
+|   |   |       |                       Audio.class
+|   |   |       |                       Constantes.class
+|   |   |       |                       ControladorEntradaJugador.class
+|   |   |       |                       ControladorPartida.class
+|   |   |       |                       Entrada.class
+|   |   |       |                       FabricaViewport.class
+|   |   |       |                       Recursos.class
+|   |   |       |                       RenderizadorJuego.class
+|   |   |       |                       
+|   |   |       \---test
 |   |   |           \---com
 |   |   |               \---capuccinolovesballerina
 |   |   |                   \---game
-|   |   |                       |   CapuccinoLovesBallerinaGame.class
-|   |   |                       |
-|   |   |                       +---entidades
-|   |   |                       |       BallerinaCapuccina.class
-|   |   |                       |       CapuccinoAssassino.class
-|   |   |                       |       Player.class
-|   |   |                       |
-|   |   |                       +---graficos
-|   |   |                       |       AnimacionesCappuccino$1.class
-|   |   |                       |       AnimacionesCappuccino.class
-|   |   |                       |       Estado.class
-|   |   |                       |
-|   |   |                       +---mapa
-|   |   |                       |       GestorColisiones.class
-|   |   |                       |       Nivel.class
-|   |   |                       |
-|   |   |                       +---objetos
-|   |   |                       |       BloqueEspuma.class
-|   |   |                       |       ElementosNivel.class
-|   |   |                       |       ObjetoCortable.class
-|   |   |                       |       Palanca.class
-|   |   |                       |       Puerta.class
-|   |   |                       |
-|   |   |                       +---pantallas
-|   |   |                       |       HUD.class
-|   |   |                       |       MenuGameOver$1.class
-|   |   |                       |       MenuGameOver$2.class
-|   |   |                       |       MenuGameOver.class
-|   |   |                       |       MenuPausa$1.class
-|   |   |                       |       MenuPausa$2.class
-|   |   |                       |       MenuPausa$3.class
-|   |   |                       |       MenuPausa.class
-|   |   |                       |       MenuVictoria$1.class
-|   |   |                       |       MenuVictoria$2.class
-|   |   |                       |       MenuVictoria.class
-|   |   |                       |       PantallaControles$1.class
-|   |   |                       |       PantallaControles.class
-|   |   |                       |       PantallaJuego.class
-|   |   |                       |       PantallaMenu$1.class
-|   |   |                       |       PantallaMenu$2.class
-|   |   |                       |       PantallaMenu$3.class
-|   |   |                       |       PantallaMenu$4.class
-|   |   |                       |       PantallaMenu$5.class
-|   |   |                       |       PantallaMenu$6$1.class
-|   |   |                       |       PantallaMenu$6.class
-|   |   |                       |       PantallaMenu.class
-|   |   |                       |       PantallaOpciones$1.class
-|   |   |                       |       PantallaOpciones$2.class
-|   |   |                       |       PantallaOpciones$3.class
-|   |   |                       |       PantallaOpciones$4.class
-|   |   |                       |       PantallaOpciones$5.class
-|   |   |                       |       PantallaOpciones.class
-|   |   |                       |
-|   |   |                       +---red
-|   |   |                       |   |   Cliente.class
-|   |   |                       |   |   Servidor.class
-|   |   |                       |   |
-|   |   |                       |   \---hilos
-|   |   |                       |           HiloCliente.class
-|   |   |                       |           HiloDescubrimiento.class
-|   |   |                       |           HiloServidor.class
-|   |   |                       |
-|   |   |                       \---Utilidades
-|   |   |                               Audio.class
-|   |   |                               Constantes.class
-|   |   |                               ControladorEntradaJugador.class
-|   |   |                               ControladorPartida.class
-|   |   |                               Entrada.class
-|   |   |                               FabricaViewport.class
-|   |   |                               Recursos.class
-|   |   |                               RenderizadorJuego.class
-|   |   |
+|   |   |                       \---red
+|   |   |                               PruebasRed.class
+|   |   |                               
 |   |   +---generated
 |   |   |   \---sources
 |   |   |       +---annotationProcessor
 |   |   |       |   \---java
-|   |   |       |       \---main
+|   |   |       |       +---main
+|   |   |       |       \---test
 |   |   |       \---headers
 |   |   |           \---java
-|   |   |               \---main
+|   |   |               +---main
+|   |   |               \---test
 |   |   +---libs
-|   |   |       core-1.4.5.jar
+|   |   |       CapuccinoLovesBallerina-servidor-1.5.1.jar
 |   |   |       core-1.5.1.jar
-|   |   |
+|   |   |       
+|   |   +---reports
+|   |   |   \---tests
+|   |   |       \---test
+|   |   |           |   index.html
+|   |   |           |   
+|   |   |           +---css
+|   |   |           |       base-style.css
+|   |   |           |       style.css
+|   |   |           |       
+|   |   |           \---js
+|   |   |                   report.js
+|   |   |                   
+|   |   +---test-results
+|   |   |   \---test
+|   |   |       \---binary
+|   |   |               output-events.bin
+|   |   |               results-generic.bin
+|   |   |               
 |   |   \---tmp
+|   |       +---.cache
+|   |       |   \---expanded
+|   |       |       +---zip_e2c32e983a3c9f985a38f8980d04951f
+|   |       |       \---zip_ffb2eb3806ffde20c8a41810d630747a
 |   |       +---compileJava
 |   |       |   |   previous-compilation-data.bin
-|   |       |   |
+|   |       |   |   
 |   |       |   \---compileTransaction
 |   |       |       +---backup-dir
 |   |       |       \---stash-dir
-|   |       |               ControladorPartida.class.uniqueId0
-|   |       |               PantallaJuego.class.uniqueId1
-|   |       |
-|   |       \---jar
-|   |               MANIFEST.MF
-|   |
+|   |       |               Servidor$Conexion.class.uniqueId0
+|   |       |               Servidor.class.uniqueId1
+|   |       |               
+|   |       +---compileTestJava
+|   |       |   |   previous-compilation-data.bin
+|   |       |   |   
+|   |       |   \---compileTransaction
+|   |       |       +---backup-dir
+|   |       |       \---stash-dir
+|   |       |               PruebasRed.class.uniqueId0
+|   |       |               
+|   |       +---jar
+|   |       |       MANIFEST.MF
+|   |       |       
+|   |       +---jarServidor
+|   |       |       MANIFEST.MF
+|   |       |       
+|   |       \---test
 |   \---src
-|       \---main
+|       +---main
+|       |   \---java
+|       |       \---com
+|       |           \---capuccinolovesballerina
+|       |               \---game
+|       |                   |   CapuccinoLovesBallerinaGame.java
+|       |                   |   
+|       |                   +---entidades
+|       |                   |       BallerinaCapuccina.java
+|       |                   |       CapuccinoAssassino.java
+|       |                   |       Player.java
+|       |                   |       
+|       |                   +---graficos
+|       |                   |       AnimacionesBallerina.java
+|       |                   |       AnimacionesCappuccino.java
+|       |                   |       Estado.java
+|       |                   |       
+|       |                   +---mapa
+|       |                   |       CargadorMapaServidor.java
+|       |                   |       GestorColisiones.java
+|       |                   |       Nivel.java
+|       |                   |       
+|       |                   +---objetos
+|       |                   |       BloqueEspuma.java
+|       |                   |       ElementosNivel.java
+|       |                   |       ObjetoCortable.java
+|       |                   |       Palanca.java
+|       |                   |       Puerta.java
+|       |                   |       
+|       |                   +---pantallas
+|       |                   |       HUD.java
+|       |                   |       MenuGameOver.java
+|       |                   |       MenuPausa.java
+|       |                   |       MenuVictoria.java
+|       |                   |       PantallaControles.java
+|       |                   |       PantallaJuego.java
+|       |                   |       PantallaMenu.java
+|       |                   |       PantallaOpciones.java
+|       |                   |       
+|       |                   +---red
+|       |                   |   |   Cliente.java
+|       |                   |   |   ProtocolosRed.java
+|       |                   |   |   Servidor.java
+|       |                   |   |   
+|       |                   |   \---hilos
+|       |                   |           HiloCliente.java
+|       |                   |           HiloServidor.java
+|       |                   |           
+|       |                   \---Utilidades
+|       |                           Audio.java
+|       |                           Constantes.java
+|       |                           ControladorEntradaJugador.java
+|       |                           ControladorPartida.java
+|       |                           Entrada.java
+|       |                           FabricaViewport.java
+|       |                           Recursos.java
+|       |                           RenderizadorJuego.java
+|       |                           
+|       \---test
 |           \---java
 |               \---com
 |                   \---capuccinolovesballerina
 |                       \---game
-|                           |   CapuccinoLovesBallerinaGame.java
-|                           |   exportar_codigo.bat
-|                           |   todo_el_codigo.txt
-|                           |
-|                           +---entidades
-|                           |       BallerinaCapuccina.java
-|                           |       CapuccinoAssassino.java
-|                           |       Player.java
-|                           |
-|                           +---graficos
-|                           |       AnimacionesCappuccino.java
-|                           |       Estado.java
-|                           |
-|                           +---mapa
-|                           |       GestorColisiones.java
-|                           |       Nivel.java
-|                           |
-|                           +---objetos
-|                           |       BloqueEspuma.java
-|                           |       ElementosNivel.java
-|                           |       ObjetoCortable.java
-|                           |       Palanca.java
-|                           |       Puerta.java
-|                           |
-|                           +---pantallas
-|                           |       HUD.java
-|                           |       MenuGameOver.java
-|                           |       MenuPausa.java
-|                           |       MenuVictoria.java
-|                           |       PantallaControles.java
-|                           |       PantallaJuego.java
-|                           |       PantallaMenu.java
-|                           |       PantallaOpciones.java
-|                           |
-|                           +---red
-|                           |   |   Cliente.java
-|                           |   |   Servidor.java
-|                           |   |
-|                           |   \---hilos
-|                           |           HiloCliente.java
-|                           |           HiloDescubrimiento.java
-|                           |           HiloServidor.java
-|                           |
-|                           \---Utilidades
-|                                   Audio.java
-|                                   Constantes.java
-|                                   ControladorEntradaJugador.java
-|                                   ControladorPartida.java
-|                                   Entrada.java
-|                                   FabricaViewport.java
-|                                   Recursos.java
-|                                   RenderizadorJuego.java
-|
+|                           \---red
+|                                   PruebasRed.java
+|                                   
 +---gradle
 |   |   gradle-daemon-jvm.properties
-|   |
+|   |   
 |   \---wrapper
 |           gradle-wrapper.jar
 |           gradle-wrapper.properties
-|
-\---lwjgl3
-    |   build.gradle
-    |   nativeimage.gradle
-    |
-    +---build
-    |   +---classes
-    |   |   \---java
-    |   |       \---main
-    |   |           \---com
-    |   |               \---capuccinolovesballerina
-    |   |                   \---game
-    |   |                       \---lwjgl3
-    |   |                               Lwjgl3Launcher.class
-    |   |                               StartupHelper.class
-    |   |
-    |   +---generated
-    |   |   \---sources
-    |   |       +---annotationProcessor
-    |   |       |   \---java
-    |   |       |       \---main
-    |   |       \---headers
-    |   |           \---java
-    |   |               \---main
-    |   +---resources
-    |   |   \---main
-    |   |       |   assets.txt
-    |   |       |   libgdx128.png
-    |   |       |   libgdx16.png
-    |   |       |   libgdx32.png
-    |   |       |   libgdx64.png
-    |   |       |
-    |   |       +---interfaz
-    |   |       |       controles.png
-    |   |       |       fondo_menu.png
-    |   |       |       game_over.png
-    |   |       |       marco_hud.png
-    |   |       |       victoria.jpg
-    |   |       |
-    |   |       +---mapas
-    |   |       |       background1.png
-    |   |       |       background1.tsx
-    |   |       |       background2.png
-    |   |       |       background2.tsx
-    |   |       |       background3.png
-    |   |       |       background3.tsx
-    |   |       |       background4a.png
-    |   |       |       background4a.tsx
-    |   |       |       background4b.png
-    |   |       |       NIVEL 0.tmx
-    |   |       |       nivel0.tmx
-    |   |       |       PISO.tsx
-    |   |       |       PISO.tsx.png
-    |   |       |       TILE ABAJO DEL PISO.png
-    |   |       |       TILE PARED DERECHA.png
-    |   |       |       TILE PARED IZQUIERDA.png
-    |   |       |       TILE PISO.png
-    |   |       |       TILESET PISO 32x32.png
-    |   |       |       tileset.tsx
-    |   |       |
-    |   |       +---objetos
-    |   |       |       liana.png
-    |   |       |       palanca_apagada.png
-    |   |       |       palanca_encendida.png
-    |   |       |       pinchos.png
-    |   |       |       puerta_abierta.png
-    |   |       |       puerta_cerrada.png
-    |   |       |
-    |   |       +---skin
-    |   |       |       default.fnt
-    |   |       |       default.png
-    |   |       |       uiskin.atlas
-    |   |       |       uiskin.json
-    |   |       |       uiskin.png
-    |   |       |
-    |   |       +---sonidos
-    |   |       |       musica_juego.mp3
-    |   |       |       musica_menu.mp3
-    |   |       |
-    |   |       \---sprites
-    |   |               cappuccino.png
-    |   |
-    |   \---tmp
-    |       \---compileJava
-    |           |   previous-compilation-data.bin
-    |           |
-    |           \---compileTransaction
-    |               +---backup-dir
-    |               \---stash-dir
-    +---icons
-    |       logo.icns
-    |       logo.ico
-    |       logo.png
-    |
-    \---src
-        \---main
-            +---java
-            |   \---com
-            |       \---capuccinolovesballerina
-            |           \---game
-            |               \---lwjgl3
-            |                       Lwjgl3Launcher.java
-            |                       StartupHelper.java
-            |
-            \---resources
-                    libgdx128.png
-                    libgdx16.png
-                    libgdx32.png
-                    libgdx64.png
-
+|           
++---lwjgl3
+|   |   build.gradle
+|   |   nativeimage.gradle
+|   |   
+|   +---build
+|   |   +---classes
+|   |   |   \---java
+|   |   |       +---main
+|   |   |       |   \---com
+|   |   |       |       \---capuccinolovesballerina
+|   |   |       |           \---game
+|   |   |       |               \---lwjgl3
+|   |   |       |                       Lwjgl3Launcher.class
+|   |   |       |                       StartupHelper.class
+|   |   |       |                       
+|   |   |       \---test
+|   |   |           \---com
+|   |   |               \---capuccinolovesballerina
+|   |   |                   \---game
+|   |   |                       \---lwjgl3
+|   |   |                               PruebasClientesGraficos$1.class
+|   |   |                               PruebasClientesGraficos.class
+|   |   |                               
+|   |   +---distributions
+|   |   |       CapuccinoLovesBallerina-1.5.1.tar
+|   |   |       CapuccinoLovesBallerina-1.5.1.zip
+|   |   |       
+|   |   +---generated
+|   |   |   \---sources
+|   |   |       +---annotationProcessor
+|   |   |       |   \---java
+|   |   |       |       +---main
+|   |   |       |       \---test
+|   |   |       \---headers
+|   |   |           \---java
+|   |   |               +---main
+|   |   |               \---test
+|   |   +---libs
+|   |   |       CapuccinoLovesBallerina-1.5.1.jar
+|   |   |       
+|   |   +---reports
+|   |   |   +---red-grafica
+|   |   |   |   +---ejecucion-16251006809275396763
+|   |   |   |   |   |   asignado0
+|   |   |   |   |   |   asignado1
+|   |   |   |   |   |   cerrar0
+|   |   |   |   |   |   cliente0.log
+|   |   |   |   |   |   cliente0.png
+|   |   |   |   |   |   cliente1.log
+|   |   |   |   |   |   cliente1.png
+|   |   |   |   |   |   desconexion1
+|   |   |   |   |   |   listo0
+|   |   |   |   |   |   listo1
+|   |   |   |   |   |   servidor.log
+|   |   |   |   |   |   
+|   |   |   |   |   \---servidor-independiente
+|   |   |   |   \---ejecucion-17825494608158199037
+|   |   |   |       |   asignado0
+|   |   |   |       |   asignado1
+|   |   |   |       |   cerrar0
+|   |   |   |       |   cliente0.log
+|   |   |   |       |   cliente0.png
+|   |   |   |       |   cliente1.log
+|   |   |   |       |   cliente1.png
+|   |   |   |       |   desconexion1
+|   |   |   |       |   listo0
+|   |   |   |       |   listo1
+|   |   |   |       |   servidor.log
+|   |   |   |       |   
+|   |   |   |       \---servidor-independiente
+|   |   |   \---tests
+|   |   |       \---test
+|   |   |           |   index.html
+|   |   |           |   
+|   |   |           +---css
+|   |   |           |       base-style.css
+|   |   |           |       style.css
+|   |   |           |       
+|   |   |           \---js
+|   |   |                   report.js
+|   |   |                   
+|   |   +---resources
+|   |   |   \---main
+|   |   |       |   assets.txt
+|   |   |       |   libgdx128.png
+|   |   |       |   libgdx16.png
+|   |   |       |   libgdx32.png
+|   |   |       |   libgdx64.png
+|   |   |       |   
+|   |   |       +---interfaz
+|   |   |       |       controles.png
+|   |   |       |       fondo_menu.png
+|   |   |       |       game_over.png
+|   |   |       |       marco_hud.png
+|   |   |       |       victoria.jpg
+|   |   |       |       
+|   |   |       +---mapas
+|   |   |       |       background1.png
+|   |   |       |       background1.tsx
+|   |   |       |       background2.png
+|   |   |       |       background2.tsx
+|   |   |       |       background3.png
+|   |   |       |       background3.tsx
+|   |   |       |       background4a.png
+|   |   |       |       background4a.tsx
+|   |   |       |       background4b.png
+|   |   |       |       NIVEL 0.tmx
+|   |   |       |       nivel0.tmx
+|   |   |       |       PISO.tsx
+|   |   |       |       PISO.tsx.png
+|   |   |       |       TILE ABAJO DEL PISO.png
+|   |   |       |       TILE PARED DERECHA.png
+|   |   |       |       TILE PARED IZQUIERDA.png
+|   |   |       |       TILE PISO.png
+|   |   |       |       TILESET PISO 32x32.png
+|   |   |       |       tileset.tsx
+|   |   |       |       
+|   |   |       +---objetos
+|   |   |       |       palanca_apagada.png
+|   |   |       |       palanca_encendida.png
+|   |   |       |       pinchos.png
+|   |   |       |       puerta_abierta.png
+|   |   |       |       puerta_cerrada.png
+|   |   |       |       
+|   |   |       +---skin
+|   |   |       |       default.fnt
+|   |   |       |       default.png
+|   |   |       |       uiskin.atlas
+|   |   |       |       uiskin.json
+|   |   |       |       uiskin.png
+|   |   |       |       
+|   |   |       +---sonidos
+|   |   |       |       musica_juego.mp3
+|   |   |       |       musica_menu.mp3
+|   |   |       |       
+|   |   |       \---sprites
+|   |   |               ballerina.png
+|   |   |               cappuccino.png
+|   |   |               espumaBallerina.png
+|   |   |               lianas_animadas.png
+|   |   |               
+|   |   +---scripts
+|   |   |       CapuccinoLovesBallerina
+|   |   |       CapuccinoLovesBallerina.bat
+|   |   |       
+|   |   +---test-results
+|   |   |   \---test
+|   |   |       \---binary
+|   |   |               output-events.bin
+|   |   |               results-generic.bin
+|   |   |               
+|   |   \---tmp
+|   |       +---.cache
+|   |       |   \---expanded
+|   |       |       +---zip_000fb25261f4dca3f9a49dc57ecb313d
+|   |       |       +---zip_02b08daa66ba86c4a24147ab37868b98
+|   |       |       +---zip_03719e64f5ea4cb7e77a27e2cf96a3cd
+|   |       |       +---zip_0825b7aca4189eedde88d15c8d712b12
+|   |       |       +---zip_0d2fd87b9562cd62f2e2025bc59af7b9
+|   |       |       +---zip_1c24637c1c577ac55fbfbeefd254eb8c
+|   |       |       +---zip_211416217f30de337378d438343ee174
+|   |       |       +---zip_2aef9065f484c6e7d514416e9e6083ba
+|   |       |       +---zip_2e1f0207f09fe2e9ebf3523e8c34c1a6
+|   |       |       +---zip_34b087375ec72c997ae6130ee90c2280
+|   |       |       +---zip_353f99ccbad8dffa1d0d02f44a6fbe54
+|   |       |       +---zip_361c8c097b989cdac5a7d53fe30eb73f
+|   |       |       +---zip_44161235732c9d16fbd3bb6fc5c45f5a
+|   |       |       +---zip_4733d1df3600496dda30e856fbba12f3
+|   |       |       +---zip_4b86fe52ed41ec43caf5d4a58e6b8b09
+|   |       |       +---zip_4d91c8717b5df945ca7466c0a51b842f
+|   |       |       +---zip_5aac044d0ab6b17779695a1a0bf41ab6
+|   |       |       +---zip_62902efd37299df6a04e4d30734e4649
+|   |       |       +---zip_6a8eb708b6f4ad31391e61a0c3817afe
+|   |       |       +---zip_6ac499faaac07f8804cc1fb4256ca1a0
+|   |       |       +---zip_6b2a0792e17dd9dee67bc89c267de316
+|   |       |       +---zip_6b715445e21248dc76ec0abb8ac8d249
+|   |       |       +---zip_6c04be6c0e638938c399731517925916
+|   |       |       +---zip_6de1495dfa0f90d7aa1242a7db699f2c
+|   |       |       +---zip_72015665dc002de07d326befbb972845
+|   |       |       +---zip_7643c0c92891cf0a10252591756a2425
+|   |       |       +---zip_794a8e447964d503d0aca444d8565dc3
+|   |       |       +---zip_7b9af42c556739205fe017b969a4f365
+|   |       |       +---zip_80d92b4094a8e58d8f911af02bed9364
+|   |       |       +---zip_81e86115b20ff08ce46383e7747e30df
+|   |       |       +---zip_89c0d456a718975d7722363dfd3ad01d
+|   |       |       +---zip_89c136002abfee600ed4da0f58694b5c
+|   |       |       +---zip_8db66ea5b1c297a17c7464238ba1edf2
+|   |       |       +---zip_8ec4ee054a81659f720a21afcaff61f5
+|   |       |       +---zip_97db833a5f7a3c832b7230cb8e611580
+|   |       |       +---zip_99ce0e25b12ba1031f7167d47ca89224
+|   |       |       +---zip_9a3000936d5be4e17e87346558d7f1b0
+|   |       |       +---zip_9b7104a5ff4cad5fe427b78acf7d6132
+|   |       |       +---zip_a617cf3446ad091672ac603c4cd67944
+|   |       |       +---zip_a972658213b092eb0e2822e9a0beefc6
+|   |       |       +---zip_b189a383c60e667df650412e12b89403
+|   |       |       +---zip_b2a0ddd98724873a194f14219473b7ef
+|   |       |       +---zip_bb4c317df201f870e0821856452be003
+|   |       |       +---zip_c0caaf35cb5b26473362839a7739d489
+|   |       |       +---zip_c71568020e0d9adba43452a533ef558b
+|   |       |       +---zip_cd0039e2e4d47da3a5e44fc763f80095
+|   |       |       +---zip_cd27b6b414199858f834b109c420f090
+|   |       |       +---zip_ce2b9952da2103f3e00c21762787c7b0
+|   |       |       +---zip_cebfaf6188a0062c9af56aba61dd3e9f
+|   |       |       +---zip_d72528f9e25d533bb89be35635d1208a
+|   |       |       +---zip_d7fa6b77a2ac7a824e5f7756d15c5afe
+|   |       |       +---zip_d9e5d85fc4ad5d166242a06475f863b7
+|   |       |       +---zip_dc3dfc5b9bcd65ee762fdc5fcef21b6a
+|   |       |       +---zip_e058aa0aa4e7bef39eca35f8ea58eed8
+|   |       |       +---zip_e2c32e983a3c9f985a38f8980d04951f
+|   |       |       +---zip_e4cc58f8ce20c0e10c2364539b64c2df
+|   |       |       +---zip_e5dc9ee757bc1e2d7a62ef08a4b3e2ca
+|   |       |       +---zip_e65c469f33116ca87da066a113df1f65
+|   |       |       +---zip_e82ab787bc1ae9e8c4fd01e0353e15c9
+|   |       |       +---zip_f85364d8aec699cff19fc0ab5357b0fe
+|   |       |       +---zip_f9646d0f7fa4c8a4fdf43357eb84384d
+|   |       |       \---zip_ffb2eb3806ffde20c8a41810d630747a
+|   |       +---compileJava
+|   |       |   |   previous-compilation-data.bin
+|   |       |   |   
+|   |       |   \---compileTransaction
+|   |       |       +---backup-dir
+|   |       |       \---stash-dir
+|   |       +---compileTestJava
+|   |       |       previous-compilation-data.bin
+|   |       |       
+|   |       +---jar
+|   |       |       MANIFEST.MF
+|   |       |       
+|   |       \---test
+|   +---icons
+|   |       logo.icns
+|   |       logo.ico
+|   |       logo.png
+|   |       
+|   \---src
+|       +---main
+|       |   +---java
+|       |   |   \---com
+|       |   |       \---capuccinolovesballerina
+|       |   |           \---game
+|       |   |               \---lwjgl3
+|       |   |                       Lwjgl3Launcher.java
+|       |   |                       StartupHelper.java
+|       |   |                       
+|       |   \---resources
+|       |           libgdx128.png
+|       |           libgdx16.png
+|       |           libgdx32.png
+|       |           libgdx64.png
+|       |           
+|       \---test
+|           \---java
+|               \---com
+|                   \---capuccinolovesballerina
+|                       \---game
+|                           \---lwjgl3
+|                                   PruebasClientesGraficos.java
+|                                   
+\---referencias_red
+        projecto amigo CLIENTE.txt
+        projecto amigo SERVER.txt
+        
 
 ============================================================
 2. CODIGO FUENTE JAVA
@@ -727,6 +942,96 @@ public class Player {
 .
 .
 ============================================================
+ARCHIVO: C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\graficos\AnimacionesBallerina.java
+============================================================
+.
+package com.capuccinolovesballerina.game.graficos;
+
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+public class AnimacionesBallerina {
+
+    private static final int FRAME = 128;
+    private static final int FRAMES_IDLE = 4;
+    private static final int FRAMES_WALK = 8;
+    private static final int FRAMES_JUMP = 3;
+    private static final int FRAMES_ABILITY = 8;
+
+    private final Texture textura;
+    private final Animation<TextureRegion> idle;
+    private final Animation<TextureRegion> walk;
+    private final Animation<TextureRegion> jump;
+    private final Animation<TextureRegion> ability;
+
+    private Estado estado = Estado.IDLE;
+    private float tiempo = 0f;
+
+    public AnimacionesBallerina() {
+        textura = new Texture("sprites/ballerina.png");
+
+        TextureRegion[][] grilla = TextureRegion.split(textura, FRAME, FRAME);
+
+        idle = new Animation<>(0.2f, primeros(grilla[0], FRAMES_IDLE));
+        idle.setPlayMode(Animation.PlayMode.LOOP);
+
+        walk = new Animation<>(0.1f, primeros(grilla[1], FRAMES_WALK));
+        walk.setPlayMode(Animation.PlayMode.LOOP);
+
+        jump = new Animation<>(0.15f, primeros(grilla[2], FRAMES_JUMP));
+        jump.setPlayMode(Animation.PlayMode.NORMAL);
+
+        ability = new Animation<>(0.08f, primeros(grilla[3], FRAMES_ABILITY));
+        ability.setPlayMode(Animation.PlayMode.NORMAL);
+    }
+
+    private TextureRegion[] primeros(TextureRegion[] fila, int n) {
+        TextureRegion[] frames = new TextureRegion[n];
+        for (int i = 0; i < n; i++) {
+            frames[i] = fila[i];
+        }
+        return frames;
+    }
+
+    public void setEstado(Estado nuevo) {
+        if (estado == Estado.ABILITY && !ability.isAnimationFinished(tiempo)) return;
+
+        if (nuevo != estado) {
+            estado = nuevo;
+            tiempo = 0f;
+        }
+    }
+
+    public void actualizar(float delta) {
+        tiempo += delta;
+    }
+
+    public void reiniciar() {
+        estado = Estado.IDLE;
+        tiempo = 0f;
+    }
+
+    public TextureRegion getFrameActual() {
+        switch (estado) {
+            case WALK:
+                return walk.getKeyFrame(tiempo);
+            case JUMP:
+                return jump.getKeyFrame(tiempo);
+            case ABILITY:
+                return ability.getKeyFrame(tiempo);
+            default:
+                return idle.getKeyFrame(tiempo);
+        }
+    }
+
+    public void dispose() {
+        textura.dispose();
+    }
+}
+.
+.
+============================================================
 ARCHIVO: C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\graficos\AnimacionesCappuccino.java
 ============================================================
 .
@@ -782,7 +1087,7 @@ public class AnimacionesCappuccino {
 
 
     public void setEstado(Estado nuevo) {
-        if (estado == Estado.ATTACK && !attack.isAnimationFinished(tiempo)) return;
+        if (estado == Estado.ABILITY && !attack.isAnimationFinished(tiempo)) return;
         if (nuevo != estado) {
             estado = nuevo;
             tiempo = 0f;
@@ -803,7 +1108,7 @@ public class AnimacionesCappuccino {
         switch (estado) {
             case WALK:   return walk.getKeyFrame(tiempo);
             case JUMP:   return jump.getKeyFrame(tiempo);
-            case ATTACK: return attack.getKeyFrame(tiempo);
+            case ABILITY: return attack.getKeyFrame(tiempo);
             default:     return idle.getKeyFrame(tiempo);
         }
     }
@@ -821,7 +1126,63 @@ ARCHIVO: C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\j
 package com.capuccinolovesballerina.game.graficos;
 
 public enum Estado {
-    IDLE, WALK, JUMP, ATTACK;
+    IDLE, WALK, JUMP, ABILITY;
+}
+.
+.
+============================================================
+ARCHIVO: C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\mapa\CargadorMapaServidor.java
+============================================================
+.
+package com.capuccinolovesballerina.game.mapa;
+
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.Files.FileType;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.ImageResolver;
+import com.badlogic.gdx.maps.tiled.*;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.XmlReader.Element;
+
+/** Usa el lector TMX de LibGDX y sus mismas colisiones, sin cargar PNG ni OpenGL. */
+public class CargadorMapaServidor extends TmxMapLoader {
+    public CargadorMapaServidor() {
+        super(ruta -> {
+            FileHandle archivo = new FileHandle(ruta);
+            if (archivo.exists()) return archivo;
+            archivo = new FileHandle("assets/" + ruta);
+            if (archivo.exists()) return archivo;
+            // El servidor tambien debe arrancar desde el JAR, sin depender de la carpeta actual.
+            return new FileHandle(ruta, FileType.Classpath) {};
+        });
+    }
+
+    @Override
+    public TiledMap load(String ruta) {
+        FileHandle archivo = resolve(ruta);
+        root = xml.parse(archivo);
+        return loadTiledMap(archivo, new Parameters(), nombre -> new TextureRegion());
+    }
+
+    @Override
+    protected void addStaticTiles(FileHandle archivo, ImageResolver imagenes, TiledMapTileSet tiles,
+        Element elemento, Array<Element> elementos, String nombre, int primerId, int ancho, int alto,
+        int separacion, int margen, int offsetX, int offsetY, String fuente, int anchoImagen,
+        int altoImagen, FileHandle imagen) {
+        int cantidad = elemento.getIntAttribute("tilecount", 0);
+        if (cantidad == 0 && imagen != null) {
+            cantidad = ((anchoImagen - 2 * margen + separacion) / (ancho + separacion))
+                * ((altoImagen - 2 * margen + separacion) / (alto + separacion));
+        }
+        for (int i = 0; i < cantidad; i++) {
+            // Solo importan las medidas para interpretar los objetos del tileset.
+            TextureRegion region = new TextureRegion() {
+                @Override public int getRegionWidth() { return ancho; }
+                @Override public int getRegionHeight() { return alto; }
+            };
+            addStaticTiledMapTile(tiles, region, primerId + i, offsetX, offsetY);
+        }
+    }
 }
 .
 .
@@ -932,13 +1293,17 @@ public class Nivel {
     private final float altoPx;
 
     public Nivel(String ruta) {
+        this(ruta, false);
+    }
+
+    public Nivel(String ruta, boolean servidor) {
         TmxMapLoader.Parameters parametros = new TmxMapLoader.Parameters();
         if (PIXEL_ART) {
             parametros.generateMipMaps = false;
             parametros.textureMinFilter = Texture.TextureFilter.Nearest;
             parametros.textureMagFilter = Texture.TextureFilter.Nearest;
         }
-        mapa = new TmxMapLoader().load(ruta, parametros);
+        mapa = servidor ? new CargadorMapaServidor().load(ruta) : new TmxMapLoader().load(ruta, parametros);
 
         MapProperties props = mapa.getProperties();
         int tileAncho = props.get("tilewidth", Integer.class);
@@ -959,7 +1324,7 @@ public class Nivel {
 
         colisiones = new GestorColisiones(mapa, tileAncho, ESCALA);
 
-        if (DEBUG_OBJETOS) {
+        if (DEBUG_OBJETOS && Gdx.app != null) {
             logObjetos();
         }
     }
@@ -989,7 +1354,7 @@ public class Nivel {
             Rectangle r = rectanguloDe(obj);
             if (r != null) return r;
         }
-        if (DEBUG_OBJETOS) {
+        if (DEBUG_OBJETOS && Gdx.app != null) {
             Gdx.app.log("NIVEL", "NO se encontro el objeto '" + tipo + "' (revisa name/type en Tiled)");
         }
         return null;
@@ -1068,14 +1433,17 @@ ARCHIVO: C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\j
 package com.capuccinolovesballerina.game.objetos;
 
 import com.badlogic.gdx.math.Rectangle;
+import com.capuccinolovesballerina.game.Utilidades.Constantes;
 
 public class BloqueEspuma {
 
     private final Rectangle zona;
+    private final float vidaInicial;
     private float vida;
 
     public BloqueEspuma(float x, float y, float ancho, float alto, float vida) {
         this.zona = new Rectangle(x, y, ancho, alto);
+        this.vidaInicial = vida;
         this.vida = vida;
     }
 
@@ -1087,13 +1455,32 @@ public class BloqueEspuma {
         return vida > 0f;
     }
 
+    public float getVidaRestante() { return vida; }
+
+    /** El cliente muestra el reloj de la espuma que decide el servidor. */
+    public void aplicarVidaRemota(float restante) { vida = Math.max(0f, Math.min(vidaInicial, restante)); }
+
     public Rectangle getZona() {
         return zona;
     }
 
+    // El reloj pertenece al bloque: cada espuma nueva empieza en el primer frame.
+    public int getIndiceFrame() {
+        float transcurrido = Math.max(0f, vidaInicial - vida);
+        if (vida <= Constantes.DURACION_DISOLUCION_ESPUMA) {
+            float disolucion = Constantes.DURACION_DISOLUCION_ESPUMA - vida;
+            return 6 + Math.min(1, (int) (disolucion / (Constantes.DURACION_DISOLUCION_ESPUMA / 2f)));
+        }
+        if (transcurrido < Constantes.DURACION_FORMACION_ESPUMA) {
+            return Math.min(3, (int) (transcurrido / (Constantes.DURACION_FORMACION_ESPUMA / 4f)));
+        }
+        float activo = transcurrido - Constantes.DURACION_FORMACION_ESPUMA;
+        return 4 + (int) (activo / Constantes.DURACION_FRAME_ACTIVO_ESPUMA) % 2;
+    }
+
     //alpha es la opacidad, cosa de que se vaya desvaneciendo poco a poco. queda prime confien
     public float getAlpha() {
-        float fade = 0.5f;
+        float fade = Constantes.DURACION_DISOLUCION_ESPUMA;
         if (vida >= fade) return 1f;
         return Math.max(0f, vida / fade);
     }
@@ -1371,6 +1758,11 @@ public class HUD {
             ultimoSegundo = segundo;
             labelTiempo.setText(formatear(segundo));
         }
+    }
+
+    public void setTiempoRemoto(float segundos) {
+        tiempo = segundos;
+        actualizar(0f);
     }
 
     private String formatear(int totalSegundos) {
@@ -1844,8 +2236,17 @@ import com.capuccinolovesballerina.game.Utilidades.*;
 import com.capuccinolovesballerina.game.entidades.BallerinaCapuccina;
 import com.capuccinolovesballerina.game.entidades.CapuccinoAssassino;
 import com.capuccinolovesballerina.game.graficos.AnimacionesCappuccino;
+import com.capuccinolovesballerina.game.graficos.AnimacionesBallerina;
 import com.capuccinolovesballerina.game.mapa.Nivel;
 import com.capuccinolovesballerina.game.objetos.ElementosNivel;
+import com.capuccinolovesballerina.game.red.Cliente;
+import com.capuccinolovesballerina.game.red.ProtocolosRed.*;
+import com.capuccinolovesballerina.game.red.ProtocolosRed;
+import com.capuccinolovesballerina.game.objetos.Palanca;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
 public class PantallaJuego implements Screen {
 
@@ -1865,13 +2266,26 @@ public class PantallaJuego implements Screen {
     private ControladorEntradaJugador controladorEntrada;
     private CapuccinoAssassino cappuccino;
     private BallerinaCapuccina ballerina;
-    private AnimacionesCappuccino animaciones;
+    private AnimacionesCappuccino animacionesCappuccino;
+    private AnimacionesBallerina animacionesBallerina;
 
     private ControladorPartida controladorPartida;
     private RenderizadorJuego renderizadorJuego;
+    private Cliente clienteRed;
+    private long ultimaFoto = -1;
+    private long rondaRed = -1, espumaRed, habilidadCap, habilidadBal;
+    private Stage interfazRed;
+    private Label estadoRed;
+    private TextButton volverRed;
+    private boolean liberado;
 
     public PantallaJuego(Game juego) {
         this.juego = juego;
+    }
+
+    public PantallaJuego(Game juego, Cliente cliente) {
+        this(juego);
+        clienteRed = cliente;
     }
 
     @Override
@@ -1884,12 +2298,16 @@ public class PantallaJuego implements Screen {
         elementos = new ElementosNivel(nivel);
 
         menuPausa = new MenuPausa(juego);
-        menuGameOver = new MenuGameOver(juego, () -> controladorPartida.reiniciar());
+        menuGameOver = new MenuGameOver(juego, () -> {
+            if (clienteRed == null) controladorPartida.reiniciar();
+            else clienteRed.enviarReinicio();
+        });
         menuVictoria = new MenuVictoria(juego);
         hud = new HUD();
 
         controladorEntrada = new ControladorEntradaJugador();
-        animaciones = new AnimacionesCappuccino();
+        animacionesCappuccino = new AnimacionesCappuccino();
+        animacionesBallerina = new AnimacionesBallerina();
 
         cappuccino = new CapuccinoAssassino(elementos.getSpawnX(), elementos.getSpawnY());
         ballerina = new BallerinaCapuccina(elementos.getSpawnBallerinaX(), elementos.getSpawnBallerinaY());
@@ -1901,13 +2319,33 @@ public class PantallaJuego implements Screen {
 
         controladorPartida = new ControladorPartida(
             nivel, elementos, menuPausa, menuGameOver, menuVictoria,
-            hud, controladorEntrada, cappuccino, ballerina, animaciones
+            hud, controladorEntrada, cappuccino, ballerina,
+            animacionesCappuccino, animacionesBallerina
         );
 
         renderizadorJuego = new RenderizadorJuego(
-            camera, nivel, cappuccino, ballerina, animaciones,
+            camera, nivel, cappuccino, ballerina,
+            animacionesCappuccino, animacionesBallerina,
             elementos, hud, menuPausa, menuGameOver, menuVictoria
         );
+
+        if (clienteRed != null) {
+            interfazRed = new Stage(FabricaViewport.crear());
+            estadoRed = new Label("", Recursos.getSkin());
+            volverRed = new TextButton("VOLVER AL MENU", Recursos.getSkin());
+            volverRed.addListener(new ClickListener() {
+                @Override public void clicked(InputEvent event, float x, float y) {
+                    juego.setScreen(new PantallaMenu(juego));
+                }
+            });
+            Table tabla = new Table();
+            tabla.setFillParent(true);
+            tabla.top().left();
+            tabla.add(estadoRed).pad(8).row();
+            tabla.add(volverRed).size(250, 45).pad(8);
+            interfazRed.addActor(tabla);
+            volverRed.setVisible(false);
+        }
 
         Audio.reproducirMusica("sonidos/musica_juego.mp3");
     }
@@ -1915,8 +2353,92 @@ public class PantallaJuego implements Screen {
     @Override
     public void render(float delta) {
         float dt = Math.min(delta, 1f / 30f);
-        controladorPartida.actualizar(dt);
-        renderizadorJuego.dibujar();
+        if (clienteRed == null) controladorPartida.actualizar(dt);
+        else actualizarRed(dt);
+        renderizadorJuego.dibujar(delta);
+        if (interfazRed != null) { interfazRed.act(delta); interfazRed.draw(); }
+    }
+
+    private void actualizarRed(float delta) {
+        EstadoPartida foto = clienteRed.getEstadoPartida();
+        if (clienteRed.termino()) {
+            estadoRed.setText(clienteRed.getEstadoConexion());
+            volverRed.setVisible(true);
+            controladorEntrada.soltarTodo();
+            Gdx.input.setInputProcessor(interfazRed);
+            return;
+        }
+        estadoRed.setText((clienteRed.getMiRol() == 0 ? "Cappuccino" : "Ballerina") + " - "
+            + (foto != null && foto.fase().equals(ProtocolosRed.CUENTA) ? "Inicio en " + foto.cuenta() : clienteRed.getIpServer()));
+        if (foto != null && foto.secuencia() > ultimaFoto) {
+            if (foto.cortados().length() != elementos.getCortables().size) {
+                clienteRed.cerrar("El mapa no coincide con el servidor. Usen la misma version.");
+                return;
+            }
+            ultimaFoto = foto.secuencia();
+            if (rondaRed != foto.ronda()) {
+                rondaRed = foto.ronda();
+                controladorEntrada.soltarTodo();
+                menuGameOver.ocultar(); menuVictoria.ocultar(); menuPausa.ocultar();
+                animacionesCappuccino.reiniciar(); animacionesBallerina.reiniciar();
+            }
+            Jugador capRed = foto.cappuccino(), balRed = foto.ballerina();
+            cappuccino.setPosicionRemota(capRed.x(), capRed.y(), capRed.mirando(), capRed.suelo());
+            ballerina.setPosicionRemota(balRed.x(), balRed.y(), balRed.mirando(), balRed.suelo());
+            if (habilidadCap != capRed.habilidad()) {
+                habilidadCap = capRed.habilidad();
+                animacionesCappuccino.reiniciar();
+                animacionesCappuccino.setEstado(com.capuccinolovesballerina.game.graficos.Estado.ABILITY);
+            }
+            if (habilidadBal != balRed.habilidad()) {
+                habilidadBal = balRed.habilidad();
+                animacionesBallerina.reiniciar();
+                animacionesBallerina.setEstado(com.capuccinolovesballerina.game.graficos.Estado.ABILITY);
+            }
+            animacionesCappuccino.setEstado(capRed.animacion());
+            animacionesBallerina.setEstado(balRed.animacion());
+            aplicarPalanca(elementos.getPalancaCappuccino(), foto.palancaCap());
+            aplicarPalanca(elementos.getPalancaBallerina(), foto.palancaBal());
+            if (elementos.getPuerta() != null) elementos.getPuerta().setAbierta(foto.puerta());
+            for (int i = 0; i < elementos.getCortables().size; i++)
+                elementos.getCortables().get(i).setCortado(foto.cortados().charAt(i) == '1');
+            if (foto.espumaId() == 0 || foto.espumaVida() <= 0f) ballerina.reiniciarHabilidad();
+            else {
+                if (espumaRed != foto.espumaId() || ballerina.getEspuma() == null)
+                    ballerina.setEspumaRemota(foto.espumaX(), foto.espumaY());
+                ballerina.getEspuma().aplicarVidaRemota(foto.espumaVida());
+            }
+            espumaRed = foto.espumaId();
+            hud.setTiempoRemoto(foto.tiempo());
+            if (foto.fase().equals(ProtocolosRed.DERROTA) && !menuGameOver.estaVisible()) {
+                menuPausa.ocultar(); menuGameOver.mostrar();
+            }
+            if (foto.fase().equals(ProtocolosRed.VICTORIA) && !menuVictoria.estaVisible()) {
+                menuPausa.ocultar(); menuVictoria.mostrar();
+            }
+        }
+        if (controladorEntrada.isEscapePresionado() && !menuGameOver.estaVisible() && !menuVictoria.estaVisible()) {
+            if (menuPausa.estaVisible()) menuPausa.ocultar();
+            else { menuPausa.mostrar(); controladorEntrada.soltarTodo(); }
+        }
+        boolean puedeMover = foto != null && foto.fase().equals(ProtocolosRed.JUGANDO) && !menuPausa.estaVisible();
+        if (menuPausa.estaVisible()) menuPausa.actualizar(delta);
+        else if (menuGameOver.estaVisible()) menuGameOver.actualizar(delta);
+        else if (menuVictoria.estaVisible()) menuVictoria.actualizar(delta);
+        else Gdx.input.setInputProcessor(controladorEntrada);
+        boolean cap = clienteRed.getMiRol() == 0;
+        clienteRed.enviarControles(puedeMover && (cap ? controladorEntrada.isIzquierda() : controladorEntrada.isIzquierdaBallerina()),
+            puedeMover && (cap ? controladorEntrada.isDerecha() : controladorEntrada.isDerechaBallerina()),
+            puedeMover && (cap ? controladorEntrada.isSaltoPresionado() : controladorEntrada.isSaltoPresionadoBallerina()),
+            puedeMover && (cap ? controladorEntrada.isHabilidadPresionada() : controladorEntrada.isHabilidadPresionadaBallerina()),
+            puedeMover && (cap ? controladorEntrada.isInteractuarPresionado() : controladorEntrada.isInteractuarPresionadoBallerina()));
+        controladorEntrada.limpiarEventos();
+        animacionesCappuccino.actualizar(delta);
+        animacionesBallerina.actualizar(delta);
+    }
+
+    private void aplicarPalanca(Palanca palanca, boolean activada) {
+        if (palanca != null && palanca.estaActivada() != activada) palanca.alternar();
     }
 
     @Override
@@ -1926,17 +2448,23 @@ public class PantallaJuego implements Screen {
         menuGameOver.resize(width, height);
         menuVictoria.resize(width, height);
         hud.resize(width, height);
+        if (interfazRed != null) interfazRed.getViewport().update(width, height, true);
     }
 
     @Override
     public void dispose() {
+        if (liberado) return;
+        liberado = true;
+        if (clienteRed != null) clienteRed.cerrar();
         renderizadorJuego.dispose();
         nivel.dispose();
         menuPausa.dispose();
         menuGameOver.dispose();
         menuVictoria.dispose();
         hud.dispose();
-        animaciones.dispose();
+        animacionesCappuccino.dispose();
+        animacionesBallerina.dispose();
+        if (interfazRed != null) interfazRed.dispose();
     }
 
     @Override
@@ -1947,7 +2475,9 @@ public class PantallaJuego implements Screen {
 
     @Override
     public void hide() {
+        if (clienteRed != null) clienteRed.cerrar();
         Gdx.input.setInputProcessor(null);
+        dispose();
     }
 }
 .
@@ -1967,6 +2497,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.Game;
@@ -1990,6 +2521,9 @@ public class PantallaMenu implements Screen {
     private final Game juego;
 
     private Cliente clienteRed;
+    private TextField ipManual;
+    private boolean transferido;
+    private boolean liberado;
 
     public PantallaMenu(Game juego) {
         this.juego = juego;
@@ -2015,6 +2549,8 @@ public class PantallaMenu implements Screen {
         botonControles = new TextButton("CONTROLES", skin);
         botonSalir = new TextButton("SALIR", skin);
         estadoRed = new Label("", skin);
+        ipManual = new TextField("", skin);
+        ipManual.setMessageText("IP del servidor (vacio = buscar en LAN)");
     }
 
     private void agregarBotones() {
@@ -2023,7 +2559,8 @@ public class PantallaMenu implements Screen {
         tabla.setFillParent(true);
         tabla.bottom();
 
-        tabla.add(estadoRed).size(400, 30).pad(5).row();
+        tabla.add(estadoRed).size(750, 30).pad(5).row();
+        tabla.add(ipManual).size(420, 35).pad(5).row();
         tabla.add(botonJugar).size(200, 60).pad(10).row();
         tabla.add(botonJugarRed).size(200, 60).pad(10).row();
         tabla.add(botonOpciones).size(200, 60).pad(10).row();
@@ -2046,7 +2583,7 @@ public class PantallaMenu implements Screen {
         botonJugarRed.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                buscarServidor();
+                if (!botonJugarRed.isDisabled()) buscarServidor();
             }
         });
 
@@ -2073,33 +2610,10 @@ public class PantallaMenu implements Screen {
     }
 
     private void buscarServidor() {
+        if (clienteRed != null) clienteRed.cerrar();
+        clienteRed = new Cliente();
+        clienteRed.conectar(ipManual.getText());
         botonJugarRed.setDisabled(true);
-        estadoRed.setText("Buscando servidor en la red...");
-        final PantallaMenu self = this;
-        Thread hilo = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Cliente c = new Cliente();
-                final boolean ok = c.conectar();
-                final int rol = c.getMiRol();
-                final String ip = c.getIpServer();
-                Gdx.app.postRunnable(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (ok) {
-                            clienteRed = c;
-                            String nombre = (rol == 0) ? "Cappuccino" : "Ballerina";
-                            estadoRed.setText("Conectado a " + ip + " como " + nombre);
-                        } else {
-                            c.cerrar();
-                            estadoRed.setText("No se encontro servidor. Levantá Servidor.main");
-                        }
-                        botonJugarRed.setDisabled(false);
-                    }
-                });
-            }
-        });
-        hilo.start();
     }
 
     public Cliente getClienteRed() {
@@ -2108,6 +2622,18 @@ public class PantallaMenu implements Screen {
 
     @Override
     public void render(float delta) {
+        if (clienteRed != null) {
+            String personaje = clienteRed.getMiRol() < 0 ? "" : clienteRed.getMiRol() == 0 ? "Cappuccino - " : "Ballerina - ";
+            estadoRed.setText(personaje + clienteRed.getEstadoConexion()
+                + (clienteRed.getIpServer().isEmpty() ? "" : " (" + clienteRed.getIpServer() + ")"));
+            botonJugarRed.setDisabled(!clienteRed.termino());
+            var foto = clienteRed.getEstadoPartida();
+            if (!clienteRed.termino() && foto != null && foto.fase().equals(com.capuccinolovesballerina.game.red.ProtocolosRed.JUGANDO)) {
+                transferido = true;
+                juego.setScreen(new PantallaJuego(juego, clienteRed));
+                return;
+            }
+        }
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
         stage.act(delta);
         stage.draw();
@@ -2128,10 +2654,15 @@ public class PantallaMenu implements Screen {
 
     @Override
     public void hide() {
+        if (!transferido && clienteRed != null) clienteRed.cerrar();
+        dispose();
     }
 
     @Override
     public void dispose() {
+        if (liberado) return;
+        liberado = true;
+        if (!transferido && clienteRed != null) clienteRed.cerrar();
         stage.dispose();
     }
 }
@@ -2443,171 +2974,115 @@ ARCHIVO: C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\j
 package com.capuccinolovesballerina.game.red;
 
 import com.capuccinolovesballerina.game.red.hilos.HiloCliente;
+import com.capuccinolovesballerina.game.red.ProtocolosRed.*;
 
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.util.ArrayList;
-import java.util.List;
+/** Fachada para las pantallas. Los metodos no esperan respuestas ni bloquean el render. */
+public class Cliente implements AutoCloseable {
+    private HiloCliente hilo;
+    private long saltos, habilidades, interacciones, reinicios;
+    public void conectar() { conectar(""); }
+    public void conectar(String ipManual) {
+        cerrar();
+        saltos = habilidades = interacciones = reinicios = 0;
+        hilo = new HiloCliente(ipManual);
+        hilo.start();
+    }
+    public void enviarControles(boolean izquierda, boolean derecha, boolean salto, boolean habilidad, boolean interactuar) {
+        if (hilo == null) return;
+        if (salto) saltos++;
+        if (habilidad) habilidades++;
+        if (interactuar) interacciones++;
+        hilo.controles(new Controles(izquierda, derecha, saltos, habilidades, interacciones));
+    }
+    public void enviarReinicio() { if (hilo != null) hilo.reiniciar(++reinicios); }
+    public EstadoPartida getEstadoPartida() { return hilo == null ? null : hilo.getFoto(); }
+    public int getMiRol() { return hilo == null ? -1 : hilo.getRol(); }
+    public String getIpServer() { return hilo == null ? "" : hilo.getIpServidor(); }
+    public String getEstadoConexion() { return hilo == null ? "Sin conexion" : hilo.getEstado(); }
+    public boolean termino() { return hilo == null || hilo.terminado(); }
+    public void cerrar() { if (hilo != null) hilo.detener(); }
+    public void cerrar(String motivo) { if (hilo != null) hilo.detener(motivo); }
+    @Override public void close() { cerrar(); }
+}
+.
+.
+============================================================
+ARCHIVO: C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\red\ProtocolosRed.java
+============================================================
+.
+package com.capuccinolovesballerina.game.red;
 
-public class Cliente {
+import com.capuccinolovesballerina.game.graficos.Estado;
+import java.nio.charset.StandardCharsets;
 
-    private static final int PUERTO_DESCUBRIMIENTO = 9993;
-    private static final int TIMEOUT_DESCUBRIMIENTO = 2000;
-    private static final int TIMEOUT_ROL = 3000;
-
-    private HiloCliente hc;
-    private int miRol = -1;
-    private String ipServer;
-    private int puertoServer;
-
-    private final List<String> pendientes = new ArrayList<>();
-
-    public boolean conectar() {
-        if (!descubrirServidor()) {
-            return false;
+/** Protocolo de texto UTF-8. Separador de campos: |. Dentro de un jugador: coma. */
+public final class ProtocolosRed {
+    private ProtocolosRed() {}
+    public static final int PUERTO = 9992, MAX_PAQUETE = 1400;
+    public static final long TIMEOUT_MS = 5000, BUSQUEDA_MS = 10000;
+    public static final String CONEXION = "CONEXION", OK = "OK", ASIGNADO = "ASIGNADO";
+    public static final String REGISTRO = "REGISTRO", LISTO = "LISTO", PONG = "PONG";
+    public static final String LLENO = "LLENO", CONTROLES = "CONTROLES", ESTADO = "ESTADO";
+    public static final String PING = "PING", SALIR = "SALIR", DESCONECTADO = "DESCONECTADO", REINICIO = "REINICIO";
+    public static final String ESPERA = "ESPERA", CUENTA = "CUENTA", JUGANDO = "JUGANDO", DERROTA = "DERROTA", VICTORIA = "VICTORIA";
+    public static final String MAPA = "mapas/NIVEL 0.tmx";
+    public static byte[] bytes(String mensaje) { return mensaje.getBytes(StandardCharsets.UTF_8); }
+    public static String[] partes(String mensaje) { return mensaje.split("\\|", -1); }
+    public static int bit(boolean valor) { return valor ? 1 : 0; }
+    public static boolean booleano(String valor) {
+        if (!valor.equals("0") && !valor.equals("1")) throw new IllegalArgumentException("Booleano invalido");
+        return valor.equals("1");
+    }
+    public static long natural(String valor) {
+        long numero = Long.parseLong(valor);
+        if (numero < 0) throw new IllegalArgumentException("Numero negativo");
+        return numero;
+    }
+    public static float numero(String valor) {
+        float numero = Float.parseFloat(valor);
+        if (!Float.isFinite(numero) || Math.abs(numero) > 1_000_000f) throw new IllegalArgumentException("Numero invalido");
+        return numero;
+    }
+    // Los contadores acumulados repiten los eventos perdidos y evitan ejecutarlos dos veces.
+    public record Controles(boolean izquierda, boolean derecha, long salto, long habilidad, long interactuar) {
+        public static final Controles VACIOS = new Controles(false, false, 0, 0, 0);
+        public String mensaje(String sesion, long ronda, long secuencia) {
+            return CONTROLES + "|" + sesion + "|" + ronda + "|" + secuencia + "|" + bit(izquierda)
+                + "|" + bit(derecha) + "|" + salto + "|" + habilidad + "|" + interactuar;
         }
-        hc = new HiloCliente(ipServer, puertoServer);
-        hc.start();
-        hc.enviarMensaje("JOIN");
-        return esperarRol();
-    }
-
-    private boolean descubrirServidor() {
-        DatagramSocket socket = null;
-        try {
-            socket = new DatagramSocket();
-            socket.setBroadcast(true);
-            socket.setSoTimeout(TIMEOUT_DESCUBRIMIENTO);
-
-            byte[] pedido = "DISCOVER".getBytes();
-            InetAddress broadcast = InetAddress.getByName("255.255.255.255");
-            DatagramPacket dpOut = new DatagramPacket(pedido, pedido.length, broadcast, PUERTO_DESCUBRIMIENTO);
-            socket.send(dpOut);
-
-            byte[] buffer = new byte[64];
-            DatagramPacket dpIn = new DatagramPacket(buffer, buffer.length);
-            socket.receive(dpIn);
-
-            String msg = new String(dpIn.getData(), 0, dpIn.getLength());
-            String[] partes = msg.split("\\|", -1);
-            if (partes.length < 2 || !"SERVER".equals(partes[0])) {
-                return false;
-            }
-            ipServer = dpIn.getAddress().getHostAddress();
-            puertoServer = Integer.parseInt(partes[1]);
-            return true;
-        } catch (Exception e) {
-            return false;
-        } finally {
-            if (socket != null && !socket.isClosed()) {
-                socket.close();
-            }
-        }
-    }
-
-    private boolean esperarRol() {
-        long inicio = System.currentTimeMillis();
-        while (miRol == -1) {
-            for (String m : hc.drenar()) {
-                String[] p = m.split("\\|", -1);
-                if (p.length >= 2 && "ROL".equals(p[0])) {
-                    miRol = Integer.parseInt(p[1]);
-                } else {
-                    pendientes.add(m);
-                }
-            }
-            if (miRol != -1) {
-                return true;
-            }
-            if (System.currentTimeMillis() - inicio > TIMEOUT_ROL) {
-                return false;
-            }
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public void enviarPosicion(float x, float y, boolean mirando, boolean enSuelo) {
-        if (hc == null) return;
-        hc.enviarMensaje("POS|" + x + "|" + y + "|" + mirando + "|" + enSuelo);
-    }
-
-    public void enviarCorte(int indice) {
-        if (hc == null) return;
-        hc.enviarMensaje("CORTE|" + indice);
-    }
-
-    public void enviarEspuma(float x, float y) {
-        if (hc == null) return;
-        hc.enviarMensaje("ESPUMA|" + x + "|" + y);
-    }
-
-    public void enviarPalanca() {
-        if (hc == null) return;
-        hc.enviarMensaje("PALANCA");
-    }
-
-    public void enviarSalida(boolean dentro) {
-        if (hc == null) return;
-        hc.enviarMensaje("SALIDA|" + dentro);
-    }
-
-    public void enviarMuerte() {
-        if (hc == null) return;
-        hc.enviarMensaje("MUERTE");
-    }
-
-    public void enviarReinicio() {
-        if (hc == null) return;
-        hc.enviarMensaje("REINICIO");
-    }
-
-    public List<String> drenarMensajes() {
-        List<String> out = new ArrayList<>();
-        out.addAll(pendientes);
-        pendientes.clear();
-        if (hc != null) {
-            out.addAll(hc.drenar());
-        }
-        return out;
-    }
-
-    public int getMiRol() {
-        return miRol;
-    }
-
-    public String getIpServer() {
-        return ipServer;
-    }
-
-    public void cerrar() {
-        if (hc != null) {
-            hc.detener();
+        public static Controles leer(String[] p) {
+            if (p.length != 9) throw new IllegalArgumentException("Controles incompletos");
+            return new Controles(booleano(p[4]), booleano(p[5]), natural(p[6]), natural(p[7]), natural(p[8]));
         }
     }
-
-    public static void main(String[] args) {
-        Cliente c = new Cliente();
-        if (c.conectar()) {
-            System.out.println("conectado como rol " + c.getMiRol() + " a " + c.getIpServer());
-            c.enviarPosicion(100f, 200f, true, true);
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            for (String m : c.drenarMensajes()) {
-                System.out.println("recibi: " + m);
-            }
-        } else {
-            System.out.println("no se encontro servidor");
+    public record Jugador(float x, float y, boolean mirando, boolean suelo, Estado animacion, long habilidad) {
+        public String texto() { return x + "," + y + "," + bit(mirando) + "," + bit(suelo) + "," + animacion + "," + habilidad; }
+        public static Jugador leer(String texto) {
+            String[] p = texto.split(",", -1);
+            if (p.length != 6) throw new IllegalArgumentException("Jugador incompleto");
+            return new Jugador(numero(p[0]), numero(p[1]), booleano(p[2]), booleano(p[3]), Estado.valueOf(p[4]), natural(p[5]));
         }
-        c.cerrar();
+    }
+    /** Foto completa e inmutable: pasa del hilo de red al grafico. */
+    public record EstadoPartida(long secuencia, long ronda, String fase, int cuenta, float tiempo,
+        Jugador cappuccino, Jugador ballerina, boolean palancaCap, boolean palancaBal, boolean puerta,
+        String cortados, long espumaId, float espumaX, float espumaY, float espumaVida) {
+        public String mensaje(String sesion) {
+            return ESTADO + "|" + sesion + "|" + secuencia + "|" + ronda + "|" + fase + "|" + cuenta + "|" + tiempo
+                + "|" + cappuccino.texto() + "|" + ballerina.texto() + "|" + bit(palancaCap) + "|" + bit(palancaBal)
+                + "|" + bit(puerta) + "|" + cortados + "|" + espumaId + "|" + espumaX + "|" + espumaY + "|" + espumaVida;
+        }
+        public static EstadoPartida leer(String[] p) {
+            if (p.length != 17) throw new IllegalArgumentException("Estado incompleto");
+            if (!java.util.Set.of(ESPERA, CUENTA, JUGANDO, DERROTA, VICTORIA).contains(p[4])) throw new IllegalArgumentException("Fase invalida");
+            int cuenta = Integer.parseInt(p[5]);
+            float tiempo = numero(p[6]), vida = numero(p[16]);
+            if (cuenta < 0 || cuenta > 5 || tiempo < 0 || vida < 0 || vida > 4f || !p[12].matches("[01]*"))
+                throw new IllegalArgumentException("Estado invalido");
+            return new EstadoPartida(natural(p[2]), natural(p[3]), p[4], cuenta, tiempo,
+                Jugador.leer(p[7]), Jugador.leer(p[8]), booleano(p[9]), booleano(p[10]), booleano(p[11]),
+                p[12], natural(p[13]), numero(p[14]), numero(p[15]), vida);
+        }
     }
 }
 .
@@ -2618,22 +3093,213 @@ ARCHIVO: C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\j
 .
 package com.capuccinolovesballerina.game.red;
 
-import com.capuccinolovesballerina.game.red.hilos.HiloDescubrimiento;
+import com.capuccinolovesballerina.game.Utilidades.*;
+import com.capuccinolovesballerina.game.entidades.*;
+import com.capuccinolovesballerina.game.mapa.Nivel;
+import com.capuccinolovesballerina.game.objetos.*;
 import com.capuccinolovesballerina.game.red.hilos.HiloServidor;
+import java.net.*;
+import java.util.UUID;
+import java.util.concurrent.locks.LockSupport;
+import static com.capuccinolovesballerina.game.red.ProtocolosRed.*;
 
-public class Servidor {
-
-    static HiloServidor hs;
-    static HiloDescubrimiento hd;
-
-    public static void main(String[] args) {
-        hs = new HiloServidor();
-        hs.start();
-        hd = new HiloDescubrimiento();
-        hd.start();
-        System.out.println("Servidor de juego escuchando en puerto 9992");
-        System.out.println("Servidor de descubrimiento escuchando en puerto 9993");
+/** Autoridad sobre la partida: recibe controles y ejecuta las reglas originales. */
+public class Servidor implements AutoCloseable {
+    private static class Conexion {
+        final InetSocketAddress destino;
+        final String sesion = UUID.randomUUID().toString();
+        long ultimoMensaje = System.nanoTime(), ultimoControl, ultimaSecuencia = -1, reinicio = -1;
+        Controles controles = Controles.VACIOS;
+        boolean listo;
+        Conexion(InetSocketAddress destino) { this.destino = destino; }
     }
+    private final HiloServidor red;
+    private final Conexion[] clientes = new Conexion[2];
+    private final Nivel nivel;
+    private final ElementosNivel elementos;
+    private final ControladorEntradaJugador entrada = new ControladorEntradaJugador();
+    private final CapuccinoAssassino cappuccino;
+    private final BallerinaCapuccina ballerina;
+    private final ControladorPartida partida;
+    private volatile boolean cerrado;
+    private String fase = ESPERA;
+    private long finCuenta, ronda, secuencia, espumaId;
+    private BloqueEspuma ultimaEspuma;
+    private float tiempo;
+
+    public Servidor() throws SocketException {
+        nivel = new Nivel(MAPA, true);
+        elementos = new ElementosNivel(nivel);
+        cappuccino = new CapuccinoAssassino(elementos.getSpawnX(), elementos.getSpawnY());
+        ballerina = new BallerinaCapuccina(elementos.getSpawnBallerinaX(), elementos.getSpawnBallerinaY());
+        partida = new ControladorPartida(nivel, elementos, entrada, cappuccino, ballerina);
+        red = new HiloServidor();
+    }
+    public static void main(String[] args) throws Exception {
+        try {
+            Servidor servidor = new Servidor();
+            Runtime.getRuntime().addShutdownHook(new Thread(servidor::close));
+            try (servidor) { servidor.ejecutar(); }
+        } catch (BindException error) {
+            System.err.println("[RED] No se pudo abrir UDP " + PUERTO + ": ya hay otro servidor o prueba usando el puerto.");
+            System.exit(1);
+        }
+    }
+    public void ejecutar() {
+        red.start();
+        System.out.println("[RED] Servidor UDP en 0.0.0.0:" + PUERTO + ". Esperando dos jugadores.");
+        System.out.println("[RED] Usar la IP Ethernet de esta PC para conexion manual. Ctrl+C para cerrar.");
+        mostrarDirecciones();
+        long siguienteTick = System.nanoTime(), ultimoEstado = 0;
+        int ultimaCuenta = -1;
+        while (!cerrado) {
+            HiloServidor.Recibido recibido;
+            int leidos = 0;
+            while (leidos++ < 512 && (recibido = red.siguiente()) != null) procesar(recibido);
+            long ahora = System.nanoTime();
+            for (Conexion cliente : clientes) {
+                if (cliente != null && ahora - cliente.ultimoMensaje > TIMEOUT_MS * 1_000_000L) {
+                    desconectar("Un jugador perdio la conexion");
+                    break;
+                }
+            }
+            if (fase.equals(CUENTA)) {
+                int cuenta = cuenta(ahora);
+                if (cuenta != ultimaCuenta) { System.out.println("[RED] Inicio en " + cuenta); ultimaCuenta = cuenta; }
+                if (ahora >= finCuenta) { fase = JUGANDO; System.out.println("[RED] INICIO de ronda " + ronda); }
+            }
+            if (ahora >= siguienteTick) {
+                if (fase.equals(JUGANDO)) {
+                    for (int rol = 0; rol < 2; rol++) {
+                        Conexion c = clientes[rol];
+                        if (c != null && ahora - c.ultimoControl > 350_000_000L)
+                            entrada.aplicarControlesRed(rol, false, false, false, false, false);
+                    }
+                    // Mismo Player y ControladorPartida, con un paso fijo de 60 Hz.
+                    partida.actualizar(1f / 60f);
+                    tiempo += 1f / 60f;
+                    if (partida.estaDerrotada()) { fase = DERROTA; System.out.println("[PARTIDA] Derrota"); }
+                    if (partida.hayVictoria()) { fase = VICTORIA; System.out.println("[PARTIDA] Victoria cooperativa"); }
+                }
+                siguienteTick += 1_000_000_000L / 60;
+                if (ahora - siguienteTick > 250_000_000L) siguienteTick = ahora;
+            }
+            if (ahora - ultimoEstado >= 50_000_000L) { enviarEstado(ahora); ultimoEstado = ahora; }
+            LockSupport.parkNanos(1_000_000L);
+        }
+        nivel.dispose();
+    }
+    private void procesar(HiloServidor.Recibido recibido) {
+        String[] p = partes(recibido.mensaje());
+        InetSocketAddress origen = recibido.origen();
+        try {
+            if (p.length == 1 && p[0].equals(CONEXION)) {
+                // Descubrir no ocupa un cupo: el mismo equipo puede emitir por varias interfaces.
+                red.enviar(origen, OK);
+                System.out.println("[RED] CONEXION desde " + origen + ": OK enviado, esperando REGISTRO directo.");
+                return;
+            }
+            if (p.length == 1 && p[0].equals(REGISTRO)) { conectar(origen); return; }
+            int rol = buscar(origen);
+            if (rol < 0 || p.length < 2 || !clientes[rol].sesion.equals(p[1])) return;
+            Conexion c = clientes[rol];
+            if (p[0].equals(LISTO) && p.length == 2) {
+                if (!c.listo) System.out.println("[RED] " + origen + " confirmo su personaje (LISTO).");
+                c.listo = true;
+                if (fase.equals(ESPERA) && clientes[0] != null && clientes[1] != null
+                    && clientes[0].listo && clientes[1].listo) comenzarCuenta();
+            } else if (p[0].equals(CONTROLES)) {
+                Controles controles = Controles.leer(p);
+                long rondaRecibida = natural(p[2]), numero = natural(p[3]);
+                if (numero <= c.ultimaSecuencia || rondaRecibida != ronda) return;
+                if (controles.salto() < c.controles.salto() || controles.habilidad() < c.controles.habilidad()
+                    || controles.interactuar() < c.controles.interactuar()) return;
+                if (fase.equals(JUGANDO)) {
+                    entrada.aplicarControlesRed(rol, controles.izquierda(), controles.derecha(),
+                        controles.salto() > c.controles.salto(), controles.habilidad() > c.controles.habilidad(),
+                        controles.interactuar() > c.controles.interactuar());
+                }
+                c.controles = controles;
+                c.ultimaSecuencia = numero;
+                c.ultimoControl = System.nanoTime();
+            } else if (p[0].equals(REINICIO) && p.length == 4) {
+                long rondaRecibida = natural(p[2]), numero = natural(p[3]);
+                if (rondaRecibida != ronda || numero <= c.reinicio) return;
+                c.reinicio = numero;
+                if (fase.equals(DERROTA) || fase.equals(VICTORIA)) comenzarCuenta();
+            } else if (p[0].equals(SALIR) && p.length == 2) {
+                desconectar("El otro jugador salio de la partida"); return;
+            } else if (p[0].equals(PING) && p.length == 2) {
+                // Equivale a ESTAS_AHI / ESTOY_ACA en SpeedG2L.
+                red.enviar(origen, PONG + "|" + c.sesion);
+            } else return;
+            c.ultimoMensaje = System.nanoTime();
+        } catch (IllegalArgumentException error) {
+            // Los paquetes incompletos o incorrectos se descartan, sin tocar el hilo grafico.
+        }
+    }
+    private int buscar(InetSocketAddress origen) {
+        for (int i = 0; i < 2; i++) if (clientes[i] != null && clientes[i].destino.equals(origen)) return i;
+        return -1;
+    }
+    private void conectar(InetSocketAddress origen) {
+        int rol = buscar(origen);
+        if (rol < 0) {
+            rol = clientes[0] == null ? 0 : clientes[1] == null ? 1 : -1;
+            if (rol < 0) { red.enviar(origen, LLENO); return; }
+            clientes[rol] = new Conexion(origen);
+            System.out.println("[RED] " + origen + " registrado como " + (rol == 0 ? "Cappuccino" : "Ballerina"));
+        }
+        Conexion cliente = clientes[rol];
+        cliente.ultimoMensaje = System.nanoTime();
+        red.enviar(origen, ASIGNADO + "|" + cliente.sesion + "|" + rol);
+        System.out.println("[RED] REGISTRO desde " + origen + ": ASIGNADO enviado.");
+    }
+    private void comenzarCuenta() {
+        partida.reiniciar(); tiempo = 0; ronda++;
+        fase = CUENTA;
+        finCuenta = System.nanoTime() + 5_000_000_000L;
+        System.out.println("[RED] Dos jugadores listos. Cuenta regresiva de cinco segundos, ronda " + ronda);
+    }
+    private int cuenta(long ahora) { return fase.equals(CUENTA) ? Math.max(0, (int) Math.ceil((finCuenta - ahora) / 1e9)) : 0; }
+    private void enviarEstado(long ahora) {
+        BloqueEspuma espuma = ballerina.getEspuma();
+        if (espuma != null && espuma != ultimaEspuma) espumaId++;
+        ultimaEspuma = espuma;
+        StringBuilder cortados = new StringBuilder();
+        for (ObjetoCortable objeto : elementos.getCortables()) cortados.append(bit(objeto.estaCortado()));
+        EstadoPartida estado = new EstadoPartida(++secuencia, ronda, fase, cuenta(ahora), tiempo,
+            jugador(cappuccino, 0), jugador(ballerina, 1), activada(elementos.getPalancaCappuccino()),
+            activada(elementos.getPalancaBallerina()), elementos.getPuerta() != null && elementos.getPuerta().estaAbierta(),
+            cortados.toString(), espuma == null ? 0 : espumaId,
+            espuma == null ? 0 : espuma.getZona().x, espuma == null ? 0 : espuma.getZona().y,
+            espuma == null ? 0 : espuma.getVidaRestante());
+        for (Conexion c : clientes) if (c != null) red.enviar(c.destino, estado.mensaje(c.sesion));
+    }
+    private Jugador jugador(Player jugador, int rol) {
+        return new Jugador(jugador.getX(), jugador.getY(), jugador.isMirandoDerecha(), jugador.isEnSuelo(),
+            partida.getEstado(rol), clientes[rol] == null ? 0 : clientes[rol].controles.habilidad());
+    }
+    private boolean activada(Palanca palanca) { return palanca != null && palanca.estaActivada(); }
+    private void mostrarDirecciones() {
+        try {
+            var interfaces = NetworkInterface.getNetworkInterfaces();
+            while (interfaces.hasMoreElements()) {
+                NetworkInterface interfaz = interfaces.nextElement();
+                if (!interfaz.isUp() || interfaz.isLoopback()) continue;
+                for (InterfaceAddress direccion : interfaz.getInterfaceAddresses())
+                    if (direccion.getAddress() instanceof Inet4Address)
+                        System.out.println("[RED] IP manual en " + interfaz.getDisplayName() + ": " + direccion.getAddress().getHostAddress());
+            }
+        } catch (SocketException error) { System.err.println("[RED] No se pudieron listar interfaces: " + error.getMessage()); }
+    }
+    private void desconectar(String motivo) {
+        System.out.println("[RED] " + motivo + ". Se libera la sala.");
+        for (Conexion c : clientes) if (c != null)
+            for (int i = 0; i < 3; i++) red.enviar(c.destino, DESCONECTADO + "|" + c.sesion + "|" + motivo);
+        clientes[0] = clientes[1] = null; fase = ESPERA; partida.reiniciar(); tiempo = 0;
+    }
+    @Override public void close() { cerrado = true; red.detener(); }
 }
 .
 .
@@ -2643,144 +3309,176 @@ ARCHIVO: C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\j
 .
 package com.capuccinolovesballerina.game.red.hilos;
 
+import com.capuccinolovesballerina.game.red.ProtocolosRed.*;
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketException;
+import java.net.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import static com.capuccinolovesballerina.game.red.ProtocolosRed.*;
 
+/** Un solo hilo/socket descubre, recibe y envia. Nunca modifica elementos de LibGDX. */
 public class HiloCliente extends Thread {
+    private final String ipManual;
+    private volatile DatagramSocket socket;
+    private volatile boolean fin;
+    private volatile int rol = -1;
+    private volatile String estado = "Buscando servidor...", ipServidor = "";
+    private volatile EstadoPartida foto;
+    private volatile Controles controles = Controles.VACIOS;
+    private volatile long pedidoReinicio;
+    private InetSocketAddress servidor;
+    private String sesion;
 
-    private DatagramSocket socket;
-    private boolean fin = false;
-    private InetAddress ipServer;
-    private int puertoServer;
-
-    private final List<String> bandeja = new ArrayList<>();
-
-    public HiloCliente(String ip, int puerto) {
-        try {
-            socket = new DatagramSocket();
-            ipServer = InetAddress.getByName(ip);
-            puertoServer = puerto;
-        } catch (SocketException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public HiloCliente(String ipManual) {
+        super("UDP-cliente");
+        this.ipManual = ipManual == null ? "" : ipManual.trim();
+        setDaemon(true);
     }
-
-    @Override
-    public void run() {
-        while (!fin) {
-            byte[] datos = new byte[1024];
-            DatagramPacket dp = new DatagramPacket(datos, datos.length);
-            try {
-                socket.receive(dp);
-                String msg = new String(dp.getData(), 0, dp.getLength());
-                synchronized (bandeja) {
-                    bandeja.add(msg);
+    @Override public void run() {
+        try (DatagramSocket abierto = new DatagramSocket()) {
+            socket = abierto;
+            socket.setBroadcast(true);
+            socket.setSoTimeout(25);
+            InetAddress manual = ipManual.isEmpty() ? null : InetAddress.getByName(ipManual);
+            List<InetSocketAddress> busqueda = manual == null ? destinosDescubrimiento()
+                : List.of(new InetSocketAddress(manual, PUERTO));
+            System.out.println("[RED CLIENTE] Socket local UDP " + socket.getLocalPort() + ". Destinos: " + busqueda);
+            long inicio = System.nanoTime(), ultimaRecepcion = inicio, ultimoEnvio = 0, ultimoPing = 0, secuencia = 0;
+            long ultimoEstado = inicio;
+            int intentos = 0;
+            long rondaReinicio = -1, reinicioEnviado = 0;
+            while (!fin) {
+                long ahora = System.nanoTime();
+                if (sesion == null) {
+                    if (ahora - inicio > BUSQUEDA_MS * 1_000_000L) {
+                        estado = "No se encontro servidor. Revisar UDP 9992/firewall o probar IP manual.";
+                        break;
+                    }
+                    if (ahora - ultimoEnvio > 500_000_000L) {
+                        // Como SpeedG2L: despues de OK se reintenta directamente contra la IP recibida.
+                        List<InetSocketAddress> destinos = servidor == null ? busqueda : List.of(servidor);
+                        System.out.println("[RED CLIENTE] CONEXION, intento " + (++intentos) + ": " + destinos);
+                        for (InetSocketAddress destino : destinos) {
+                            try { enviar(destino, servidor == null ? CONEXION : REGISTRO); }
+                            catch (IOException error) {
+                                // Una interfaz virtual sin ruta no debe cancelar las demas interfaces.
+                                System.err.println("[RED CLIENTE] No se pudo enviar a " + destino + ": " + error.getMessage());
+                            }
+                        }
+                        ultimoEnvio = ahora;
+                    }
+                } else {
+                    if (ahora - ultimaRecepcion > TIMEOUT_MS * 1_000_000L) { estado = "Se perdio la conexion con el servidor."; break; }
+                    if (ahora - ultimoEstado > TIMEOUT_MS * 1_000_000L) {
+                        estado = "El servidor responde, pero no llegan estados compatibles. Revisar version y consola.";
+                        break;
+                    }
+                    if (ahora - ultimoPing > 1_000_000_000L) {
+                        enviar(servidor, PING + "|" + sesion);
+                        if (foto == null || foto.fase().equals(ESPERA)) enviar(servidor, LISTO + "|" + sesion);
+                        ultimoPing = ahora;
+                    }
+                    if (foto != null && ahora - ultimoEnvio > 33_000_000L) {
+                        enviar(servidor, controles.mensaje(sesion, foto.ronda(), ++secuencia));
+                        if (pedidoReinicio > reinicioEnviado) {
+                            reinicioEnviado = pedidoReinicio;
+                            rondaReinicio = foto.ronda();
+                        }
+                        if (rondaReinicio == foto.ronda())
+                            enviar(servidor, REINICIO + "|" + sesion + "|" + rondaReinicio + "|" + reinicioEnviado);
+                        ultimoEnvio = ahora;
+                    }
                 }
-            } catch (IOException e) {
-                if (!fin) {
-                    e.printStackTrace();
+                byte[] datos = new byte[MAX_PAQUETE + 1];
+                DatagramPacket paquete = new DatagramPacket(datos, datos.length);
+                try {
+                    socket.receive(paquete);
+                    if (paquete.getLength() > MAX_PAQUETE || paquete.getPort() != PUERTO) continue;
+                    InetSocketAddress origen = (InetSocketAddress) paquete.getSocketAddress();
+                    if (servidor != null && !origen.equals(servidor)) continue;
+                    if (manual != null && !paquete.getAddress().equals(manual)) continue;
+                    String[] p = partes(new String(datos, 0, paquete.getLength(), StandardCharsets.UTF_8));
+                    if (sesion == null && p.length == 1 && p[0].equals(OK)) {
+                        servidor = origen;
+                        ipServidor = origen.getAddress().getHostAddress();
+                        estado = "Servidor encontrado en " + ipServidor + ". Esperando personaje...";
+                        System.out.println("[RED CLIENTE] OK recibido desde " + servidor);
+                        enviar(servidor, REGISTRO);
+                    } else if (sesion == null && p.length == 3 && p[0].equals(ASIGNADO)) {
+                        int asignado = Integer.parseInt(p[2]);
+                        if ((asignado != 0 && asignado != 1) || !p[1].matches("[a-f0-9-]{36}")) continue;
+                        // ASIGNADO tambien confirma el servidor si OK se perdio o llego despues.
+                        servidor = origen;
+                        ipServidor = origen.getAddress().getHostAddress();
+                        sesion = p[1]; rol = asignado;
+                        estado = "Conectado como " + (rol == 0 ? "Cappuccino" : "Ballerina") + ". Esperando al otro jugador...";
+                        ultimaRecepcion = ahora;
+                        ultimoEstado = ahora;
+                        enviar(servidor, LISTO + "|" + sesion);
+                        System.out.println("[RED CLIENTE] Personaje " + rol + " asignado en " + servidor + "; LISTO enviado.");
+                    } else if (sesion == null && p.length == 1 && p[0].equals(LLENO)) {
+                        estado = "El servidor ya tiene dos jugadores."; break;
+                    } else if (sesion != null && p.length >= 2 && p[1].equals(sesion)) {
+                        if (p[0].equals(ESTADO)) {
+                            EstadoPartida nueva = EstadoPartida.leer(p);
+                            if (foto != null && nueva.secuencia() <= foto.secuencia()) continue;
+                            foto = nueva;
+                            estado = nueva.fase().equals(CUENTA) ? "Inicio en " + nueva.cuenta() + "..."
+                                : nueva.fase().equals(ESPERA) ? "Esperando al otro jugador..." : "Partida en red";
+                            ultimaRecepcion = ahora;
+                            ultimoEstado = ahora;
+                        } else if (p[0].equals(PONG) && p.length == 2) {
+                            ultimaRecepcion = ahora;
+                        } else if (p[0].equals(DESCONECTADO) && p.length == 3) {
+                            estado = p[2]; break;
+                        }
+                    }
+                } catch (SocketTimeoutException ignorado) {
+                    // Despierta para reintentar, enviar controles o comprobar el timeout.
+                } catch (IllegalArgumentException ignorado) {
+                    // Un datagrama incorrecto nunca llega a la pantalla.
                 }
             }
+            if (sesion != null && !socket.isClosed())
+                for (int i = 0; i < 3; i++) enviar(servidor, SALIR + "|" + sesion);
+        } catch (IOException error) {
+            if (!fin) estado = "Error de red: " + error.getMessage();
+        } finally {
+            fin = true;
+            System.out.println("[RED CLIENTE] Conexion cerrada: " + estado);
         }
     }
-
-    public void enviarMensaje(String msg) {
-        byte[] data = msg.getBytes();
-        DatagramPacket dp = new DatagramPacket(data, data.length, ipServer, puertoServer);
-        try {
-            socket.send(dp);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public List<String> drenar() {
-        synchronized (bandeja) {
-            List<String> copia = new ArrayList<>(bandeja);
-            bandeja.clear();
-            return copia;
-        }
-    }
-
-    public void detener() {
-        fin = true;
-        if (socket != null && !socket.isClosed()) {
-            socket.close();
-        }
-    }
-}
-.
-.
-============================================================
-ARCHIVO: C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\red\hilos\HiloDescubrimiento.java
-============================================================
-.
-package com.capuccinolovesballerina.game.red.hilos;
-
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.SocketAddress;
-import java.net.SocketException;
-
-public class HiloDescubrimiento extends Thread {
-
-    private static final int PUERTO_DESCUBRIMIENTO = 9993;
-    private static final int PUERTO_JUEGO = 9992;
-
-    private DatagramSocket socket;
-    private boolean fin = false;
-
-    public HiloDescubrimiento() {
-        try {
-            socket = new DatagramSocket(PUERTO_DESCUBRIMIENTO);
-        } catch (SocketException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void run() {
-        while (!fin) {
-            byte[] datos = new byte[64];
-            DatagramPacket dp = new DatagramPacket(datos, datos.length);
-            try {
-                socket.receive(dp);
-                String msg = new String(dp.getData(), 0, dp.getLength());
-                if ("DISCOVER".equals(msg)) {
-                    responder(dp.getSocketAddress());
-                }
-            } catch (IOException e) {
-                if (!fin) {
-                    e.printStackTrace();
-                }
+    /** Broadcast general + broadcast de cada interfaz; loopback permite probar dos clientes en una PC. */
+    public static List<InetSocketAddress> destinosDescubrimiento() throws SocketException, UnknownHostException {
+        LinkedHashSet<InetSocketAddress> destinos = new LinkedHashSet<>();
+        destinos.add(new InetSocketAddress(InetAddress.getByName("255.255.255.255"), PUERTO));
+        var interfaces = NetworkInterface.getNetworkInterfaces();
+        while (interfaces.hasMoreElements()) {
+            NetworkInterface interfaz = interfaces.nextElement();
+            if (!interfaz.isUp() || interfaz.isLoopback()) continue;
+            for (InterfaceAddress direccion : interfaz.getInterfaceAddresses()) {
+                if (direccion.getBroadcast() != null)
+                    destinos.add(new InetSocketAddress(direccion.getBroadcast(), PUERTO));
             }
         }
+        destinos.add(new InetSocketAddress(InetAddress.getByName("127.0.0.1"), PUERTO));
+        return new ArrayList<>(destinos);
     }
-
-    private void responder(SocketAddress destino) {
-        byte[] data = ("SERVER|" + PUERTO_JUEGO).getBytes();
-        DatagramPacket dp = new DatagramPacket(data, data.length, destino);
-        try {
-            socket.send(dp);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void enviar(InetSocketAddress destino, String mensaje) throws IOException {
+        byte[] datos = bytes(mensaje);
+        socket.send(new DatagramPacket(datos, datos.length, destino));
     }
-
-    public void detener() {
-        fin = true;
-        if (socket != null && !socket.isClosed()) {
-            socket.close();
-        }
-    }
+    public void controles(Controles nuevos) { controles = nuevos; }
+    public void reiniciar(long numero) { pedidoReinicio = numero; }
+    public EstadoPartida getFoto() { return foto; }
+    public int getRol() { return rol; }
+    public String getEstado() { return estado; }
+    public String getIpServidor() { return ipServidor; }
+    public boolean terminado() { return fin; }
+    public void detener() { fin = true; interrupt(); }
+    public void detener(String motivo) { estado = motivo; detener(); }
 }
 .
 .
@@ -2790,258 +3488,44 @@ ARCHIVO: C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\j
 .
 package com.capuccinolovesballerina.game.red.hilos;
 
+import com.capuccinolovesballerina.game.red.ProtocolosRed;
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetSocketAddress;
-import java.net.SocketException;
-import java.util.HashSet;
-import java.util.Set;
+import java.net.*;
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.ArrayBlockingQueue;
 
+/** Solo recibe datagramas. Servidor modifica la partida en su propio hilo. */
 public class HiloServidor extends Thread {
-
-    private static final int PUERTO = 9992;
-    private static final int MAX_JUGADORES = 2;
-
-    private DatagramSocket socket;
-    private boolean fin = false;
-
-    private final InetSocketAddress[] destino = new InetSocketAddress[MAX_JUGADORES];
-    private final boolean[] conectado = new boolean[MAX_JUGADORES];
-    private final float[][] pos = new float[MAX_JUGADORES][4];
-    private final boolean[] enSalida = new boolean[MAX_JUGADORES];
-
-    private int siguienteRol = 0;
-
-    private final Set<Integer> cortados = new HashSet<>();
-    private boolean palanca = false;
-    private boolean puerta = false;
-    private float espumaX = 0f;
-    private float espumaY = 0f;
-    private boolean hayEspuma = false;
-    private int muerto = -1;
-    private boolean victoria = false;
-
-    public HiloServidor() {
-        try {
-            socket = new DatagramSocket(PUERTO);
-        } catch (SocketException e) {
-            e.printStackTrace();
-        }
+    public record Recibido(InetSocketAddress origen, String mensaje) {}
+    private final DatagramSocket socket;
+    private final ArrayBlockingQueue<Recibido> bandeja = new ArrayBlockingQueue<>(512);
+    private volatile boolean fin;
+    public HiloServidor() throws SocketException {
+        super("UDP-servidor");
+        socket = new DatagramSocket(ProtocolosRed.PUERTO);
     }
-
-    @Override
-    public void run() {
+    @Override public void run() {
         while (!fin) {
-            byte[] datos = new byte[1024];
-            DatagramPacket dp = new DatagramPacket(datos, datos.length);
+            byte[] buffer = new byte[ProtocolosRed.MAX_PAQUETE + 1];
+            DatagramPacket paquete = new DatagramPacket(buffer, buffer.length);
             try {
-                socket.receive(dp);
-                procesarMensaje(dp);
-            } catch (IOException e) {
-                if (!fin) {
-                    e.printStackTrace();
-                }
+                socket.receive(paquete);
+                if (paquete.getLength() > ProtocolosRed.MAX_PAQUETE) continue;
+                bandeja.offer(new Recibido((InetSocketAddress) paquete.getSocketAddress(),
+                    new String(paquete.getData(), 0, paquete.getLength(), StandardCharsets.UTF_8)));
+            } catch (IOException error) {
+                if (!fin) System.err.println("[RED] Error de recepcion: " + error.getMessage());
             }
         }
     }
-
-    private void procesarMensaje(DatagramPacket dp) {
-        String msg = new String(dp.getData(), 0, dp.getLength());
-        String[] p = msg.split("\\|", -1);
-        if (p.length == 0) {
-            return;
-        }
-        InetSocketAddress origen = (InetSocketAddress) dp.getSocketAddress();
-        String tipo = p[0];
-
-        try {
-            switch (tipo) {
-                case "JOIN":
-                    manejarJoin(origen);
-                    break;
-                case "POS":
-                    manejarPos(origen, p);
-                    break;
-                case "CORTE":
-                    manejarCorte(origen, p);
-                    break;
-                case "ESPUMA":
-                    manejarEspuma(origen, p);
-                    break;
-                case "PALANCA":
-                    manejarPalanca(origen);
-                    break;
-                case "SALIDA":
-                    manejarSalida(origen, p);
-                    break;
-                case "MUERTE":
-                    manejarMuerte(origen);
-                    break;
-                case "REINICIO":
-                    manejarReinicio(origen);
-                    break;
-                default:
-                    break;
-            }
-        } catch (Exception e) {
-            System.out.println("mensaje invalido: " + msg);
-        }
+    public Recibido siguiente() { return bandeja.poll(); }
+    public void enviar(InetSocketAddress destino, String mensaje) {
+        byte[] datos = ProtocolosRed.bytes(mensaje);
+        if (datos.length > ProtocolosRed.MAX_PAQUETE) throw new IllegalStateException("Estado demasiado grande para un datagrama");
+        try { socket.send(new DatagramPacket(datos, datos.length, destino)); }
+        catch (IOException error) { if (!fin) System.err.println("[RED] Error de envio: " + error.getMessage()); }
     }
-
-    private int buscarRol(InetSocketAddress origen) {
-        for (int i = 0; i < MAX_JUGADORES; i++) {
-            if (conectado[i] && origen.equals(destino[i])) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    private void mandar(InetSocketAddress a, String msg) {
-        byte[] data = msg.getBytes();
-        DatagramPacket dp = new DatagramPacket(data, data.length, a);
-        try {
-            socket.send(dp);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void broadcast(String msg) {
-        for (int i = 0; i < MAX_JUGADORES; i++) {
-            if (conectado[i]) {
-                mandar(destino[i], msg);
-            }
-        }
-    }
-
-    private void manejarJoin(InetSocketAddress origen) {
-        int ya = buscarRol(origen);
-        if (ya >= 0) {
-            mandar(origen, "ROL|" + ya);
-            mandarSnapshot(origen, ya);
-            return;
-        }
-        if (siguienteRol >= MAX_JUGADORES) {
-            mandar(origen, "LLENO");
-            return;
-        }
-        int rol = siguienteRol++;
-        destino[rol] = origen;
-        conectado[rol] = true;
-        mandar(origen, "ROL|" + rol);
-        mandarSnapshot(origen, rol);
-    }
-
-    private void mandarSnapshot(InetSocketAddress a, int rol) {
-        for (Integer i : cortados) {
-            mandar(a, "CORTE|" + i);
-        }
-        mandar(a, "PALANCA|" + palanca + "|" + puerta);
-        if (hayEspuma) {
-            mandar(a, "ESPUMA|" + espumaX + "|" + espumaY);
-        }
-        if (muerto >= 0) {
-            mandar(a, "MUERTE|" + muerto);
-        }
-        if (victoria) {
-            mandar(a, "VICTORIA");
-        }
-        int otro = 1 - rol;
-        if (otro >= 0 && otro < MAX_JUGADORES && conectado[otro]) {
-            boolean mirandoOtro = pos[otro][2] > 0.5f;
-            boolean sueloOtro = pos[otro][3] > 0.5f;
-            mandar(a, "POS|" + otro + "|" + pos[otro][0] + "|" + pos[otro][1] + "|" + mirandoOtro + "|" + sueloOtro);
-        }
-    }
-
-    private void manejarPos(InetSocketAddress origen, String[] p) {
-        int rol = buscarRol(origen);
-        if (rol < 0) {
-            return;
-        }
-        pos[rol][0] = Float.parseFloat(p[1]);
-        pos[rol][1] = Float.parseFloat(p[2]);
-        pos[rol][2] = Boolean.parseBoolean(p[3]) ? 1f : 0f;
-        pos[rol][3] = Boolean.parseBoolean(p[4]) ? 1f : 0f;
-        broadcast("POS|" + rol + "|" + p[1] + "|" + p[2] + "|" + p[3] + "|" + p[4]);
-    }
-
-    private void manejarCorte(InetSocketAddress origen, String[] p) {
-        int rol = buscarRol(origen);
-        if (rol < 0) {
-            return;
-        }
-        int indice = Integer.parseInt(p[1]);
-        cortados.add(indice);
-        broadcast("CORTE|" + indice);
-    }
-
-    private void manejarEspuma(InetSocketAddress origen, String[] p) {
-        int rol = buscarRol(origen);
-        if (rol < 0) {
-            return;
-        }
-        espumaX = Float.parseFloat(p[1]);
-        espumaY = Float.parseFloat(p[2]);
-        hayEspuma = true;
-        broadcast("ESPUMA|" + espumaX + "|" + espumaY);
-    }
-
-    private void manejarPalanca(InetSocketAddress origen) {
-        int rol = buscarRol(origen);
-        if (rol < 0) {
-            return;
-        }
-        palanca = !palanca;
-        puerta = palanca;
-        broadcast("PALANCA|" + palanca + "|" + puerta);
-    }
-
-    private void manejarSalida(InetSocketAddress origen, String[] p) {
-        int rol = buscarRol(origen);
-        if (rol < 0) {
-            return;
-        }
-        enSalida[rol] = Boolean.parseBoolean(p[1]);
-        if (!victoria && enSalida[0] && enSalida[1]) {
-            victoria = true;
-            broadcast("VICTORIA");
-        }
-    }
-
-    private void manejarMuerte(InetSocketAddress origen) {
-        int rol = buscarRol(origen);
-        if (rol < 0) {
-            return;
-        }
-        muerto = rol;
-        broadcast("MUERTE|" + rol);
-    }
-
-    private void manejarReinicio(InetSocketAddress origen) {
-        int rol = buscarRol(origen);
-        if (rol < 0) {
-            return;
-        }
-        cortados.clear();
-        palanca = false;
-        puerta = false;
-        hayEspuma = false;
-        muerto = -1;
-        victoria = false;
-        enSalida[0] = false;
-        enSalida[1] = false;
-        broadcast("REINICIO");
-    }
-
-    public void detener() {
-        fin = true;
-        if (socket != null && !socket.isClosed()) {
-            socket.close();
-        }
-    }
+    public void detener() { fin = true; socket.close(); interrupt(); }
 }
 .
 .
@@ -3126,6 +3610,13 @@ public class Constantes {
     public static final float VIDA_ESPUMA = 4f;
     public static final float COOLDOWN_ESPUMA = 2.5f;
     public static final float DISTANCIA_ESPUMA = 8f * ESCALA_PERSONAJE;
+    public static final String RUTA_SPRITESHEET_ESPUMA = "sprites/espumaBallerina.png";
+    public static final int ANCHO_FRAME_ESPUMA = 128;
+    public static final int ALTO_FRAME_ESPUMA = 64;
+    public static final int CANTIDAD_FRAMES_ESPUMA = 8;
+    public static final float DURACION_FORMACION_ESPUMA = 0.45f;
+    public static final float DURACION_FRAME_ACTIVO_ESPUMA = 0.2f;
+    public static final float DURACION_DISOLUCION_ESPUMA = 0.5f;
 
     public static final float MARGEN_LATERAL_PELIGRO = 8f;   // se resta a cada lado
     public static final float MARGEN_SUPERIOR_PELIGRO = 8f;  // se resta de arriba
@@ -3263,6 +3754,23 @@ public class ControladorEntradaJugador extends InputAdapter {
         interactuarPresionadoBallerina = false;
     }
 
+    /** El servidor aplica los controles recibidos solo al personaje asignado. */
+    public void aplicarControlesRed(int rol, boolean izq, boolean der, boolean salto, boolean habilidad, boolean interactuar) {
+        if (rol == 0) {
+            izquierda = izq;
+            derecha = der;
+            saltoPresionado |= salto;
+            habilidadPresionada |= habilidad;
+            interactuarPresionado |= interactuar;
+        } else {
+            izquierdaBallerina = izq;
+            derechaBallerina = der;
+            saltoPresionadoBallerina |= salto;
+            habilidadPresionadaBallerina |= habilidad;
+            interactuarPresionadoBallerina |= interactuar;
+        }
+    }
+
     public void soltarTodo() {
         izquierda = false;
         derecha = false;
@@ -3295,6 +3803,7 @@ import com.capuccinolovesballerina.game.entidades.BallerinaCapuccina;
 import com.capuccinolovesballerina.game.entidades.CapuccinoAssassino;
 import com.capuccinolovesballerina.game.entidades.Player;
 import com.capuccinolovesballerina.game.graficos.AnimacionesCappuccino;
+import com.capuccinolovesballerina.game.graficos.AnimacionesBallerina;
 import com.capuccinolovesballerina.game.graficos.Estado;
 import com.capuccinolovesballerina.game.mapa.Nivel;
 import com.capuccinolovesballerina.game.objetos.BloqueEspuma;
@@ -3306,6 +3815,7 @@ import com.capuccinolovesballerina.game.pantallas.HUD;
 import com.capuccinolovesballerina.game.pantallas.MenuGameOver;
 import com.capuccinolovesballerina.game.pantallas.MenuPausa;
 import com.capuccinolovesballerina.game.pantallas.MenuVictoria;
+
 
 public class ControladorPartida {
 
@@ -3320,8 +3830,32 @@ public class ControladorPartida {
     private final ControladorEntradaJugador entrada;
     private final CapuccinoAssassino cappuccino;
     private final BallerinaCapuccina ballerina;
-    private final AnimacionesCappuccino animaciones;
+    private final AnimacionesCappuccino animacionesCappuccino;
+    private final AnimacionesBallerina animacionesBallerina;
     private static final float ALCANCE_PALANCA = 12f;
+    private boolean derrota;
+    private boolean victoria;
+    private final Estado[] estados = {Estado.IDLE, Estado.IDLE};
+
+    /** La misma partida sin menus ni texturas para la consola del servidor. */
+    public ControladorPartida(Nivel nivel, ElementosNivel elementos, ControladorEntradaJugador entrada,
+        CapuccinoAssassino cappuccino, BallerinaCapuccina ballerina) {
+        this(nivel, elementos, null, null, null, null, entrada, cappuccino, ballerina, null, null);
+    }
+
+    public boolean estaDerrotada() { return derrota; }
+    public boolean hayVictoria() { return victoria; }
+    public Estado getEstado(int rol) { return estados[rol]; }
+
+    private void estadoCappuccino(Estado estado) {
+        estados[0] = estado;
+        if (animacionesCappuccino != null) animacionesCappuccino.setEstado(estado);
+    }
+
+    private void estadoBallerina(Estado estado) {
+        estados[1] = estado;
+        if (animacionesBallerina != null) animacionesBallerina.setEstado(estado);
+    }
 
     public ControladorPartida(
         Nivel nivel,
@@ -3333,7 +3867,8 @@ public class ControladorPartida {
         ControladorEntradaJugador entrada,
         CapuccinoAssassino cappuccino,
         BallerinaCapuccina ballerina,
-        AnimacionesCappuccino animaciones
+        AnimacionesCappuccino animacionesCappuccino,
+        AnimacionesBallerina animacionesBallerina
     ) {
         this.nivel = nivel;
         this.elementos = elementos;
@@ -3344,12 +3879,13 @@ public class ControladorPartida {
         this.entrada = entrada;
         this.cappuccino = cappuccino;
         this.ballerina = ballerina;
-        this.animaciones = animaciones;
+        this.animacionesCappuccino = animacionesCappuccino;
+        this.animacionesBallerina = animacionesBallerina;
     }
 
     public void actualizar(float delta) {
 
-        if (entrada.isEscapePresionado()) {
+        if (menuPausa != null && entrada.isEscapePresionado()) {
             if (menuPausa.estaVisible()) {
                 menuPausa.ocultar();
             } else if (!menuGameOver.estaVisible() && !menuVictoria.estaVisible()) {
@@ -3358,26 +3894,26 @@ public class ControladorPartida {
             }
         }
 
-        if (menuPausa.estaVisible()) {
+        if (menuPausa != null && menuPausa.estaVisible()) {
             menuPausa.actualizar(delta);
             return;
         }
 
-        if (menuGameOver.estaVisible()) {
-            menuGameOver.actualizar(delta);
+        if (derrota) {
+            if (menuGameOver != null) menuGameOver.actualizar(delta);
             return;
         }
 
-        if (menuVictoria.estaVisible()) {
-            menuVictoria.actualizar(delta);
+        if (victoria) {
+            if (menuVictoria != null) menuVictoria.actualizar(delta);
             return;
         }
 
-        if (Gdx.input.getInputProcessor() != entrada) {
+        if (menuPausa != null && Gdx.input != null && Gdx.input.getInputProcessor() != entrada) {
             Gdx.input.setInputProcessor(entrada);
         }
 
-        hud.actualizar(delta);
+        if (hud != null) hud.actualizar(delta);
 
         ballerina.actualizarHabilidad(delta);
 
@@ -3417,17 +3953,28 @@ public class ControladorPartida {
 
 
         if (entrada.isHabilidadPresionada()) {
-            animaciones.setEstado(Estado.ATTACK);
+            estadoCappuccino(Estado.ABILITY);
             cortar();
         } else if (!cappuccino.isEnSuelo()) {
-            animaciones.setEstado(Estado.JUMP);
+            estadoCappuccino(Estado.JUMP);
         } else if (entrada.isIzquierda() || entrada.isDerecha()) {
-            animaciones.setEstado(Estado.WALK);
+            estadoCappuccino(Estado.WALK);
         } else {
-            animaciones.setEstado(Estado.IDLE);
+            estadoCappuccino(Estado.IDLE);
         }
 
-        animaciones.actualizar(delta);
+        if (entrada.isHabilidadPresionadaBallerina()) {
+            estadoBallerina(Estado.ABILITY);
+        } else if (!ballerina.isEnSuelo()) {
+            estadoBallerina(Estado.JUMP);
+        } else if (entrada.isIzquierdaBallerina() || entrada.isDerechaBallerina()) {
+            estadoBallerina(Estado.WALK);
+        } else {
+            estadoBallerina(Estado.IDLE);
+        }
+
+        if (animacionesCappuccino != null) animacionesCappuccino.actualizar(delta);
+        if (animacionesBallerina != null) animacionesBallerina.actualizar(delta);
 
 
         if (estaMuerto(cappuccino) || estaMuerto(ballerina)) {
@@ -3438,10 +3985,10 @@ public class ControladorPartida {
 
         comprobarVictoria();
 
-        if (menuVictoria.estaVisible()) {
+        if (victoria) {
             return;
         }
-
+        actualizarPalancas();
         entrada.limpiarEventos();
     }
 
@@ -3449,14 +3996,14 @@ public class ControladorPartida {
         Palanca palCap = elementos.getPalancaCappuccino();
         Palanca palBal = elementos.getPalancaBallerina();
 
-
-        if (entrada.isInteractuarPresionado()) {
-            Gdx.app.log("PALANCA", "E: objeto=" + (palCap != null)
-                + " cerca=" + estaCerca(cappuccino, palCap));
+        if (entrada.isInteractuarPresionado()
+            && estaCerca(cappuccino, palCap)) {
+            intentarAlternar(palCap);
         }
-        if (entrada.isInteractuarPresionadoBallerina()) {
-            Gdx.app.log("PALANCA", "ENTER: objeto=" + (palBal != null)
-                + " cerca=" + estaCerca(ballerina, palBal));
+
+        if (entrada.isInteractuarPresionadoBallerina()
+            && estaCerca(ballerina, palBal)) {
+            intentarAlternar(palBal);
         }
     }
     private boolean estaCerca(Player personaje, Palanca palanca) {
@@ -3509,7 +4056,8 @@ public class ControladorPartida {
 
         if (cappuccino.getCaja().overlaps(zona) && ballerina.getCaja().overlaps(zona)) {
             entrada.soltarTodo();
-            menuVictoria.mostrar();
+            victoria = true;
+            if (menuVictoria != null) menuVictoria.mostrar();
         }
     }
 
@@ -3529,7 +4077,8 @@ public class ControladorPartida {
 
     private void mostrarGameOver() {
         entrada.soltarTodo();
-        menuGameOver.mostrar();
+        derrota = true;
+        if (menuGameOver != null) menuGameOver.mostrar();
     }
 
     private void cortar() {
@@ -3551,6 +4100,9 @@ public class ControladorPartida {
     }
 
     public void reiniciar() {
+        derrota = false;
+        victoria = false;
+        estados[0] = estados[1] = Estado.IDLE;
         cappuccino.reaparecer(elementos.getSpawnX(), elementos.getSpawnY());
         ballerina.reaparecer(elementos.getSpawnBallerinaX(), elementos.getSpawnBallerinaY());
 
@@ -3572,8 +4124,9 @@ public class ControladorPartida {
         }
 
         entrada.soltarTodo();
-        animaciones.reiniciar();
-        hud.reiniciar();
+        if (animacionesCappuccino != null) animacionesCappuccino.reiniciar();
+        if (animacionesBallerina != null) animacionesBallerina.reiniciar();
+        if (hud != null) hud.reiniciar();
     }
 }
 .
@@ -3708,6 +4261,7 @@ package com.capuccinolovesballerina.game.Utilidades;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -3727,8 +4281,13 @@ import com.capuccinolovesballerina.game.pantallas.HUD;
 import com.capuccinolovesballerina.game.pantallas.MenuGameOver;
 import com.capuccinolovesballerina.game.pantallas.MenuPausa;
 import com.capuccinolovesballerina.game.pantallas.MenuVictoria;
+import com.capuccinolovesballerina.game.graficos.AnimacionesBallerina;
 
 public class RenderizadorJuego {
+
+    private static final int ANCHO_FRAME_LIANA = 256;
+    private static final int ALTO_FRAME_LIANA = 1024;
+    private static final int CANTIDAD_FRAMES_LIANA = 4;
 
     private final OrthographicCamera camera;
     private final OrthogonalTiledMapRenderer renderizador;
@@ -3737,7 +4296,8 @@ public class RenderizadorJuego {
 
     private final CapuccinoAssassino cappuccino;
     private final BallerinaCapuccina ballerina;
-    private final AnimacionesCappuccino animaciones;
+    private final AnimacionesCappuccino animacionesCappuccino;
+    private final AnimacionesBallerina animacionesBallerina;
     private final ElementosNivel elementos;
 
     private final HUD hud;
@@ -3751,13 +4311,18 @@ public class RenderizadorJuego {
     private Texture texturaPalancaOn;
     private Texture texturaPinchos;
     private Texture texturaLiana;
+    private Animation<TextureRegion> animacionLianas;
+    private float tiempoLianas = 0f;
+    private Texture texturaEspuma;
+    private TextureRegion[] framesEspuma;
 
     public RenderizadorJuego(
         OrthographicCamera camera,
         Nivel nivel,
         CapuccinoAssassino cappuccino,
         BallerinaCapuccina ballerina,
-        AnimacionesCappuccino animaciones,
+        AnimacionesCappuccino animacionesCappuccino,
+        AnimacionesBallerina animacionesBallerina,
         ElementosNivel elementos,
         HUD hud,
         MenuPausa menuPausa,
@@ -3768,7 +4333,8 @@ public class RenderizadorJuego {
         this.renderizador = new OrthogonalTiledMapRenderer(nivel.getMapa(), Nivel.ESCALA);
         this.cappuccino = cappuccino;
         this.ballerina = ballerina;
-        this.animaciones = animaciones;
+        this.animacionesCappuccino = animacionesCappuccino;
+        this.animacionesBallerina = animacionesBallerina;
         this.elementos = elementos;
         this.hud = hud;
         this.menuPausa = menuPausa;
@@ -3787,7 +4353,21 @@ public class RenderizadorJuego {
         texturaPalancaOff = new Texture("objetos/palanca_apagada.png");
         texturaPalancaOn = new Texture("objetos/palanca_encendida.png");
         texturaPinchos = new Texture("objetos/pinchos.png");
-        texturaLiana = new Texture("objetos/liana.png");
+        texturaLiana = new Texture("sprites/lianas_animadas.png");
+        TextureRegion[] framesLiana = new TextureRegion[CANTIDAD_FRAMES_LIANA];
+        for (int i = 0; i < framesLiana.length; i++) {
+            framesLiana[i] = new TextureRegion(texturaLiana,
+                i * ANCHO_FRAME_LIANA, 0, ANCHO_FRAME_LIANA, ALTO_FRAME_LIANA);
+        }
+        animacionLianas = new Animation<>(0.3f, framesLiana);
+        animacionLianas.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
+        texturaEspuma = new Texture(Constantes.RUTA_SPRITESHEET_ESPUMA);
+        framesEspuma = new TextureRegion[Constantes.CANTIDAD_FRAMES_ESPUMA];
+        for (int i = 0; i < framesEspuma.length; i++) {
+            framesEspuma[i] = new TextureRegion(texturaEspuma,
+                i * Constantes.ANCHO_FRAME_ESPUMA, 0,
+                Constantes.ANCHO_FRAME_ESPUMA, Constantes.ALTO_FRAME_ESPUMA);
+        }
 
         texturaCerrada.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         texturaAbierta.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
@@ -3797,7 +4377,11 @@ public class RenderizadorJuego {
         texturaLiana.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
     }
 
-    public void dibujar() {
+    public void dibujar(float delta) {
+
+        if (!menuPausa.estaVisible() && !menuGameOver.estaVisible() && !menuVictoria.estaVisible()) {
+            tiempoLianas += delta;
+        }
 
         ScreenUtils.clear(0.1f, 0.1f, 0.15f, 1f);
 
@@ -3806,21 +4390,19 @@ public class RenderizadorJuego {
         renderizador.render();
 
         dibujarCortables();
-        dibujarEspuma();
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
+        dibujarEspuma();
         dibujarPuerta();
         dibujarPalanca(elementos.getPalancaCappuccino(), new Color(0.6f, 0.8f, 1f, 1f));
         dibujarPalanca(elementos.getPalancaBallerina(), new Color(1f, 0.6f, 0.8f, 1f));
         dibujarPeligros();
         dibujarLianas();
-        dibujarPersonaje();
-
+        dibujarCappuccino();
+        dibujarBallerina();
         batch.end();
-
-        dibujarBallerinaPlaceholder();
 
         hud.dibujar();
         menuPausa.dibujar();
@@ -3853,14 +4435,11 @@ public class RenderizadorJuego {
         BloqueEspuma espuma = ballerina.getEspuma();
         if (espuma == null) return;
 
-        shapeRenderer.setProjectionMatrix(camera.combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(1f, 1f, 1f, espuma.getAlpha());
-
         Rectangle z = espuma.getZona();
-        shapeRenderer.rect(z.x, z.y, z.width, z.height);
-
-        shapeRenderer.end();
+        float colorAnterior = batch.getPackedColor();
+        batch.setColor(1f, 1f, 1f, espuma.getAlpha());
+        batch.draw(framesEspuma[espuma.getIndiceFrame()], z.x, z.y, z.width, z.height);
+        batch.setPackedColor(colorAnterior);
     }
 
     private void dibujarPuerta() {
@@ -3894,22 +4473,30 @@ public class RenderizadorJuego {
         }
     }
 
+
     private void dibujarLianas() {
+        TextureRegion frame = animacionLianas.getKeyFrame(tiempoLianas);
+
         for (ObjetoCortable cortable : elementos.getCortables()) {
             if (cortable.estaCortado()) continue;
             if (!"liana".equals(cortable.getTipo())) continue;
 
             Rectangle z = cortable.getZona();
-            float altoSegmento = 192f;
 
-            for (float y = z.y; y < z.y + z.height; y += altoSegmento) {
-                batch.draw(texturaLiana, z.x, y, z.width, altoSegmento);
-            }
+            // Tamaño visual independiente de la hitbox
+            float altoVisual = z.height;
+            float anchoVisual = z.width * 2.5f;
+
+            // Centrar la imagen respecto a la hitbox
+            float xVisual = z.x + (z.width - anchoVisual) / 2f;
+
+            batch.draw(frame, xVisual, z.y, anchoVisual, altoVisual);
         }
     }
 
-    private void dibujarPersonaje() {
-        TextureRegion frame = animaciones.getFrameActual();
+
+    private void dibujarCappuccino() {
+        TextureRegion frame = animacionesCappuccino.getFrameActual();
 
         float tam = Constantes.TAM_SPRITE_PERSONAJE;
         float x = cappuccino.getX() - (tam - cappuccino.getAncho()) / 2f;
@@ -3922,23 +4509,18 @@ public class RenderizadorJuego {
         }
     }
 
-    private void dibujarBallerinaPlaceholder() {
-        shapeRenderer.setProjectionMatrix(camera.combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+    private void dibujarBallerina() {
+        TextureRegion frame = animacionesBallerina.getFrameActual();
 
-        shapeRenderer.setColor(0.95f, 0.35f, 0.65f, 1f);
-        shapeRenderer.rect(ballerina.getX(), ballerina.getY(), ballerina.getAncho(), ballerina.getAlto());
+        float tam = Constantes.TAM_SPRITE_PERSONAJE;
+        float x = ballerina.getX() - (tam - ballerina.getAncho()) / 2f;
+        float y = ballerina.getY();
 
-        shapeRenderer.setColor(1f, 1f, 1f, 1f);
-        float e = Constantes.ESCALA_PERSONAJE;
-        float markerSize = 8f * e;
-        float markerY = ballerina.getY() + ballerina.getAlto() - 16f * e;
-        float markerX = ballerina.isMirandoDerecha()
-            ? ballerina.getX() + ballerina.getAncho() - 12f * e
-            : ballerina.getX() + 4f * e;
-        shapeRenderer.rect(markerX, markerY, markerSize, markerSize);
-
-        shapeRenderer.end();
+        if (ballerina.isMirandoDerecha()) {
+            batch.draw(frame, x, y, tam, tam);
+        } else {
+            batch.draw(frame, x + tam, y, -tam, tam);
+        }
     }
 
     public void dispose() {
@@ -3951,6 +4533,7 @@ public class RenderizadorJuego {
         texturaPalancaOn.dispose();
         texturaPinchos.dispose();
         texturaLiana.dispose();
+        texturaEspuma.dispose();
     }
 }
 .
@@ -4366,6 +4949,29 @@ jar {
   duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
+tasks.register('pruebasRed', JavaExec) {
+  dependsOn testClasses
+  classpath = sourceSets.test.runtimeClasspath
+  mainClass = 'com.capuccinolovesballerina.game.red.PruebasRed'
+  workingDir = rootProject.file('assets')
+}
+
+// Las pruebas se ejecutan con main(), sin un framework de tests adicional.
+test { failOnNoDiscoveredTests = false }
+check.dependsOn 'pruebasRed'
+
+// Entrega independiente: incluye el mapa y LibGDX, pero no necesita ventana ni sprites.
+tasks.register('jarServidor', Jar) {
+  archiveBaseName = 'CapuccinoLovesBallerina-servidor'
+  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+  from sourceSets.main.output
+  from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+  from(rootProject.file('assets')) { include '**/*.tmx', '**/*.tsx' }
+  exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA'
+  manifest { attributes 'Main-Class': 'com.capuccinolovesballerina.game.red.Servidor' }
+}
+assemble.dependsOn 'jarServidor'
+
 
 ============================================================
 ARCHIVO: lwjgl3\build.gradle
@@ -4394,6 +5000,38 @@ import io.github.fourlastor.construo.Target
 sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
 application.mainClass = 'com.capuccinolovesballerina.game.lwjgl3.Lwjgl3Launcher'
 application.applicationName = appName
+
+// Consola UDP sin ventana ni dependencias adicionales de red.
+tasks.register('servidor', JavaExec) {
+  classpath = sourceSets.main.runtimeClasspath
+  mainClass = 'com.capuccinolovesballerina.game.red.Servidor'
+  workingDir = rootProject.file('assets')
+  standardInput = System.in
+}
+
+// Prueba opcional con tres JVM: servidor y dos clientes graficos completos.
+tasks.register('pruebasClientesGraficos', JavaExec) {
+  dependsOn testClasses
+  classpath = sourceSets.test.runtimeClasspath
+  mainClass = 'com.capuccinolovesballerina.game.lwjgl3.PruebasClientesGraficos'
+  workingDir = rootProject.file('assets')
+  args layout.buildDirectory.dir('reports/red-grafica').get().asFile.absolutePath
+}
+test { failOnNoDiscoveredTests = false }
+
+// Preparar termina antes de abrir Java: servidor y clientes no bloquean Gradle entre si.
+tasks.register('prepararRed') {
+  dependsOn 'jar', ':core:jarServidor'
+  doLast {
+    def carpeta = rootProject.file('.gradle/red')
+    carpeta.mkdirs()
+    def javaRed = new File(System.getProperty('java.home'), 'bin/java.exe').absolutePath.replace('%', '%%')
+    def clienteRed = tasks.named('jar').get().archiveFile.get().asFile.absolutePath.replace('%', '%%')
+    def servidorRed = project(':core').tasks.named('jarServidor').get().archiveFile.get().asFile.absolutePath.replace('%', '%%')
+    new File(carpeta, 'cliente.bat').text = "@echo off\r\n\"${javaRed}\" --enable-native-access=ALL-UNNAMED -jar \"${clienteRed}\"\r\n"
+    new File(carpeta, 'servidor.bat').text = "@echo off\r\n\"${javaRed}\" -jar \"${servidorRed}\"\r\n"
+  }
+}
 eclipse.project.name = appName + '-lwjgl3'
 java.sourceCompatibility = 17
 java.targetCompatibility = 17
@@ -4579,6 +5217,7 @@ if(enableGraalNative == 'true') {
   apply from: file("nativeimage.gradle")
 }
 
+
 ============================================================
 ARCHIVO: README.md
 ============================================================
@@ -4697,9 +5336,9 @@ Todos los cambios importantes del proyecto serán registrados en este archivo.
 ## [1.6.1] - 2026-11-08
 
 
-## Agregado
+## Agregado 
 - **Conexion UDP**
-    - Clase `HiloDescubrimiento`: Otorga direcciones ip automaticamente
+    - Clase `HiloDescubrimiento`: Otorga direcciones ip automaticamente  
 
 ## [1.6.0] - 2026-11-07
 
@@ -4792,8 +5431,8 @@ Todos los cambios importantes del proyecto serán registrados en este archivo.
 - Imagen del menu principal
 - Imagen del menu Victoria + Cambio de nombre de su respectivo boton "Reintentar Nivel" a "Siguiente Nivel".
 
-## [1.2.0] - 2026-08-24
-### Agregado
+## [1.2.0] - 2026-08-24 
+### Agregado    
 - Zonas de peligro: rectángulos `peligro` en la capa `objetos` que muestran GAME OVER al tocarlos, además de la muerte por caída al vacío.
 - Corte de Katana de Cappuccino Assassino: con F corta objetos `cuerda` y `barril` de la capa `objetos` (`ObjetoCortable` + `Nivel.buscarObjetos`); mientras no están cortados bloquean el paso como sólidos y al reintentar vuelven a su estado inicial.
 - Mecánica cooperativa de palanca y puerta : nuevo paquete `objetos` con `Palanca` y `Puerta`; la palanca se alterna con E estando cerca y abre/cierra la puerta; la puerta cerrada bloquea el paso como sólido adicional y no puede cerrarse con el jugador en el hueco.
@@ -4899,7 +5538,6 @@ C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\assets\mapas\TILE PARED 
 C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\assets\mapas\TILE PISO.png
 C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\assets\mapas\TILESET PISO 32x32.png
 C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\assets\mapas\tileset.tsx
-C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\assets\objetos\liana.png
 C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\assets\objetos\palanca_apagada.png
 C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\assets\objetos\palanca_encendida.png
 C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\assets\objetos\pinchos.png
@@ -4912,7 +5550,10 @@ C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\assets\skin\uiskin.json
 C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\assets\skin\uiskin.png
 C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\assets\sonidos\musica_juego.mp3
 C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\assets\sonidos\musica_menu.mp3
+C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\assets\sprites\ballerina.png
 C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\assets\sprites\cappuccino.png
+C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\assets\sprites\espumaBallerina.png
+C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\assets\sprites\lianas_animadas.png
 
 ============================================================
 5. CLASES JAVA ENCONTRADAS
@@ -4922,8 +5563,10 @@ C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\c
 C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\entidades\BallerinaCapuccina.java
 C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\entidades\CapuccinoAssassino.java
 C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\entidades\Player.java
+C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\graficos\AnimacionesBallerina.java
 C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\graficos\AnimacionesCappuccino.java
 C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\graficos\Estado.java
+C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\mapa\CargadorMapaServidor.java
 C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\mapa\GestorColisiones.java
 C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\mapa\Nivel.java
 C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\objetos\BloqueEspuma.java
@@ -4940,9 +5583,9 @@ C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\c
 C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\pantallas\PantallaMenu.java
 C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\pantallas\PantallaOpciones.java
 C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\red\Cliente.java
+C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\red\ProtocolosRed.java
 C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\red\Servidor.java
 C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\red\hilos\HiloCliente.java
-C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\red\hilos\HiloDescubrimiento.java
 C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\red\hilos\HiloServidor.java
 C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\Utilidades\Audio.java
 C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\Utilidades\Constantes.java
@@ -4978,12 +5621,26 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.capuccinolovesballerina.game.Utilidades.Constantes;
 .
+[C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\graficos\AnimacionesBallerina.java]
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+.
 [C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\graficos\AnimacionesCappuccino.java]
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 .
 [C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\graficos\Estado.java]
+.
+[C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\mapa\CargadorMapaServidor.java]
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.Files.FileType;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.ImageResolver;
+import com.badlogic.gdx.maps.tiled.*;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.XmlReader.Element;
 .
 [C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\mapa\GestorColisiones.java]
 import com.badlogic.gdx.maps.MapObject;
@@ -5009,6 +5666,7 @@ import com.badlogic.gdx.utils.Array;
 .
 [C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\objetos\BloqueEspuma.java]
 import com.badlogic.gdx.math.Rectangle;
+import com.capuccinolovesballerina.game.Utilidades.Constantes;
 .
 [C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\objetos\ElementosNivel.java]
 import com.badlogic.gdx.math.Rectangle;
@@ -5111,8 +5769,17 @@ import com.capuccinolovesballerina.game.Utilidades.*;
 import com.capuccinolovesballerina.game.entidades.BallerinaCapuccina;
 import com.capuccinolovesballerina.game.entidades.CapuccinoAssassino;
 import com.capuccinolovesballerina.game.graficos.AnimacionesCappuccino;
+import com.capuccinolovesballerina.game.graficos.AnimacionesBallerina;
 import com.capuccinolovesballerina.game.mapa.Nivel;
 import com.capuccinolovesballerina.game.objetos.ElementosNivel;
+import com.capuccinolovesballerina.game.red.Cliente;
+import com.capuccinolovesballerina.game.red.ProtocolosRed.*;
+import com.capuccinolovesballerina.game.red.ProtocolosRed;
+import com.capuccinolovesballerina.game.objetos.Palanca;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 .
 [C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\pantallas\PantallaMenu.java]
 import com.badlogic.gdx.Gdx;
@@ -5124,6 +5791,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.Game;
@@ -5155,40 +5823,39 @@ import com.capuccinolovesballerina.game.Utilidades.Recursos;
 .
 [C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\red\Cliente.java]
 import com.capuccinolovesballerina.game.red.hilos.HiloCliente;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.util.ArrayList;
-import java.util.List;
+import com.capuccinolovesballerina.game.red.ProtocolosRed.*;
+.
+[C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\red\ProtocolosRed.java]
+import com.capuccinolovesballerina.game.graficos.Estado;
+import java.nio.charset.StandardCharsets;
 .
 [C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\red\Servidor.java]
-import com.capuccinolovesballerina.game.red.hilos.HiloDescubrimiento;
+import com.capuccinolovesballerina.game.Utilidades.*;
+import com.capuccinolovesballerina.game.entidades.*;
+import com.capuccinolovesballerina.game.mapa.Nivel;
+import com.capuccinolovesballerina.game.objetos.*;
 import com.capuccinolovesballerina.game.red.hilos.HiloServidor;
+import java.net.*;
+import java.util.UUID;
+import java.util.concurrent.locks.LockSupport;
+import static com.capuccinolovesballerina.game.red.ProtocolosRed.*;
 .
 [C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\red\hilos\HiloCliente.java]
+import com.capuccinolovesballerina.game.red.ProtocolosRed.*;
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketException;
+import java.net.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
-.
-[C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\red\hilos\HiloDescubrimiento.java]
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.SocketAddress;
-import java.net.SocketException;
+import static com.capuccinolovesballerina.game.red.ProtocolosRed.*;
 .
 [C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\red\hilos\HiloServidor.java]
+import com.capuccinolovesballerina.game.red.ProtocolosRed;
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetSocketAddress;
-import java.net.SocketException;
-import java.util.HashSet;
-import java.util.Set;
+import java.net.*;
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.ArrayBlockingQueue;
 .
 [C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\core\src\main\java\com\capuccinolovesballerina\game\Utilidades\Audio.java]
 import com.badlogic.gdx.Gdx;
@@ -5208,6 +5875,7 @@ import com.capuccinolovesballerina.game.entidades.BallerinaCapuccina;
 import com.capuccinolovesballerina.game.entidades.CapuccinoAssassino;
 import com.capuccinolovesballerina.game.entidades.Player;
 import com.capuccinolovesballerina.game.graficos.AnimacionesCappuccino;
+import com.capuccinolovesballerina.game.graficos.AnimacionesBallerina;
 import com.capuccinolovesballerina.game.graficos.Estado;
 import com.capuccinolovesballerina.game.mapa.Nivel;
 import com.capuccinolovesballerina.game.objetos.BloqueEspuma;
@@ -5239,6 +5907,7 @@ import java.util.HashMap;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -5258,6 +5927,7 @@ import com.capuccinolovesballerina.game.pantallas.HUD;
 import com.capuccinolovesballerina.game.pantallas.MenuGameOver;
 import com.capuccinolovesballerina.game.pantallas.MenuPausa;
 import com.capuccinolovesballerina.game.pantallas.MenuVictoria;
+import com.capuccinolovesballerina.game.graficos.AnimacionesBallerina;
 
 [C:\Users\Usuario\IdeaProjects\capuccino-loves-ballerina\lwjgl3\src\main\java\com\capuccinolovesballerina\game\lwjgl3\Lwjgl3Launcher.java]
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;

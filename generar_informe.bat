@@ -2,16 +2,17 @@
 setlocal EnableExtensions DisableDelayedExpansion
 
 REM ============================================================
-REM   INFORME DEL PROYECTO SPEEDG2L
+REM   INFORME DEL PROYECTO CAPPUCCINO LOVES BALLERINA
 REM   El .bat debe estar en la carpeta raiz del proyecto.
 REM ============================================================
 
 REM Nos aseguramos de trabajar SIEMPRE desde donde esta este .bat
 cd /d "%~dp0"
 
-set "SALIDA=todo_el_proyecto.txt"
+if not exist "build\informes" mkdir "build\informes"
+set "SALIDA=build\informes\todo_el_proyecto.txt"
 
-echo Generando informe de SpeedG2L...
+echo Generando informe de Cappuccino Loves Ballerina...
 echo Carpeta: %CD%
 echo.
 
@@ -20,7 +21,7 @@ if exist "%SALIDA%" del /q "%SALIDA%"
 
 (
 echo ============================================================
-echo                 INFORME DEL PROYECTO SPEEDG2L
+echo                 INFORME DEL PROYECTO CAPPUCCINO LOVES BALLERINA
 echo ============================================================
 echo.
 echo Fecha: %date%
@@ -32,7 +33,10 @@ echo 1. ESTRUCTURA DEL PROYECTO
 echo ============================================================
 echo.
 
-tree /F /A
+echo core/src - Codigo compartido y pruebas
+echo lwjgl3/src - Aplicacion de escritorio y pruebas
+echo assets - Recursos del juego
+echo gradle - Compilacion reproducible
 
 echo.
 echo ============================================================
