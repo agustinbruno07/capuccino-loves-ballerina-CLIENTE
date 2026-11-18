@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.Game;
@@ -24,7 +25,8 @@ public class PantallaMenu implements Screen {
     private Stage stage;
     private Skin skin;
     private TextButton botonJugar;
-    private TextButton botonJugarRed;
+
+
     private TextButton botonOpciones;
     private TextButton botonControles;
     private TextButton botonSalir;
@@ -32,6 +34,9 @@ public class PantallaMenu implements Screen {
     private final Game juego;
 
     private Cliente clienteRed;
+
+    private boolean transferido;
+    private boolean liberado;
 
     public PantallaMenu(Game juego) {
         this.juego = juego;
@@ -51,12 +56,13 @@ public class PantallaMenu implements Screen {
     }
 
     private void crearBotones() {
-        botonJugar = new TextButton("JUGAR LOCAL", skin);
-        botonJugarRed = new TextButton("JUGAR EN RED", skin);
+        botonJugar = new TextButton("JUGAR", skin);
         botonOpciones = new TextButton("OPCIONES", skin);
         botonControles = new TextButton("CONTROLES", skin);
         botonSalir = new TextButton("SALIR", skin);
         estadoRed = new Label("", skin);
+        estadoRed.setWrap(true);
+        estadoRed.setAlignment(com.badlogic.gdx.utils.Align.center);
     }
 
     private void agregarBotones() {
@@ -65,9 +71,8 @@ public class PantallaMenu implements Screen {
         tabla.setFillParent(true);
         tabla.bottom();
 
-        tabla.add(estadoRed).size(400, 30).pad(5).row();
+        tabla.add(estadoRed).size(750, 60).pad(5).row();
         tabla.add(botonJugar).size(200, 60).pad(10).row();
-        tabla.add(botonJugarRed).size(200, 60).pad(10).row();
         tabla.add(botonOpciones).size(200, 60).pad(10).row();
         tabla.add(botonControles).size(200, 60).pad(10).row();
         tabla.add(botonSalir).size(200, 60).pad(10);
@@ -81,16 +86,10 @@ public class PantallaMenu implements Screen {
         botonJugar.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                juego.setScreen(new PantallaJuego(juego));
+                if (!botonJugar.isDisabled()) buscarServidor();
             }
         });
 
-        botonJugarRed.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                buscarServidor();
-            }
-        });
 
         botonSalir.addListener(new ClickListener() {
             @Override
@@ -115,33 +114,10 @@ public class PantallaMenu implements Screen {
     }
 
     private void buscarServidor() {
-        botonJugarRed.setDisabled(true);
-        estadoRed.setText("Buscando servidor en la red...");
-        final PantallaMenu self = this;
-        Thread hilo = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Cliente c = new Cliente();
-                final boolean ok = c.conectar();
-                final int rol = c.getMiRol();
-                final String ip = c.getIpServer();
-                Gdx.app.postRunnable(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (ok) {
-                            clienteRed = c;
-                            String nombre = (rol == 0) ? "Cappuccino" : "Ballerina";
-                            estadoRed.setText("Conectado a " + ip + " como " + nombre);
-                        } else {
-                            c.cerrar();
-                            estadoRed.setText("No se encontro servidor. Levantá Servidor.main");
-                        }
-                        botonJugarRed.setDisabled(false);
-                    }
-                });
-            }
-        });
-        hilo.start();
+        if (clienteRed != null) clienteRed.cerrar();
+        clienteRed = new Cliente();
+        clienteRed.conectar();
+        botonJugar.setDisabled(true);
     }
 
     public Cliente getClienteRed() {
@@ -150,6 +126,17 @@ public class PantallaMenu implements Screen {
 
     @Override
     public void render(float delta) {
+        if (clienteRed != null) {
+            estadoRed.setText(clienteRed.termino() && clienteRed.sinServidor()
+                ? "NO SE ENCONTRÓ UN SERVIDOR ACTIVO" : clienteRed.getEstadoConexion());
+            botonJugar.setDisabled(!clienteRed.termino());
+            var foto = clienteRed.getEstadoPartida();
+            if (!clienteRed.termino() && foto != null && foto.fase().equals(com.capuccinolovesballerina.game.red.ProtocolosRed.JUGANDO)) {
+                transferido = true;
+                juego.setScreen(new PantallaJuego(juego, clienteRed));
+                return;
+            }
+        }
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
         stage.act(delta);
         stage.draw();
@@ -170,10 +157,15 @@ public class PantallaMenu implements Screen {
 
     @Override
     public void hide() {
+        if (!transferido && clienteRed != null) clienteRed.cerrar();
+        dispose();
     }
 
     @Override
     public void dispose() {
+        if (liberado) return;
+        liberado = true;
+        if (!transferido && clienteRed != null) clienteRed.cerrar();
         stage.dispose();
     }
 }

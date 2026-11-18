@@ -124,6 +124,23 @@ public class ControladorEntradaJugador extends InputAdapter {
         interactuarPresionadoBallerina = false;
     }
 
+    /** El servidor aplica los controles recibidos solo al personaje asignado. */
+    public void aplicarControlesRed(int rol, boolean izq, boolean der, boolean salto, boolean habilidad, boolean interactuar) {
+        if (rol == 0) {
+            izquierda = izq;
+            derecha = der;
+            saltoPresionado |= salto;
+            habilidadPresionada |= habilidad;
+            interactuarPresionado |= interactuar;
+        } else {
+            izquierdaBallerina = izq;
+            derechaBallerina = der;
+            saltoPresionadoBallerina |= salto;
+            habilidadPresionadaBallerina |= habilidad;
+            interactuarPresionadoBallerina |= interactuar;
+        }
+    }
+
     public void soltarTodo() {
         izquierda = false;
         derecha = false;

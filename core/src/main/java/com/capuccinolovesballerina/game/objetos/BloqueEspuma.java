@@ -23,6 +23,11 @@ public class BloqueEspuma {
         return vida > 0f;
     }
 
+    public float getVidaRestante() { return vida; }
+
+    /** El cliente muestra el reloj de la espuma que decide el servidor. */
+    public void aplicarVidaRemota(float restante) { vida = Math.max(0f, Math.min(vidaInicial, restante)); }
+
     public Rectangle getZona() {
         return zona;
     }

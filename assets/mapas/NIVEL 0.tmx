@@ -106,7 +106,7 @@
   <object id="2" name="peligro" x="480" y="416" width="64" height="32"/>
   <object id="3" name="spawn_cappuccino" type=" spawnCapuccino" x="864" y="288" width="64" height="128"/>
   <object id="4" name="palanca_ballerina" type="palanca" x="736" y="512" width="32" height="32"/>
-  <object id="5" name="liana" type="liana" x="320" y="0" width="61.212" height="640.117" rotation="359.783"/>
+  <object id="5" name="liana" type="liana" x="320" y="0" width="30.7878" height="640.117" rotation="359.783"/>
   <object id="6" name="palanca_cappuccino" type="palanca" x="64" y="96" width="32" height="32"/>
   <object id="7" name="spawn_ballerina" type="spawnBallerina" x="32" y="288" width="64" height="128"/>
  </objectgroup>

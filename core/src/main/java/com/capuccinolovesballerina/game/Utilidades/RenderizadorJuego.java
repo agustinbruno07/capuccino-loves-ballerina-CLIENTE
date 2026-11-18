@@ -3,6 +3,7 @@ package com.capuccinolovesballerina.game.Utilidades;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -26,6 +27,10 @@ import com.capuccinolovesballerina.game.graficos.AnimacionesBallerina;
 
 public class RenderizadorJuego {
 
+    private static final int ANCHO_FRAME_LIANA = 256;
+    private static final int ALTO_FRAME_LIANA = 1024;
+    private static final int CANTIDAD_FRAMES_LIANA = 4;
+
     private final OrthographicCamera camera;
     private final OrthogonalTiledMapRenderer renderizador;
     private final ShapeRenderer shapeRenderer;
@@ -48,6 +53,8 @@ public class RenderizadorJuego {
     private Texture texturaPalancaOn;
     private Texture texturaPinchos;
     private Texture texturaLiana;
+    private Animation<TextureRegion> animacionLianas;
+    private float tiempoLianas = 0f;
     private Texture texturaEspuma;
     private TextureRegion[] framesEspuma;
 
@@ -88,7 +95,14 @@ public class RenderizadorJuego {
         texturaPalancaOff = new Texture("objetos/palanca_apagada.png");
         texturaPalancaOn = new Texture("objetos/palanca_encendida.png");
         texturaPinchos = new Texture("objetos/pinchos.png");
-        texturaLiana = new Texture("objetos/liana.png");
+        texturaLiana = new Texture("sprites/lianas_animadas.png");
+        TextureRegion[] framesLiana = new TextureRegion[CANTIDAD_FRAMES_LIANA];
+        for (int i = 0; i < framesLiana.length; i++) {
+            framesLiana[i] = new TextureRegion(texturaLiana,
+                i * ANCHO_FRAME_LIANA, 0, ANCHO_FRAME_LIANA, ALTO_FRAME_LIANA);
+        }
+        animacionLianas = new Animation<>(0.3f, framesLiana);
+        animacionLianas.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
         texturaEspuma = new Texture(Constantes.RUTA_SPRITESHEET_ESPUMA);
         framesEspuma = new TextureRegion[Constantes.CANTIDAD_FRAMES_ESPUMA];
         for (int i = 0; i < framesEspuma.length; i++) {
@@ -105,7 +119,11 @@ public class RenderizadorJuego {
         texturaLiana.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
     }
 
-    public void dibujar() {
+    public void dibujar(float delta) {
+
+        if (!menuPausa.estaVisible() && !menuGameOver.estaVisible() && !menuVictoria.estaVisible()) {
+            tiempoLianas += delta;
+        }
 
         ScreenUtils.clear(0.1f, 0.1f, 0.15f, 1f);
 
@@ -197,19 +215,27 @@ public class RenderizadorJuego {
         }
     }
 
+
     private void dibujarLianas() {
+        TextureRegion frame = animacionLianas.getKeyFrame(tiempoLianas);
+
         for (ObjetoCortable cortable : elementos.getCortables()) {
             if (cortable.estaCortado()) continue;
             if (!"liana".equals(cortable.getTipo())) continue;
 
             Rectangle z = cortable.getZona();
-            float altoSegmento = 192f;
 
-            for (float y = z.y; y < z.y + z.height; y += altoSegmento) {
-                batch.draw(texturaLiana, z.x, y, z.width, altoSegmento);
-            }
+            // Tamaño visual independiente de la hitbox
+            float altoVisual = z.height;
+            float anchoVisual = z.width * 2.5f;
+
+            // Centrar la imagen respecto a la hitbox
+            float xVisual = z.x + (z.width - anchoVisual) / 2f;
+
+            batch.draw(frame, xVisual, z.y, anchoVisual, altoVisual);
         }
     }
+
 
     private void dibujarCappuccino() {
         TextureRegion frame = animacionesCappuccino.getFrameActual();

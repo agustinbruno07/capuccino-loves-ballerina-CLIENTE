@@ -14,9 +14,9 @@ public class Lwjgl3Launcher {
         return new Lwjgl3Application(new CapuccinoLovesBallerinaGame(), getDefaultConfiguration());
     }
 
-    private static Lwjgl3ApplicationConfiguration getDefaultConfiguration() {
+    static Lwjgl3ApplicationConfiguration getDefaultConfiguration() {
         Lwjgl3ApplicationConfiguration configuration = new Lwjgl3ApplicationConfiguration();
-        configuration.setTitle("CapuccinoLovesBallerina");
+        configuration.setTitle("Cappuccino Loves Ballerina");
         configuration.useVsync(true);
 
         configuration.setForegroundFPS(Lwjgl3ApplicationConfiguration.getDisplayMode().refreshRate + 1);

@@ -65,6 +65,11 @@ public class HUD {
         }
     }
 
+    public void setTiempoRemoto(float segundos) {
+        tiempo = segundos;
+        actualizar(0f);
+    }
+
     private String formatear(int totalSegundos) {
         int minutos = totalSegundos / 60;
         int segundos = totalSegundos % 60;

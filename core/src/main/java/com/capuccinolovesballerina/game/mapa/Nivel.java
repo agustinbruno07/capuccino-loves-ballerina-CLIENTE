@@ -35,13 +35,17 @@ public class Nivel {
     private final float altoPx;
 
     public Nivel(String ruta) {
+        this(ruta, false);
+    }
+
+    public Nivel(String ruta, boolean servidor) {
         TmxMapLoader.Parameters parametros = new TmxMapLoader.Parameters();
         if (PIXEL_ART) {
             parametros.generateMipMaps = false;
             parametros.textureMinFilter = Texture.TextureFilter.Nearest;
             parametros.textureMagFilter = Texture.TextureFilter.Nearest;
         }
-        mapa = new TmxMapLoader().load(ruta, parametros);
+        mapa = servidor ? new CargadorMapaServidor().load(ruta) : new TmxMapLoader().load(ruta, parametros);
 
         MapProperties props = mapa.getProperties();
         int tileAncho = props.get("tilewidth", Integer.class);
@@ -62,7 +66,7 @@ public class Nivel {
 
         colisiones = new GestorColisiones(mapa, tileAncho, ESCALA);
 
-        if (DEBUG_OBJETOS) {
+        if (DEBUG_OBJETOS && Gdx.app != null) {
             logObjetos();
         }
     }
@@ -92,7 +96,7 @@ public class Nivel {
             Rectangle r = rectanguloDe(obj);
             if (r != null) return r;
         }
-        if (DEBUG_OBJETOS) {
+        if (DEBUG_OBJETOS && Gdx.app != null) {
             Gdx.app.log("NIVEL", "NO se encontro el objeto '" + tipo + "' (revisa name/type en Tiled)");
         }
         return null;

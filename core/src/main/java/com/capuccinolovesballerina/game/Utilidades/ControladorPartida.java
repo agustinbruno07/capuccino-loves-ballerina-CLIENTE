@@ -37,6 +37,29 @@ public class ControladorPartida {
     private final AnimacionesCappuccino animacionesCappuccino;
     private final AnimacionesBallerina animacionesBallerina;
     private static final float ALCANCE_PALANCA = 12f;
+    private boolean derrota;
+    private boolean victoria;
+    private final Estado[] estados = {Estado.IDLE, Estado.IDLE};
+
+    /** La misma partida sin menus ni texturas para la consola del servidor. */
+    public ControladorPartida(Nivel nivel, ElementosNivel elementos, ControladorEntradaJugador entrada,
+        CapuccinoAssassino cappuccino, BallerinaCapuccina ballerina) {
+        this(nivel, elementos, null, null, null, null, entrada, cappuccino, ballerina, null, null);
+    }
+
+    public boolean estaDerrotada() { return derrota; }
+    public boolean hayVictoria() { return victoria; }
+    public Estado getEstado(int rol) { return estados[rol]; }
+
+    private void estadoCappuccino(Estado estado) {
+        estados[0] = estado;
+        if (animacionesCappuccino != null) animacionesCappuccino.setEstado(estado);
+    }
+
+    private void estadoBallerina(Estado estado) {
+        estados[1] = estado;
+        if (animacionesBallerina != null) animacionesBallerina.setEstado(estado);
+    }
 
     public ControladorPartida(
         Nivel nivel,
@@ -66,7 +89,7 @@ public class ControladorPartida {
 
     public void actualizar(float delta) {
 
-        if (entrada.isEscapePresionado()) {
+        if (menuPausa != null && entrada.isEscapePresionado()) {
             if (menuPausa.estaVisible()) {
                 menuPausa.ocultar();
             } else if (!menuGameOver.estaVisible() && !menuVictoria.estaVisible()) {
@@ -75,26 +98,26 @@ public class ControladorPartida {
             }
         }
 
-        if (menuPausa.estaVisible()) {
+        if (menuPausa != null && menuPausa.estaVisible()) {
             menuPausa.actualizar(delta);
             return;
         }
 
-        if (menuGameOver.estaVisible()) {
-            menuGameOver.actualizar(delta);
+        if (derrota) {
+            if (menuGameOver != null) menuGameOver.actualizar(delta);
             return;
         }
 
-        if (menuVictoria.estaVisible()) {
-            menuVictoria.actualizar(delta);
+        if (victoria) {
+            if (menuVictoria != null) menuVictoria.actualizar(delta);
             return;
         }
 
-        if (Gdx.input.getInputProcessor() != entrada) {
+        if (menuPausa != null && Gdx.input != null && Gdx.input.getInputProcessor() != entrada) {
             Gdx.input.setInputProcessor(entrada);
         }
 
-        hud.actualizar(delta);
+        if (hud != null) hud.actualizar(delta);
 
         ballerina.actualizarHabilidad(delta);
 
@@ -134,28 +157,28 @@ public class ControladorPartida {
 
 
         if (entrada.isHabilidadPresionada()) {
-            animacionesCappuccino.setEstado(Estado.ABILITY);
+            estadoCappuccino(Estado.ABILITY);
             cortar();
         } else if (!cappuccino.isEnSuelo()) {
-            animacionesCappuccino.setEstado(Estado.JUMP);
+            estadoCappuccino(Estado.JUMP);
         } else if (entrada.isIzquierda() || entrada.isDerecha()) {
-            animacionesCappuccino.setEstado(Estado.WALK);
+            estadoCappuccino(Estado.WALK);
         } else {
-            animacionesCappuccino.setEstado(Estado.IDLE);
+            estadoCappuccino(Estado.IDLE);
         }
 
         if (entrada.isHabilidadPresionadaBallerina()) {
-            animacionesBallerina.setEstado(Estado.ABILITY);
+            estadoBallerina(Estado.ABILITY);
         } else if (!ballerina.isEnSuelo()) {
-            animacionesBallerina.setEstado(Estado.JUMP);
+            estadoBallerina(Estado.JUMP);
         } else if (entrada.isIzquierdaBallerina() || entrada.isDerechaBallerina()) {
-            animacionesBallerina.setEstado(Estado.WALK);
+            estadoBallerina(Estado.WALK);
         } else {
-            animacionesBallerina.setEstado(Estado.IDLE);
+            estadoBallerina(Estado.IDLE);
         }
 
-        animacionesCappuccino.actualizar(delta);
-        animacionesBallerina.actualizar(delta);
+        if (animacionesCappuccino != null) animacionesCappuccino.actualizar(delta);
+        if (animacionesBallerina != null) animacionesBallerina.actualizar(delta);
 
 
         if (estaMuerto(cappuccino) || estaMuerto(ballerina)) {
@@ -166,7 +189,7 @@ public class ControladorPartida {
 
         comprobarVictoria();
 
-        if (menuVictoria.estaVisible()) {
+        if (victoria) {
             return;
         }
         actualizarPalancas();
@@ -237,7 +260,8 @@ public class ControladorPartida {
 
         if (cappuccino.getCaja().overlaps(zona) && ballerina.getCaja().overlaps(zona)) {
             entrada.soltarTodo();
-            menuVictoria.mostrar();
+            victoria = true;
+            if (menuVictoria != null) menuVictoria.mostrar();
         }
     }
 
@@ -257,7 +281,8 @@ public class ControladorPartida {
 
     private void mostrarGameOver() {
         entrada.soltarTodo();
-        menuGameOver.mostrar();
+        derrota = true;
+        if (menuGameOver != null) menuGameOver.mostrar();
     }
 
     private void cortar() {
@@ -279,6 +304,9 @@ public class ControladorPartida {
     }
 
     public void reiniciar() {
+        derrota = false;
+        victoria = false;
+        estados[0] = estados[1] = Estado.IDLE;
         cappuccino.reaparecer(elementos.getSpawnX(), elementos.getSpawnY());
         ballerina.reaparecer(elementos.getSpawnBallerinaX(), elementos.getSpawnBallerinaY());
 
@@ -300,8 +328,8 @@ public class ControladorPartida {
         }
 
         entrada.soltarTodo();
-        animacionesCappuccino.reiniciar();
-        animacionesBallerina.reiniciar();
-        hud.reiniciar();
+        if (animacionesCappuccino != null) animacionesCappuccino.reiniciar();
+        if (animacionesBallerina != null) animacionesBallerina.reiniciar();
+        if (hud != null) hud.reiniciar();
     }
 }
