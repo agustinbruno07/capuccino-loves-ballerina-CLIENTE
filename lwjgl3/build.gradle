@@ -21,6 +21,25 @@ import io.github.fourlastor.construo.Target
 sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
 application.mainClass = 'com.capuccinolovesballerina.game.lwjgl3.Lwjgl3Launcher'
 application.applicationName = appName
+
+// Consola UDP sin ventana ni dependencias adicionales de red.
+tasks.register('servidor', JavaExec) {
+  classpath = sourceSets.main.runtimeClasspath
+  mainClass = 'com.capuccinolovesballerina.game.red.Servidor'
+  workingDir = rootProject.file('assets')
+  standardInput = System.in
+}
+
+// Prueba opcional con tres JVM: servidor y dos clientes graficos completos.
+tasks.register('pruebasClientesGraficos', JavaExec) {
+  dependsOn testClasses
+  classpath = sourceSets.test.runtimeClasspath
+  mainClass = 'com.capuccinolovesballerina.game.lwjgl3.PruebasClientesGraficos'
+  workingDir = rootProject.file('assets')
+  args layout.buildDirectory.dir('reports/red-grafica').get().asFile.absolutePath
+}
+test { failOnNoDiscoveredTests = false }
+
 eclipse.project.name = appName + '-lwjgl3'
 java.sourceCompatibility = 17
 java.targetCompatibility = 17
@@ -204,4 +223,58 @@ tasks.withType(JavaExec.class).configureEach {
 
 if(enableGraalNative == 'true') {
   apply from: file("nativeimage.gradle")
+}
+
+
+// Dos aplicaciones jpackage: entradas y destinos independientes.
+def registrarWindows = { String tipo, String nombre, String launcher ->
+  tasks.register("preparar${tipo}Windows", Sync) {
+    dependsOn 'jar'
+    from tasks.named('jar').flatMap { it.archiveFile }
+    into layout.buildDirectory.dir("jpackage-input/${tipo.toLowerCase()}")
+  }
+  tasks.register("distribucion${tipo}Windows", Exec) {
+    group = 'distribution'
+    description = "Genera ${nombre}.exe con Java incluido, sin consola."
+    dependsOn "preparar${tipo}Windows"
+    inputs.file tasks.named('jar').flatMap { it.archiveFile }
+    inputs.property 'versionAplicacion', projectVersion
+    inputs.property 'launcher', launcher
+    outputs.dir layout.buildDirectory.dir("windows/${tipo.toLowerCase()}/${nombre}")
+    doFirst {
+      def jpackage = new File(System.getProperty('java.home'), 'bin/jpackage.exe')
+      if (!jpackage.isFile()) throw new GradleException('Se requiere un JDK para Windows con jpackage.')
+      def destino = layout.buildDirectory.dir("windows/${tipo.toLowerCase()}").get().asFile
+      def imagen = new File(destino, nombre)
+      if (!imagen.canonicalPath.startsWith(layout.buildDirectory.get().asFile.canonicalPath + File.separator))
+        throw new GradleException('Destino de distribucion fuera de build.')
+      delete imagen
+      commandLine jpackage.absolutePath, '--type', 'app-image', '--name', nombre,
+        '--input', layout.buildDirectory.dir("jpackage-input/${tipo.toLowerCase()}").get().asFile.absolutePath,
+        '--main-jar', tasks.named('jar').get().archiveFileName.get(),
+        '--main-class', launcher, '--dest', destino.absolutePath,
+        '--app-version', projectVersion, '--vendor', 'Cappuccino Loves Ballerina',
+        '--java-options', '--enable-native-access=ALL-UNNAMED',
+        '--add-modules', 'java.base,java.desktop,java.management,jdk.unsupported,jdk.zipfs'
+    }
+  }
+  tasks.register("zip${tipo}Windows", Zip) {
+    dependsOn "distribucion${tipo}Windows"
+    from(layout.buildDirectory.dir("windows/${tipo.toLowerCase()}"))
+    archiveFileName = "${nombre}-${projectVersion}-Windows.zip"
+    destinationDirectory = layout.buildDirectory.dir('distributions')
+  }
+}
+registrarWindows('Cliente', 'CappuccinoLovesBallerina', 'com.capuccinolovesballerina.game.lwjgl3.Lwjgl3Launcher')
+registrarWindows('Servidor', 'CappuccinoServidor', 'com.capuccinolovesballerina.game.lwjgl3.Lwjgl3ServidorLauncher')
+
+// Compatibilidad: las tareas anteriores ahora preparan las dos aplicaciones.
+tasks.register('prepararWindows') { dependsOn 'prepararClienteWindows', 'prepararServidorWindows' }
+tasks.register('distribucionWindows') { dependsOn 'distribucionClienteWindows', 'distribucionServidorWindows' }
+tasks.register('zipWindows') { dependsOn 'zipClienteWindows', 'zipServidorWindows' }
+
+tasks.register('runServidor', JavaExec) {
+  classpath = sourceSets.main.runtimeClasspath
+  mainClass = 'com.capuccinolovesballerina.game.lwjgl3.Lwjgl3ServidorLauncher'
+  workingDir = rootProject.file('assets')
 }

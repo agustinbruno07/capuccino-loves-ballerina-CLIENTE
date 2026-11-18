@@ -2,6 +2,39 @@
 
 Todos los cambios importantes del proyecto serán registrados en este archivo.
 
+## [1.7.0] - 2026-11-16
+
+### Agregado
+- Animaciones de Ballerina y spritesheet de espuma con formación, actividad y disolución; conserva duración, cooldown, transparencia y colisiones.
+- Animación de lianas con cuatro fotogramas en LOOP_PINGPONG, dibujando la liana completa y separando su tamaño visual de la hitbox.
+- Aplicación gráfica exclusiva del servidor: `CapuccinoServidorGame`, `PantallaMenuServidor`, `ServicioServidor` y `Lwjgl3ServidorLauncher`.
+- Pantalla de supervisión con jugadores conectados, estado de partida y botón DETENER SERVIDOR.
+- Distribuciones Windows independientes `CappuccinoServidor.exe` y `CappuccinoLovesBallerina.exe`, con Java incluido, sin consola, generadas mediante jpackage.
+- Pruebas reproducibles de reglas y UDP, cliente sin servidor, ciclo de vida y tres procesos gráficos.
+
+### Modificado
+- Integración de la red UDP existente con la simulación autoritativa y las pantallas: sincronización de movimientos, habilidades, espuma, cortes, palancas, puerta, derrota, victoria y reinicios.
+- Descubrimiento por broadcast general, interfaces de red y loopback; registro separado del descubrimiento, asignación de personajes y confirmación de ambos clientes antes de la cuenta regresiva.
+- Controles con secuencia, sesión, ronda y contadores de acciones; estados completos y comprobación periódica de conexión.
+- Menú cliente con un único JUGAR y búsqueda asíncrona; servidor con menú propio JUGAR/SALIR. Los puntos de entrada determinan la aplicación, sin selector de rol.
+- Aviso de desconexión centrado con fondo oscurecido y retorno al menú.
+- Referencias e informes históricos conservados en `docs/desarrollo`, fuera de la distribución; README y documentación de entrega actualizados.
+
+### Corregido
+- Registro duplicado de un cliente por distintas interfaces y tolerancia a asignaciones que llegan antes del OK.
+- Descarte de paquetes inválidos, antiguos o duplicados; timeout, liberación de cupos y prevención de movimiento retenido por falta de controles.
+- Carga de mapas y tilesets del servidor desde el classpath al ejecutar fuera del proyecto.
+- Inicio del servicio fuera del hilo gráfico, cierre de sockets y recursos, y error entendible si el puerto está ocupado.
+- Cliente sin servidor: muestra «NO SE ENCONTRÓ UN SERVIDOR ACTIVO», permite reintentar y nunca crea un servidor.
+- Glifo Ó ausente en la fuente ASCII del menú, para mostrar completo el aviso de servidor no encontrado.
+- Encabezado del generador de informes y versión de Gradle alineada con esta entrega: `1.7.0`.
+
+### Eliminado
+- `InicioLan` y la conversión automática de cliente a servidor.
+- Selección manual de IP, botones JUGAR LOCAL/JUGAR EN RED e IP visibles durante la partida.
+- Descubrimiento separado mediante `HiloDescubrimiento`, segmentos visuales de liana y recurso estático sin uso.
+- Lanzadores BAT de cliente/servidor de la entrega; la herramienta de consola queda opcional para desarrollo.
+
 ## [1.6.1] - 2026-11-08
 
 

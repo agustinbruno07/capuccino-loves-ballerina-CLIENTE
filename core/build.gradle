@@ -12,3 +12,26 @@ dependencies {
 jar {
   duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
+
+tasks.register('pruebasRed', JavaExec) {
+  dependsOn testClasses
+  classpath = sourceSets.test.runtimeClasspath
+  mainClass = 'com.capuccinolovesballerina.game.red.PruebasRed'
+  workingDir = rootProject.file('assets')
+}
+
+// Las pruebas se ejecutan con main(), sin un framework de tests adicional.
+test { failOnNoDiscoveredTests = false }
+check.dependsOn 'pruebasRed'
+
+// Herramienta opcional de desarrollo en consola; no integra la entrega Windows.
+tasks.register('jarServidor', Jar) {
+  description = 'JAR de diagnostico en consola, no es la aplicacion grafica de entrega.'
+  archiveBaseName = 'CapuccinoLovesBallerina-servidor'
+  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+  from sourceSets.main.output
+  from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+  from(rootProject.file('assets')) { include '**/*.tmx', '**/*.tsx' }
+  exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA'
+  manifest { attributes 'Main-Class': 'com.capuccinolovesballerina.game.red.Servidor' }
+}
