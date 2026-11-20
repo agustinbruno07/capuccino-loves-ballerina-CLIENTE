@@ -14,18 +14,11 @@ import com.badlogic.gdx.utils.Array;
 
 public class Nivel {
 
-    /**
-     * Escala entre "pixeles de Tiled" y "unidades del mundo".
-     * 1f = el mundo mide lo mismo que el mapa en Tiled (30x20 tiles de 32 = 960x640).
-     * Es como esta disenado NIVEL 0 (puerta 96x128, peligro 64x32, etc.).
-     * Si algun dia queres un mundo mas grande sin retocar el mapa, cambia SOLO este numero.
-     */
+
     public static final float ESCALA = 1f;
 
-    /** true = los tiles se dibujan sin suavizar (pixel art). */
     private static final boolean PIXEL_ART = false;
 
-    /** Dejalo en true hasta que todo funcione; despues ponelo en false. */
     private static final boolean DEBUG_OBJETOS = true;
 
     private final TiledMap mapa;
@@ -35,17 +28,15 @@ public class Nivel {
     private final float altoPx;
 
     public Nivel(String ruta) {
-        this(ruta, false);
-    }
-
-    public Nivel(String ruta, boolean servidor) {
         TmxMapLoader.Parameters parametros = new TmxMapLoader.Parameters();
+
         if (PIXEL_ART) {
             parametros.generateMipMaps = false;
             parametros.textureMinFilter = Texture.TextureFilter.Nearest;
             parametros.textureMagFilter = Texture.TextureFilter.Nearest;
         }
-        mapa = servidor ? new CargadorMapaServidor().load(ruta) : new TmxMapLoader().load(ruta, parametros);
+
+        mapa = new TmxMapLoader().load(ruta, parametros);
 
         MapProperties props = mapa.getProperties();
         int tileAncho = props.get("tilewidth", Integer.class);
@@ -56,8 +47,6 @@ public class Nivel {
         anchoPx = tilesX * tileAncho * ESCALA;
         altoPx = tilesY * tileAlto * ESCALA;
 
-        // Se leen los objetos de TODAS las capas de objetos, se llamen como se llamen
-        // (Tiled las crea como "Capa de Objetos 1" por defecto).
         for (MapLayer capa : mapa.getLayers()) {
             for (MapObject obj : capa.getObjects()) {
                 objetos.add(obj);
@@ -79,17 +68,14 @@ public class Nivel {
         return colisiones;
     }
 
-    /** Ancho total del mapa en unidades del mundo. */
     public float getAnchoPx() {
         return anchoPx;
     }
 
-    /** Alto total del mapa en unidades del mundo. */
     public float getAltoPx() {
         return altoPx;
     }
 
-    /** Primer objeto con ese nombre/type/class, en unidades del mundo (o null). */
     public Rectangle buscarObjeto(String tipo) {
         for (MapObject obj : objetos) {
             if (!coincide(obj, tipo)) continue;
@@ -102,7 +88,6 @@ public class Nivel {
         return null;
     }
 
-    /** Todos los objetos con ese nombre/type/class, en unidades del mundo. */
     public Array<Rectangle> buscarObjetos(String tipo) {
         Array<Rectangle> resultado = new Array<>();
         for (MapObject obj : objetos) {
@@ -117,9 +102,6 @@ public class Nivel {
         mapa.dispose();
     }
 
-    // ---------------------------------------------------------------- internos
-
-    /** Compara con name, type o class (Tiled 1.9+), ignorando mayusculas y espacios. */
     private static boolean coincide(MapObject obj, String tipo) {
         MapProperties p = obj.getProperties();
         return igual(tipo, obj.getName()) || igual(tipo, p.get("type")) || igual(tipo, p.get("class"));
@@ -129,7 +111,6 @@ public class Nivel {
         return valor != null && tipo.equalsIgnoreCase(valor.toString().trim());
     }
 
-    /** Convierte el objeto de Tiled a un rectangulo en unidades del mundo. */
     private static Rectangle rectanguloDe(MapObject obj) {
         if (obj instanceof RectangleMapObject) {
             Rectangle r = ((RectangleMapObject) obj).getRectangle();

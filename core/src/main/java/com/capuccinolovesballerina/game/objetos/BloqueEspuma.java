@@ -25,14 +25,12 @@ public class BloqueEspuma {
 
     public float getVidaRestante() { return vida; }
 
-    /** El cliente muestra el reloj de la espuma que decide el servidor. */
     public void aplicarVidaRemota(float restante) { vida = Math.max(0f, Math.min(vidaInicial, restante)); }
 
     public Rectangle getZona() {
         return zona;
     }
 
-    // El reloj pertenece al bloque: cada espuma nueva empieza en el primer frame.
     public int getIndiceFrame() {
         float transcurrido = Math.max(0f, vidaInicial - vida);
         if (vida <= Constantes.DURACION_DISOLUCION_ESPUMA) {
@@ -46,7 +44,7 @@ public class BloqueEspuma {
         return 4 + (int) (activo / Constantes.DURACION_FRAME_ACTIVO_ESPUMA) % 2;
     }
 
-    //alpha es la opacidad, cosa de que se vaya desvaneciendo poco a poco. queda prime confien
+
     public float getAlpha() {
         float fade = Constantes.DURACION_DISOLUCION_ESPUMA;
         if (vida >= fade) return 1f;

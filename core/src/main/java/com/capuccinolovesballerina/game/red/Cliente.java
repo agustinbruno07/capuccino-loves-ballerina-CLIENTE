@@ -3,7 +3,6 @@ package com.capuccinolovesballerina.game.red;
 import com.capuccinolovesballerina.game.red.hilos.HiloCliente;
 import com.capuccinolovesballerina.game.red.ProtocolosRed.*;
 
-/** Fachada para las pantallas. Los metodos no esperan respuestas ni bloquean el render. */
 public class Cliente implements AutoCloseable {
     private HiloCliente hilo;
     private long saltos, habilidades, interacciones, reinicios;

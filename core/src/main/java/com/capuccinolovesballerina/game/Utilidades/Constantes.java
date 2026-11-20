@@ -35,7 +35,7 @@ public class Constantes {
     public static final float DURACION_FRAME_ACTIVO_ESPUMA = 0.2f;
     public static final float DURACION_DISOLUCION_ESPUMA = 0.5f;
 
-    public static final float MARGEN_LATERAL_PELIGRO = 8f;   // se resta a cada lado
-    public static final float MARGEN_SUPERIOR_PELIGRO = 8f;  // se resta de arriba
+    public static final float MARGEN_LATERAL_PELIGRO = 8f;
+    public static final float MARGEN_SUPERIOR_PELIGRO = 8f;
 
 }

@@ -5,7 +5,6 @@ import com.badlogic.gdx.InputAdapter;
 
 public class ControladorEntradaJugador extends InputAdapter {
 
-    // --- Controles de Cappuccino (A/D/W/E/F) ---
     private boolean izquierda;
     private boolean derecha;
     private boolean saltoW;
@@ -15,7 +14,6 @@ public class ControladorEntradaJugador extends InputAdapter {
     private boolean interactuarPresionado;
     private boolean habilidadPresionada;
 
-    // --- Controles de Ballerina (Flechas / Shift Derecho) ---
     private boolean izquierdaBallerina;
     private boolean derechaBallerina;
     private boolean saltoPresionadoBallerina;

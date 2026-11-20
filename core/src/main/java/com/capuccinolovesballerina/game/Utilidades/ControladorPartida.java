@@ -41,7 +41,6 @@ public class ControladorPartida {
     private boolean victoria;
     private final Estado[] estados = {Estado.IDLE, Estado.IDLE};
 
-    /** La misma partida sin menus ni texturas para la consola del servidor. */
     public ControladorPartida(Nivel nivel, ElementosNivel elementos, ControladorEntradaJugador entrada,
         CapuccinoAssassino cappuccino, BallerinaCapuccina ballerina) {
         this(nivel, elementos, null, null, null, null, entrada, cappuccino, ballerina, null, null);
@@ -141,17 +140,17 @@ public class ControladorPartida {
 
         cappuccino.actualizar(
             delta,
-            entrada.isIzquierda(),           // A
-            entrada.isDerecha(),             // D
-            entrada.isSaltoPresionado(),     // W / Espacio
+            entrada.isIzquierda(),
+            entrada.isDerecha(),
+            entrada.isSaltoPresionado(),
             solidos
         );
 
         ballerina.actualizar(
             delta,
-            entrada.isIzquierdaBallerina(),      // ←
-            entrada.isDerechaBallerina(),        // →
-            entrada.isSaltoPresionadoBallerina(),// ↑
+            entrada.isIzquierdaBallerina(),
+            entrada.isDerechaBallerina(),
+            entrada.isSaltoPresionadoBallerina(),
             solidos
         );
 
@@ -221,7 +220,6 @@ public class ControladorPartida {
     private void intentarAlternar(Palanca palanca) {
         Puerta puerta = elementos.getPuerta();
 
-        // No dejar cerrar la puerta con alguien parado adentro
         boolean seCerraria = palanca.estaActivada() && puerta != null && puerta.estaAbierta();
         if (seCerraria && alguienEnLaPuerta()) return;
 
@@ -236,7 +234,6 @@ public class ControladorPartida {
         Palanca palBal = elementos.getPalancaBallerina();
         if (puerta == null || (palCap == null && palBal == null)) return;
 
-        // si un nivel solo tiene una palanca, la que falta no bloquea
         boolean capOk = palCap == null || palCap.estaActivada();
         boolean balOk = palBal == null || palBal.estaActivada();
         puerta.setAbierta(capOk && balOk);

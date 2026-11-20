@@ -225,11 +225,9 @@ public class RenderizadorJuego {
 
             Rectangle z = cortable.getZona();
 
-            // Tamaño visual independiente de la hitbox
             float altoVisual = z.height;
             float anchoVisual = z.width * 2.5f;
 
-            // Centrar la imagen respecto a la hitbox
             float xVisual = z.x + (z.width - anchoVisual) / 2f;
 
             batch.draw(frame, xVisual, z.y, anchoVisual, altoVisual);

@@ -9,7 +9,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import static com.capuccinolovesballerina.game.red.ProtocolosRed.*;
 
-/** Un solo hilo/socket descubre, recibe y envia. Nunca modifica elementos de LibGDX. */
 public class HiloCliente extends Thread {
     private final String ipManual;
     private volatile DatagramSocket socket;
@@ -142,7 +141,7 @@ public class HiloCliente extends Thread {
             System.out.println("[RED CLIENTE] Conexion cerrada: " + estado);
         }
     }
-    /** Broadcast general + broadcast de cada interfaz; loopback permite probar dos clientes en una PC. */
+
     public static List<InetSocketAddress> destinosDescubrimiento() throws SocketException, UnknownHostException {
         LinkedHashSet<InetSocketAddress> destinos = new LinkedHashSet<>();
         destinos.add(new InetSocketAddress(InetAddress.getByName("255.255.255.255"), PUERTO));

@@ -3,7 +3,6 @@ package com.capuccinolovesballerina.game.red;
 import com.capuccinolovesballerina.game.graficos.Estado;
 import java.nio.charset.StandardCharsets;
 
-/** Protocolo de texto UTF-8. Separador de campos: |. Dentro de un jugador: coma. */
 public final class ProtocolosRed {
     private ProtocolosRed() {}
     public static final int PUERTO = 9992, MAX_PAQUETE = 1400;
@@ -31,7 +30,7 @@ public final class ProtocolosRed {
         if (!Float.isFinite(numero) || Math.abs(numero) > 1_000_000f) throw new IllegalArgumentException("Numero invalido");
         return numero;
     }
-    // Los contadores acumulados repiten los eventos perdidos y evitan ejecutarlos dos veces.
+
     public record Controles(boolean izquierda, boolean derecha, long salto, long habilidad, long interactuar) {
         public static final Controles VACIOS = new Controles(false, false, 0, 0, 0);
         public String mensaje(String sesion, long ronda, long secuencia) {
@@ -51,7 +50,6 @@ public final class ProtocolosRed {
             return new Jugador(numero(p[0]), numero(p[1]), booleano(p[2]), booleano(p[3]), Estado.valueOf(p[4]), natural(p[5]));
         }
     }
-    /** Foto completa e inmutable: pasa del hilo de red al grafico. */
     public record EstadoPartida(long secuencia, long ronda, String fase, int cuenta, float tiempo,
         Jugador cappuccino, Jugador ballerina, boolean palancaCap, boolean palancaBal, boolean puerta,
         String cortados, long espumaId, float espumaX, float espumaY, float espumaVida) {
