@@ -1,33 +1,100 @@
+
 package com.capuccinolovesballerina.game.red;
 
 import com.capuccinolovesballerina.game.red.hilos.HiloCliente;
-import com.capuccinolovesballerina.game.red.ProtocolosRed.*;
+import com.capuccinolovesballerina.game.red.ProtocolosRed.Controles;
+import com.capuccinolovesballerina.game.red.ProtocolosRed.EstadoPartida;
 
-public class Cliente implements AutoCloseable {
-    private HiloCliente hilo;
-    private long saltos, habilidades, interacciones, reinicios;
-    public void conectar() { conectar(""); }
-    public void conectar(String ipManual) {
+public class Cliente {
+
+    private HiloCliente hiloRed;
+
+    private long saltos;
+    private long habilidades;
+    private long interacciones;
+    private long reinicios;
+
+    public void conectar() {
+
         cerrar();
-        saltos = habilidades = interacciones = reinicios = 0;
-        hilo = new HiloCliente(ipManual);
-        hilo.start();
+
+        saltos = 0;
+        habilidades = 0;
+        interacciones = 0;
+        reinicios = 0;
+
+        hiloRed = new HiloCliente();
+        hiloRed.start();
     }
-    public void enviarControles(boolean izquierda, boolean derecha, boolean salto, boolean habilidad, boolean interactuar) {
-        if (hilo == null) return;
+
+    public void enviarControles(
+        boolean izquierda,
+        boolean derecha,
+        boolean salto,
+        boolean habilidad,
+        boolean interactuar
+    ) {
+
+        if (hiloRed == null) return;
+
         if (salto) saltos++;
         if (habilidad) habilidades++;
         if (interactuar) interacciones++;
-        hilo.controles(new Controles(izquierda, derecha, saltos, habilidades, interacciones));
+
+        Controles controles = new Controles(
+            izquierda,
+            derecha,
+            saltos,
+            habilidades,
+            interacciones
+        );
+
+        hiloRed.controles(controles);
     }
-    public void enviarReinicio() { if (hilo != null) hilo.reiniciar(++reinicios); }
-    public EstadoPartida getEstadoPartida() { return hilo == null ? null : hilo.getFoto(); }
-    public int getMiRol() { return hilo == null ? -1 : hilo.getRol(); }
-    public String getIpServer() { return hilo == null ? "" : hilo.getIpServidor(); }
-    public String getEstadoConexion() { return hilo == null ? "Sin conexion" : hilo.getEstado(); }
-    public boolean sinServidor() { return hilo != null && hilo.sinServidor(); }
-    public boolean termino() { return hilo == null || hilo.terminado(); }
-    public void cerrar() { if (hilo != null) hilo.detener(); }
-    public void cerrar(String motivo) { if (hilo != null) hilo.detener(motivo); }
-    @Override public void close() { cerrar(); }
+
+    public void enviarReinicio() {
+
+        if (hiloRed == null) return;
+
+        reinicios++;
+        hiloRed.reiniciar(reinicios);
+    }
+
+    public EstadoPartida getEstadoPartida() {
+
+        if (hiloRed == null) return null;
+
+        return hiloRed.getFoto();
+    }
+
+    public String getEstadoConexion() {
+
+        if (hiloRed == null) return "Sin conexion";
+
+        return hiloRed.getEstado();
+    }
+
+    public boolean sinServidor() {
+
+        return hiloRed != null && hiloRed.sinServidor();
+    }
+
+    public boolean termino() {
+
+        return hiloRed == null || hiloRed.terminado();
+    }
+
+    public void cerrar() {
+
+        if (hiloRed != null) {
+            hiloRed.detener();
+        }
+    }
+
+    public void cerrar(String motivo) {
+
+        if (hiloRed != null) {
+            hiloRed.detener(motivo);
+        }
+    }
 }
